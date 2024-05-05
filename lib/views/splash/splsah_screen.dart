@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/icons/app_icons.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
+import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/splash/splash_controller.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -30,10 +32,38 @@ class SplashScreen extends StatelessWidget {
             const Text('Shopify Admin',
                 style: TextStyle(
                     fontFamily: 'MyraidPro',
-                    fontSize: 30,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                     color: AppTheme.oliverGreenClr)),
+            const SizedBox(height: 15),
+            const LoadingIndicator(),
+            AnimatedTextKit(
+              animatedTexts: [
+                // TyperAnimatedText(
+                //   "Checking Internet Connection...",
+                //   textStyle: const TextStyle(
+                //       fontSize: 20.0,
+                //       fontFamily: "MyriadPro",
+                //       color: AppTheme.oliverGreenClr),
+                //   speed: const Duration(milliseconds: 10),
+                // ),
+                TyperAnimatedText("Establishing connection with database...",
+                    textStyle: const TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "MyriadPro",
+                        color: AppTheme.oliverGreenClr),
+                    speed: const Duration(milliseconds: 20)),
+                TyperAnimatedText(
+                    "Please wait while we set things up for you...",
+                    textStyle: const TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "MyriadPro",
+                        color: AppTheme.oliverGreenClr),
+                    speed: const Duration(milliseconds: 20)),
+              ],
+              isRepeatingAnimation: true,
+            ),
           ],
         ),
       ),
