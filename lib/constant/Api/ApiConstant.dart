@@ -1,5 +1,7 @@
 class ApiConstant {
-  static String baseUrl = 'http://192.168.18.127:3000/';
-  static String customerApi = 'api/customers';
-  static String checkDbConnection = 'api/db-connection-status';
+  // static String baseUrl = 'http://192.168.18.127:3000/'; //home
+  //  static String baseUrl = 'http://10.133.148.237:3000/'; //office
+  static String baseUrl = 'http://10.133.137.111:3000';
+  static String customerApi = '/api/customers';
+  static String checkDbConnection = '/api/db-connection-status';
 }

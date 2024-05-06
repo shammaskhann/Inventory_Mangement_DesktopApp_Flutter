@@ -37,6 +37,7 @@ class DatabaseServices {
         bool dbConnected = response['dbConnected'] as bool;
         return dbConnected;
       } else {
+        log('Error: ${result.body}');
         return false;
       }
     } catch (e) {
