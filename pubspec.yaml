@@ -42,6 +42,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   sidebarx: ^0.17.1
   syncfusion_flutter_charts: ^25.1.42+1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -94,8 +95,12 @@ flutter:
     - family: MyraidPro
       fonts:
         - asset: "assets/fonts/MYRIADPRO-SEMIBOLDIT.OTF"
+    - family: NicoMoji
+      fonts:
+        - asset: "assets/fonts/NicoMoji-Regular.ttf"
+    
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
+  # "D
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

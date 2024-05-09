@@ -13,4 +13,8 @@ class AppIcons {
   static const String inventoryIcon = 'assets/icons/inventory.png';
   static const String purchaseOrderIcon = 'assets/icons/purchaseOrder.png';
   static const String salechannelIcon = 'assets/icons/salechannel.png';
+  static const String totalSalesIcon = 'assets/icons/totalSales.png';
+  static const String totalProductIcon = 'assets/icons/totalProduts.png';
+  static const String todaySalesIon = 'assets/icons/todaySalesIon.png';
+  static const String revenueIcon = 'assets/icons/revenue.png';
 }

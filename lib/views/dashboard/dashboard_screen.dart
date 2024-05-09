@@ -10,6 +10,7 @@ import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItemThe
 import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItems.dart';
 import 'package:shopify_admin_dashboard/views/dashboard/dashboard_controller.dart';
 import 'package:shopify_admin_dashboard/views/home/home_screen.dart';
+import 'package:shopify_admin_dashboard/views/orders/order_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -38,7 +39,7 @@ class DashboardScreen extends StatelessWidget {
                   case 0:
                     return const HomeScreen();
                   case 1:
-                    return LoadingIndicator();
+                    return const OrderScreen();
                   case 2:
                     return LoadingIndicator();
                   default:
