@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/icons/app_icons.dart';
 
@@ -6,7 +7,7 @@ import '../../../constant/theme/app_themes.dart';
 
 Widget navBarHeader() {
   return Container(
-    height: Get.height * 0.06,
+    height: Get.height * 0.1,
     child: const Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

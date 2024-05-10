@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -7,6 +11,7 @@ import 'package:shopify_admin_dashboard/services/Sales%20Services/sales_services
 import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/components/info_blockks.dart';
 import 'package:shopify_admin_dashboard/views/components/tag_container.dart';
+import 'package:shopify_admin_dashboard/views/home/components/vendors_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -18,11 +23,22 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<SalesData> data = [
+      SalesData('Product 1', Random().nextInt(100)),
+      SalesData('Product 2', Random().nextInt(100)),
+      SalesData('Product 3', Random().nextInt(100)),
+      SalesData('Product 4', Random().nextInt(100)),
+      SalesData('Product 5', Random().nextInt(100)),
+      SalesData('Product 6', Random().nextInt(100)),
+      SalesData('Product 7', Random().nextInt(100)),
+      SalesData('Product 8', Random().nextInt(100)),
+      SalesData('Product 9', Random().nextInt(100)),
+    ];
     return Scaffold(
       backgroundColor: AppTheme.darkThemeBackgroudClr,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(right: 10.0, left: 30, top: 30),
+          padding: const EdgeInsets.only(right: 90.0, left: 30, top: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -65,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     CustomTagContainer(
                       iconData: Icons.circle,
-                      text: '4 live visitors',
+                      text: 'Onlinex',
                       iconColor: AppTheme.grasGreenClr,
                     ),
                   ],
@@ -74,112 +90,164 @@ class HomeScreen extends StatelessWidget {
               //Info Block
               Row(
                 children: [
-                  FutureBuilder(
-                    future: SalesServices.getTodaySales(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Shimmer(
-                            gradient: AppTheme.shimmerEffectTile,
-                            child: const InfoBlock(
-                                value: "100k",
-                                title: 'Today\'s Sale',
-                                iconData: Icons.trending_up));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        return InfoBlock(
-                            value: snapshot.data.toString(),
-                            title: 'Today\'s Sale',
-                            iconData: Icons.trending_up,
-                            avatarBackgroundColor: Colors.lightBlue);
-                      }
-                      return const SizedBox();
-                    },
+                  Expanded(
+                    child: FutureBuilder(
+                      future: SalesServices.getTodaySales(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Shimmer(
+                              gradient: AppTheme.shimmerEffectTile,
+                              child: const InfoBlock(
+                                  value: "100k",
+                                  title: 'Today\'s Sale',
+                                  iconData: Icons.trending_up));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          return InfoBlock(
+                              value: snapshot.data.toString(),
+                              title: 'Today\'s Sale',
+                              iconData: Icons.trending_up,
+                              avatarBackgroundColor: Colors.lightBlue);
+                        }
+                        return const SizedBox();
+                      },
+                    ),
                   ),
                   const SizedBox(
                     width: 20,
                   ),
                   //today order
-                  FutureBuilder(
-                    future: SalesServices.getTodayOrder(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Shimmer(
-                            gradient: AppTheme.shimmerEffectTile,
-                            child: const InfoBlock(
-                                value: "100k",
-                                title: 'Today\'s Orders',
-                                iconData: Icons.trending_up));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        return InfoBlock(
-                            value: snapshot.data.toString(),
-                            title: 'Today\'s Orders',
-                            iconData: Icons.list,
-                            avatarBackgroundColor: Colors.purpleAccent);
-                      }
-                      return const SizedBox();
-                    },
+                  Expanded(
+                    child: FutureBuilder(
+                      future: SalesServices.getTodayOrder(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Shimmer(
+                              gradient: AppTheme.shimmerEffectTile,
+                              child: const InfoBlock(
+                                  value: "100k",
+                                  title: 'Today\'s Orders',
+                                  iconData: Icons.trending_up));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          return InfoBlock(
+                              value: snapshot.data.toString(),
+                              title: 'Today\'s Orders',
+                              iconData: Icons.list,
+                              avatarBackgroundColor: Colors.purpleAccent);
+                        }
+                        return const SizedBox();
+                      },
+                    ),
                   ),
                   //get Total Revenue
                   const SizedBox(
                     width: 20,
                   ),
-                  FutureBuilder(
-                    future: SalesServices.getTotalRevenue(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Shimmer(
-                            gradient: AppTheme.shimmerEffectTile,
-                            child: const InfoBlock(
-                                value: "100k",
-                                title: 'Total Revenue',
-                                iconData: Icons.trending_up));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        return InfoBlock(
-                          value: snapshot.data.toString(),
-                          title: 'Total Revenue',
-                          iconData: Icons.attach_money,
-                          avatarBackgroundColor: Colors.orangeAccent,
-                        );
-                      }
-                      return const SizedBox();
-                    },
+                  Expanded(
+                    child: FutureBuilder(
+                      future: SalesServices.getTotalRevenue(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Shimmer(
+                              gradient: AppTheme.shimmerEffectTile,
+                              child: const InfoBlock(
+                                  value: "100k",
+                                  title: 'Total Revenue',
+                                  iconData: Icons.trending_up));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          return InfoBlock(
+                            value: snapshot.data.toString(),
+                            title: 'Total Revenue',
+                            iconData: Icons.attach_money,
+                            avatarBackgroundColor: Colors.orangeAccent,
+                          );
+                        }
+                        return const SizedBox();
+                      },
+                    ),
                   ),
                   //get Totl Products
                   const SizedBox(
                     width: 20,
                   ),
-                  FutureBuilder(
-                    future: SalesServices.getTotalProducts(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Shimmer(
-                            gradient: AppTheme.shimmerEffectTile,
-                            child: const InfoBlock(
-                                value: "100k",
-                                title: 'Total Products',
-                                iconData: Icons.trending_up));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        return InfoBlock(
-                          value: snapshot.data.toString(),
-                          title: 'Total Products',
-                          iconData: Icons.shopping_cart,
-                          avatarBackgroundColor: Colors.pinkAccent,
-                        );
-                      }
-                      return const SizedBox();
-                    },
+                  Expanded(
+                    child: FutureBuilder(
+                      future: SalesServices.getTotalProducts(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Shimmer(
+                              gradient: AppTheme.shimmerEffectTile,
+                              child: const InfoBlock(
+                                  value: "100k",
+                                  title: 'Total Products',
+                                  iconData: Icons.trending_up));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          return InfoBlock(
+                            value: snapshot.data.toString(),
+                            title: 'Total Products',
+                            iconData: Icons.shopping_cart,
+                            avatarBackgroundColor: Colors.pinkAccent,
+                          );
+                        }
+                        return const SizedBox();
+                      },
+                    ),
                   ),
                 ],
-              )
+              ),
+              SfCartesianChart(
+                plotAreaBorderWidth: 0,
+                title: const ChartTitle(
+                    text: 'Top Selling Products',
+                    textStyle: TextStyle(color: Colors.white, fontSize: 20)),
+                primaryXAxis: const CategoryAxis(
+                  majorGridLines: MajorGridLines(width: 0),
+                  axisLine: AxisLine(color: AppTheme.whiteselClr),
+                  labelStyle: TextStyle(color: AppTheme.whiteselClr),
+                ),
+                primaryYAxis: const NumericAxis(
+                  isVisible: true,
+                  majorGridLines: MajorGridLines(width: 0),
+                  minorGridLines: MinorGridLines(width: 0),
+                  axisLine: AxisLine(color: AppTheme.whiteselClr),
+                  labelStyle: TextStyle(color: AppTheme.whiteselClr),
+                ),
+                tooltipBehavior: TooltipBehavior(enable: true),
+                series: <ColumnSeries<SalesData, String>>[
+                  ColumnSeries<SalesData, String>(
+                    name: 'Sales',
+                    color: Colors.blue,
+                    dataSource: data,
+                    xValueMapper: (SalesData sales, _) => sales.product,
+                    yValueMapper: (SalesData sales, _) => sales.sales,
+                    dataLabelSettings: const DataLabelSettings(
+                        isVisible: true,
+                        textStyle: TextStyle(color: Colors.white),
+                        labelAlignment: ChartDataLabelAlignment.auto),
+                  )
+                ],
+              ),
+              //VendorProductChart()
             ],
           ),
         ),
       ),
     );
   }
+}
+
+class SalesData {
+  final String product;
+  final int sales;
+
+  SalesData(this.product, this.sales);
 }
 //Total Sales Card with Graph spline
 

@@ -107,6 +107,11 @@ class OrderScreen extends StatelessWidget {
                       ),
                       series: <CartesianSeries<SiteVisit, String>>[
                         SplineSeries<SiteVisit, String>(
+                          dataLabelSettings: const DataLabelSettings(
+                              textStyle: TextStyle(
+                                  color: AppTheme.whiteselClr,
+                                  fontWeight: FontWeight.bold),
+                              isVisible: true),
                           animationDelay: 10,
                           splineType: SplineType.monotonic,
                           color: AppTheme.grasGreenClr,
