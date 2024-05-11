@@ -1,5 +1,14 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
+import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
+import 'package:shopify_admin_dashboard/views/components/tag_container.dart';
+import 'package:shopify_admin_dashboard/views/components/info_blocks2.dart';
+import 'package:shopify_admin_dashboard/views/orders/components/customer_wdiget.dart';
+import 'package:shopify_admin_dashboard/views/orders/components/orderlist_header.dart';
+import 'package:shopify_admin_dashboard/views/orders/controller/order_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../constant/theme/app_themes.dart';
@@ -10,6 +19,7 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OrderController orderController = Get.put(OrderController());
     final List<SiteVisit> data = [
       SiteVisit(time: '12:00 AM', visit: 60),
       SiteVisit(time: '3:00 AM', visit: 50),
@@ -22,14 +32,58 @@ class OrderScreen extends StatelessWidget {
     return Container(
       color: AppTheme.darkThemeBackgroudClr,
       width: Get.height * 0.88,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Container(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 90.0, left: 30, top: 30),
+        child: ListView(
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Orders',
+                      style: TextStyle(
+                        color: AppTheme.whiteselClr,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        CustomTagContainer(
+                          iconData: Icons.list,
+                          text: 'Orders',
+                        ),
+                        SizedBox(width: 10),
+                        CustomTagContainer(
+                          iconData: Icons.bar_chart,
+                          text: 'Past Weeks Analysis',
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                const Spacer(),
+                CustomButton(
+                  title: "Create Order",
+                  icon: const Icon(
+                    Icons.list_alt_sharp,
+                    color: AppTheme.whiteselClr,
+                    size: 17,
+                  ),
+                  onTap: () {},
+                ),
+              ],
+            ),
+            SizedBox(height: Get.height * 0.02),
+            Container(
               height: Get.height * 0.4,
-              width: Get.width * 0.7,
+              // width: Get.width * 0.7,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                 color: AppTheme.secondaryClr,
@@ -37,53 +91,21 @@ class OrderScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Row(children: [
-                    Container(
-                      height: Get.height * 0.08,
-                      width: Get.width * 0.1,
-                      decoration: BoxDecoration(
-                        color: AppTheme.lightGreyClr.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10),
+                  const Row(
+                    children: [
+                      InfoBlock2(
+                        title: 'Today Orders',
+                        value: 16,
+                        isGreaterThanLastWeek: true,
+                        percValue: 7,
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Online Store Sessions',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppTheme.whiteselClr)),
-                            Divider(
-                              color: AppTheme.lightGreyClr,
-                              endIndent: 40,
-                            ),
-                            Row(
-                              children: [
-                                Text('346',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.whiteselClr)),
-                                SizedBox(width: 5),
-                                Icon(
-                                  Icons.arrow_drop_up,
-                                  color: AppTheme.grasGreenClr,
-                                ),
-                                Text('12%',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.grasGreenClr)),
-                              ],
-                            ),
-                          ],
-                        ),
+                      InfoBlock2(
+                        title: "Past Week Order's ",
+                        value: 46,
+                        isGreaterThanLastWeek: false,
                       ),
-                    ),
-                  ]),
+                    ],
+                  ),
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
@@ -134,8 +156,106 @@ class OrderScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              decoration: const BoxDecoration(color: AppTheme.secondaryClr),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                child: Row(children: [
+                  const Text(
+                    '   Recent Orders',
+                    style: TextStyle(
+                        color: AppTheme.whiteselClr,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  Obx(
+                    () => DropdownButtonHideUnderline(
+                      child: DropdownButton2<String>(
+                        dropdownStyleData: DropdownStyleData(
+                            decoration: BoxDecoration(
+                          color: AppTheme.secondaryClr,
+                          borderRadius: BorderRadius.circular(10),
+                        )),
+                        isExpanded: true,
+                        hint: Text(
+                          'Select Item',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ),
+                        items: orderController.timeSpan
+                            .map((String item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: AppTheme.whiteselClr,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        value: orderController.selectedTimeSpan.value,
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            orderController.selectedTimeSpan.value = value!;
+                          } else {
+                            orderController.selectedTimeSpan.value = 'Today';
+                          }
+                        },
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          height: 40,
+                          width: 140,
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          height: 40,
+                        ),
+                      ),
+                    ),
+                  )
+                ]),
+              ),
+            ),
+            const OrderListHeader(),
+            FutureBuilder(
+              future: orderController
+                  .getOrderList(orderController.selectedTimeSpan.value),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Container(
+                      height: Get.height * 0.2,
+                      child: const Center(child: LoadingIndicator()));
+                } else {
+                  return Container(
+                    decoration:
+                        const BoxDecoration(color: AppTheme.secondaryClr),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        return CustomerWidget(
+                          orderId: snapshot.data![index]['orderID'].toString(),
+                          customer: snapshot.data![index]['CustomerName'],
+                          product: snapshot.data![index]['Product'],
+                          date: snapshot.data![index]['OrderDate'],
+                          status: snapshot.data![index]['Status'],
+                          channel: snapshot.data![index]['Channel'],
+                          total: snapshot.data![index]['Total'].toString(),
+                        );
+                      },
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

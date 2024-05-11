@@ -43,6 +43,7 @@ dependencies:
   sidebarx: ^0.17.1
   syncfusion_flutter_charts: ^25.1.42+1
   shimmer: ^3.0.0
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:
