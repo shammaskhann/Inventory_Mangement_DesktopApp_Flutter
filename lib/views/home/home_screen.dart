@@ -202,38 +202,92 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SfCartesianChart(
-                plotAreaBorderWidth: 0,
-                title: const ChartTitle(
-                    text: 'Top Selling Products',
-                    textStyle: TextStyle(color: Colors.white, fontSize: 20)),
-                primaryXAxis: const CategoryAxis(
-                  majorGridLines: MajorGridLines(width: 0),
-                  axisLine: AxisLine(color: AppTheme.whiteselClr),
-                  labelStyle: TextStyle(color: AppTheme.whiteselClr),
-                ),
-                primaryYAxis: const NumericAxis(
-                  isVisible: true,
-                  majorGridLines: MajorGridLines(width: 0),
-                  minorGridLines: MinorGridLines(width: 0),
-                  axisLine: AxisLine(color: AppTheme.whiteselClr),
-                  labelStyle: TextStyle(color: AppTheme.whiteselClr),
-                ),
-                tooltipBehavior: TooltipBehavior(enable: true),
-                series: <ColumnSeries<SalesData, String>>[
-                  ColumnSeries<SalesData, String>(
-                    name: 'Sales',
-                    color: Colors.blue,
-                    dataSource: data,
-                    xValueMapper: (SalesData sales, _) => sales.product,
-                    yValueMapper: (SalesData sales, _) => sales.sales,
-                    dataLabelSettings: const DataLabelSettings(
-                        isVisible: true,
-                        textStyle: TextStyle(color: Colors.white),
-                        labelAlignment: ChartDataLabelAlignment.auto),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text('TOP Selling Products',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.lightGreyClr)),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 300,
+                        width: 400,
+                        child: SfCartesianChart(
+                          plotAreaBorderWidth: 0,
+                          title: const ChartTitle(
+                              text: 'Top Selling Products',
+                              textStyle:
+                                  TextStyle(color: Colors.white, fontSize: 20)),
+                          primaryXAxis: const CategoryAxis(
+                            majorGridLines: MajorGridLines(width: 0),
+                            axisLine: AxisLine(color: AppTheme.whiteselClr),
+                            labelStyle: TextStyle(color: AppTheme.whiteselClr),
+                          ),
+                          primaryYAxis: const NumericAxis(
+                            isVisible: true,
+                            majorGridLines: MajorGridLines(width: 0),
+                            minorGridLines: MinorGridLines(width: 0),
+                            axisLine: AxisLine(color: AppTheme.whiteselClr),
+                            labelStyle: TextStyle(color: AppTheme.whiteselClr),
+                          ),
+                          tooltipBehavior: TooltipBehavior(enable: true),
+                          series: <ColumnSeries<SalesData, String>>[
+                            ColumnSeries<SalesData, String>(
+                              name: 'Sales',
+                              color: Colors.blue,
+                              dataSource: data,
+                              xValueMapper: (SalesData sales, _) =>
+                                  sales.product,
+                              yValueMapper: (SalesData sales, _) => sales.sales,
+                              dataLabelSettings: const DataLabelSettings(
+                                  isVisible: true,
+                                  textStyle: TextStyle(color: Colors.white),
+                                  labelAlignment: ChartDataLabelAlignment.auto),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
+              // SfCartesianChart(
+              //   plotAreaBorderWidth: 0,
+              //   title: const ChartTitle(
+              //       text: 'Top Selling Products',
+              //       textStyle: TextStyle(color: Colors.white, fontSize: 20)),
+              //   primaryXAxis: const CategoryAxis(
+              //     majorGridLines: MajorGridLines(width: 0),
+              //     axisLine: AxisLine(color: AppTheme.whiteselClr),
+              //     labelStyle: TextStyle(color: AppTheme.whiteselClr),
+              //   ),
+              //   primaryYAxis: const NumericAxis(
+              //     isVisible: true,
+              //     majorGridLines: MajorGridLines(width: 0),
+              //     minorGridLines: MinorGridLines(width: 0),
+              //     axisLine: AxisLine(color: AppTheme.whiteselClr),
+              //     labelStyle: TextStyle(color: AppTheme.whiteselClr),
+              //   ),
+              //   tooltipBehavior: TooltipBehavior(enable: true),
+              //   series: <ColumnSeries<SalesData, String>>[
+              //     ColumnSeries<SalesData, String>(
+              //       name: 'Sales',
+              //       color: Colors.blue,
+              //       dataSource: data,
+              //       xValueMapper: (SalesData sales, _) => sales.product,
+              //       yValueMapper: (SalesData sales, _) => sales.sales,
+              //       dataLabelSettings: const DataLabelSettings(
+              //           isVisible: true,
+              //           textStyle: TextStyle(color: Colors.white),
+              //           labelAlignment: ChartDataLabelAlignment.auto),
+              //     )
+              //   ],
+              // ),
               //VendorProductChart()
             ],
           ),

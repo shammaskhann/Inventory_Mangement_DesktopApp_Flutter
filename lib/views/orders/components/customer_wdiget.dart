@@ -107,24 +107,24 @@ class CustomerWidget extends StatelessWidget {
                   fontWeight: FontWeight.w400),
             ),
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.edit,
-              color: AppTheme.whiteselClr,
-            ),
-            onPressed: () {
-              // Handle edit action
-            },
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.delete,
-              color: AppTheme.whiteselClr,
-            ),
-            onPressed: () {
-              // Handle remove action
-            },
-          ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.edit,
+                  color: AppTheme.whiteselClr,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.delete,
+                  color: AppTheme.whiteselClr,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

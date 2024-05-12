@@ -4,7 +4,7 @@ import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 class CustomButton extends StatelessWidget {
   final String title;
   final Function() onTap;
-  final Icon icon;
+  final Widget icon;
   const CustomButton(
       {super.key,
       required this.title,

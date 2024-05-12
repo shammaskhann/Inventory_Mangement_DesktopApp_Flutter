@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
 
-class InventoryScreen extends StatelessWidget {
-  const InventoryScreen({super.key});
+class PurchaseOrderScreen extends StatelessWidget {
+  const PurchaseOrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class InventoryScreen extends StatelessWidget {
             Row(
               children: [
                 const Text(
-                  'Inventory',
+                  'Purchase Orders',
                   style: TextStyle(
                     color: AppTheme.whiteselClr,
                     fontSize: 24,
@@ -29,23 +29,17 @@ class InventoryScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 CustomButton(
-                    title: 'Add Product',
-                    onTap: () {},
-                    icon: const Icon(
-                      Icons.add_circle_outline,
-                      color: AppTheme.whiteselClr,
-                      size: 18,
-                    )),
-                const SizedBox(
-                  width: 10,
-                )
+                  title: 'ADD Purchase-Order',
+                  onTap: () {},
+                  icon: const SizedBox(),
+                ),
               ],
             ),
             const SizedBox(height: 20),
             //header preceeding the list name sku category price quantity status
             Container(
               color: AppTheme.secondaryClr,
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Row(
                 children: [
                   const SizedBox(
@@ -54,7 +48,7 @@ class InventoryScreen extends StatelessWidget {
                   SizedBox(
                     width: Get.width * 0.1,
                     child: const Text(
-                      'Name',
+                      'Product Name',
                       style: TextStyle(
                         color: AppTheme.whiteselClr,
                         fontSize: 16,
@@ -65,7 +59,7 @@ class InventoryScreen extends StatelessWidget {
                   SizedBox(
                     width: Get.width * 0.1,
                     child: const Text(
-                      'SKU',
+                      'SKU (CODE)',
                       style: TextStyle(
                         color: AppTheme.whiteselClr,
                         fontSize: 16,
@@ -73,21 +67,22 @@ class InventoryScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: Get.width * 0.1,
+                    child: const Text(
+                      'Vendor-Name',
+                      style: TextStyle(
+                        color: AppTheme.whiteselClr,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
                   SizedBox(
                     width: Get.width * 0.1,
                     child: const Text(
                       'Category',
-                      style: TextStyle(
-                        color: AppTheme.whiteselClr,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: Get.width * 0.1,
-                    child: const Text(
-                      'Price',
                       style: TextStyle(
                         color: AppTheme.whiteselClr,
                         fontSize: 16,
@@ -109,7 +104,19 @@ class InventoryScreen extends StatelessWidget {
                   SizedBox(
                     width: Get.width * 0.1,
                     child: const Text(
-                      'Status',
+                      'Price',
+                      style: TextStyle(
+                        color: AppTheme.whiteselClr,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  //invoice
+                  SizedBox(
+                    width: Get.width * 0.1,
+                    child: const Text(
+                      'Invoice',
                       style: TextStyle(
                         color: AppTheme.whiteselClr,
                         fontSize: 16,
@@ -121,16 +128,17 @@ class InventoryScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+            //list of purchase orders
             Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 50,
+                itemCount: 10,
                 itemBuilder: (context, index) {
                   return Container(
                     color: index.isEven
                         ? AppTheme.darkThemeBackgroudClr
                         : AppTheme.secondaryClr,
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     child: Row(
                       children: [
                         const SizedBox(
@@ -143,62 +151,71 @@ class InventoryScreen extends StatelessWidget {
                             style: TextStyle(
                               color: AppTheme.whiteselClr,
                               fontSize: 16,
-                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
                         SizedBox(
                           width: Get.width * 0.1,
                           child: const Text(
-                            'SKU3092',
+                            'SKU (CODE)',
                             style: TextStyle(
                               color: AppTheme.whiteselClr,
                               fontSize: 16,
-                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
                         SizedBox(
                           width: Get.width * 0.1,
                           child: const Text(
-                            'Category321',
+                            'Vendor-Name',
                             style: TextStyle(
                               color: AppTheme.whiteselClr,
                               fontSize: 16,
-                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
                         SizedBox(
                           width: Get.width * 0.1,
                           child: const Text(
-                            '\$ 100.99',
+                            'Category',
                             style: TextStyle(
                               color: AppTheme.whiteselClr,
                               fontSize: 16,
-                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
                         SizedBox(
                           width: Get.width * 0.1,
                           child: const Text(
-                            '12',
+                            'Quantity',
                             style: TextStyle(
                               color: AppTheme.whiteselClr,
                               fontSize: 16,
-                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
                         SizedBox(
                           width: Get.width * 0.1,
                           child: const Text(
-                            'Available',
+                            'Price',
                             style: TextStyle(
                               color: AppTheme.whiteselClr,
                               fontSize: 16,
-                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        //invoice
+                        SizedBox(
+                          width: Get.width * 0.1,
+                          child: InkWell(
+                            onTap: () {},
+                            child: const Text(
+                              'View Invoice',
+                              style: TextStyle(
+                                  color: AppTheme.grasGreenClr,
+                                  fontSize: 16,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppTheme.grasGreenClr),
                             ),
                           ),
                         ),
