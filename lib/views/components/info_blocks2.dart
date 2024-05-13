@@ -4,7 +4,7 @@ import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 
 class InfoBlock2 extends StatelessWidget {
   final String title;
-  final double value;
+  final int value;
   final bool isGreaterThanLastWeek;
   final double? percValue;
   const InfoBlock2(
@@ -43,6 +43,7 @@ class InfoBlock2 extends StatelessWidget {
               ),
               Row(
                 children: [
+                  const SizedBox(width: 5),
                   Text(value.toString(),
                       style: const TextStyle(
                           fontSize: 18,

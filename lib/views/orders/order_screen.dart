@@ -2,6 +2,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:shopify_admin_dashboard/data/graphmodels/PastWeekOrders.dart';
 import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
 import 'package:shopify_admin_dashboard/views/components/tag_container.dart';
@@ -91,68 +93,135 @@ class OrderScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      InfoBlock2(
-                        title: 'Today Orders',
-                        value: 16,
-                        isGreaterThanLastWeek: true,
-                        percValue: 7,
-                      ),
-                      InfoBlock2(
-                        title: "Past Week Order's ",
-                        value: 46,
-                        isGreaterThanLastWeek: false,
-                      ),
+                      FutureBuilder(
+                          future: orderController.getTodayOrders(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Shimmer(
+                                gradient: AppTheme.shimmerEffectTile,
+                                child: const InfoBlock2(
+                                  title: 'Today Orders',
+                                  value: 16,
+                                  isGreaterThanLastWeek: true,
+                                  percValue: 7,
+                                ),
+                              );
+                            } else {
+                              if (snapshot.hasData) {
+                                return InfoBlock2(
+                                  title: "Today's Orders",
+                                  value: snapshot.data?[0]
+                                      ['NumberOfOrdersToday'],
+                                  isGreaterThanLastWeek: !snapshot.data?[0]
+                                      ['IsLesser'],
+                                  percValue: double.parse(snapshot.data![0]
+                                          ['PercentageChange']
+                                      .toString()),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            }
+                          }),
+                      const SizedBox(width: 10),
+                      FutureBuilder(
+                          future: orderController.getPastWeekOrder(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Shimmer(
+                                gradient: AppTheme.shimmerEffectTile,
+                                child: const InfoBlock2(
+                                  title: 'Past Week Orders',
+                                  value: 16,
+                                  isGreaterThanLastWeek: true,
+                                  percValue: 7,
+                                ),
+                              );
+                            } else {
+                              if (snapshot.hasData) {
+                                return InfoBlock2(
+                                  title: "Past Week Orders",
+                                  value: snapshot.data,
+                                  isGreaterThanLastWeek: false,
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            }
+                          }),
                     ],
                   ),
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
                   // ignore: sized_box_for_whitespace
-                  Container(
-                    height: Get.height * 0.25,
-                    child: SfCartesianChart(
-                      plotAreaBorderWidth: 0,
-                      primaryXAxis: const CategoryAxis(
-                        isVisible: true,
-                        majorGridLines: MajorGridLines(width: 0),
-                        axisLine: AxisLine(color: AppTheme.whiteselClr),
-                        labelStyle: TextStyle(color: AppTheme.whiteselClr),
-                      ),
-                      primaryYAxis: const NumericAxis(
-                        isVisible: true,
-                        majorGridLines: MajorGridLines(width: 0.5),
-                        minorGridLines: MinorGridLines(width: 0),
-                        axisLine: AxisLine(color: AppTheme.whiteselClr),
-                        labelStyle: TextStyle(color: AppTheme.whiteselClr),
-                      ),
-                      series: <CartesianSeries<SiteVisit, String>>[
-                        SplineSeries<SiteVisit, String>(
-                          dataLabelSettings: const DataLabelSettings(
-                              textStyle: TextStyle(
-                                  color: AppTheme.whiteselClr,
-                                  fontWeight: FontWeight.bold),
-                              isVisible: true),
-                          animationDelay: 10,
-                          splineType: SplineType.monotonic,
-                          color: AppTheme.grasGreenClr,
-                          dataSource: data,
-                          xValueMapper: (SiteVisit orders, _) => orders.time,
-                          yValueMapper: (SiteVisit orders, _) => orders.visit,
-                        ),
-                        // SplineSeries<SiteVisit, String>(
-                        //   splineType: SplineType.cardinal,
-                        //   color: AppTheme.grasGreenClr,
-                        //   dataSource: data,
-                        //   xValueMapper: (SiteVisit orders, _) =>
-                        //       orders.time,
-                        //   yValueMapper: (SiteVisit orders, _) =>
-                        //       orders.visit,
-                        // )
-                      ],
-                    ),
-                  ),
+                  FutureBuilder(
+                      future: orderController.getGraphPastWeekOrders(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Container(
+                            height: Get.height * 0.2,
+                            child: const Center(child: LoadingIndicator()),
+                          );
+                        } else {
+                          return Container(
+                            height: Get.height * 0.25,
+                            child: SfCartesianChart(
+                              plotAreaBorderWidth: 0,
+                              primaryXAxis: const CategoryAxis(
+                                isVisible: true,
+                                majorGridLines: MajorGridLines(width: 0),
+                                axisLine: AxisLine(color: AppTheme.whiteselClr),
+                                labelStyle:
+                                    TextStyle(color: AppTheme.whiteselClr),
+                              ),
+                              primaryYAxis: const NumericAxis(
+                                isVisible: true,
+                                majorGridLines: MajorGridLines(width: 0.5),
+                                minorGridLines: MinorGridLines(width: 0),
+                                axisLine: AxisLine(color: AppTheme.whiteselClr),
+                                labelStyle:
+                                    TextStyle(color: AppTheme.whiteselClr),
+                              ),
+                              series: <CartesianSeries<PastWeekOrders, String>>[
+                                SplineSeries<PastWeekOrders, String>(
+                                  dataLabelSettings: const DataLabelSettings(
+                                      textStyle: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontWeight: FontWeight.bold),
+                                      isVisible: true),
+                                  animationDelay: 10,
+                                  splineType: SplineType.monotonic,
+                                  color: AppTheme.grasGreenClr,
+                                  dataSource: snapshot.data,
+                                  xValueMapper: (PastWeekOrders orders, _) =>
+                                      orders.day,
+                                  yValueMapper: (PastWeekOrders orders, _) =>
+                                      orders.orders,
+                                ),
+                                // SplineSeries<SiteVisit, String>(
+                                //   splineType: SplineType.cardinal,
+                                //   color: AppTheme.grasGreenClr,
+                                //   dataSource: data,
+                                //   xValueMapper: (SiteVisit orders, _) =>
+                                //       orders.time,
+                                //   yValueMapper: (SiteVisit orders, _) =>
+                                //       orders.visit,
+                                // )
+                              ],
+                            ),
+                          );
+                        }
+                      }),
                 ],
               ),
             ),

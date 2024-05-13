@@ -8,7 +8,7 @@ import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/dashboard/components/navBarHeader.dart';
 import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItemTheme.dart';
 import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItems.dart';
-import 'package:shopify_admin_dashboard/views/dashboard/dashboard_controller.dart';
+import 'package:shopify_admin_dashboard/views/dashboard/controller/dashboard_controller.dart';
 import 'package:shopify_admin_dashboard/views/home/home_screen.dart';
 import 'package:shopify_admin_dashboard/views/inventory/inventory_screen.dart';
 import 'package:shopify_admin_dashboard/views/orders/order_screen.dart';

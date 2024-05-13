@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shopify_admin_dashboard/views/dashboard/dashboard_controller.dart';
+import 'package:shopify_admin_dashboard/views/dashboard/controller/dashboard_controller.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../../../constant/icons/app_icons.dart';

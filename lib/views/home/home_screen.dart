@@ -12,6 +12,7 @@ import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/components/info_blockks.dart';
 import 'package:shopify_admin_dashboard/views/components/tag_container.dart';
 import 'package:shopify_admin_dashboard/views/home/components/vendors_chart.dart';
+import 'package:shopify_admin_dashboard/views/home/controller/home_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -23,6 +24,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController homeScreenController = Get.put(HomeController());
     List<SalesData> data = [
       SalesData('Product 1', Random().nextInt(100)),
       SalesData('Product 2', Random().nextInt(100)),
@@ -92,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: FutureBuilder(
-                      future: SalesServices.getTodaySales(),
+                      future: homeScreenController.getTodaySalesInfoBlock(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -120,7 +122,8 @@ class HomeScreen extends StatelessWidget {
                   //today order
                   Expanded(
                     child: FutureBuilder(
-                      future: SalesServices.getTodayOrder(),
+                      future:
+                          homeScreenController.getTodayOrderCountInfoBlock(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -148,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: FutureBuilder(
-                      future: SalesServices.getTotalRevenue(),
+                      future: homeScreenController.getTotalRevenue(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -177,7 +180,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: FutureBuilder(
-                      future: SalesServices.getTotalProducts(),
+                      future: homeScreenController.getTotalCountOfProducts(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

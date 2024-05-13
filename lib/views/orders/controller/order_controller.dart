@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:shopify_admin_dashboard/data/graphmodels/PastWeekOrders.dart';
+import 'package:shopify_admin_dashboard/services/API/API_Client.dart';
+import 'package:intl/intl.dart';
 
 class OrderController extends GetxController {
   final List<String> timeSpan = [
@@ -48,5 +51,27 @@ class OrderController extends GetxController {
         'Total': 899.99
       },
     ];
+  }
+
+  Future getTodayOrders() async {
+    final res = await ApiClient.getTodayOrdersCountInfoBlock();
+    return res;
+  }
+
+  Future getPastWeekOrder() async {
+    final res = await ApiClient.getTotalCountPastWeek();
+    return res[0]['OrderCount'];
+  }
+
+  Future getGraphPastWeekOrders() async {
+    List<PastWeekOrders> pastWeekOrders = [];
+    final res = await ApiClient.getGraphPastWeekOrder();
+    res.forEach((element) {
+      DateTime orderDate = DateTime.parse(element['OrderDate']);
+      String formattedDate = DateFormat('dd-MM-yyyy').format(orderDate);
+      pastWeekOrders
+          .add(PastWeekOrders(formattedDate, element['NumberOfOrders']));
+    });
+    return pastWeekOrders;
   }
 }
