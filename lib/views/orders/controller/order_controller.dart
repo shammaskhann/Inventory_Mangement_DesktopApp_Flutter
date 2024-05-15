@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:shopify_admin_dashboard/data/graphmodels/PastWeekOrders.dart';
+import 'package:shopify_admin_dashboard/data/models/graphmodels/PastWeekOrders.dart';
 import 'package:shopify_admin_dashboard/services/API/API_Client.dart';
 import 'package:intl/intl.dart';
 

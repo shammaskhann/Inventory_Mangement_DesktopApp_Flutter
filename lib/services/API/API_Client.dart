@@ -117,4 +117,42 @@ class ApiClient {
       log(e.toString());
     }
   }
+
+  static Future getTopSellingProducts() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.top5SellingProducts}");
+      log("Getting Top 5 Selling Products: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Top 5 Selling Products: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getTopVendorPieChart() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.topVendorPieChart}");
+      log("Getting Top Vendor Pie Chart: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Top Vendor Pie Chart: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:shopify_admin_dashboard/data/models/graphmodels/VendorData.dart';
+import 'package:shopify_admin_dashboard/data/models/mini-models/topSellingProductModel.dart';
 
 import '../../../services/API/API_Client.dart';
 
@@ -47,9 +51,41 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<String> getTotalCountOfProducts() async {
+  Future getTotalCountOfProducts() async {
     final res = await ApiClient.getTotalCountOfProducts();
     String totalProducts = res[0]['TotalProducts'].toString();
     return totalProducts;
+  }
+
+  Future<List<TopSellingProductModel>> getTopSellingProducts() async {
+    log("Getting Top Selling Products");
+    List<TopSellingProductModel> topSellingProducts = [];
+    final res = await ApiClient.getTopSellingProducts();
+    //add in TopSellingProductModel
+    for (var item in res) {
+      log(item.toString());
+      topSellingProducts.add(TopSellingProductModel(
+          SKU: item['SKU'],
+          productName: item['Name'],
+          vendorName: item['SupplierName'],
+          category: item['CategoryName'],
+          quantitySold: item['TotalQuantitySold']));
+    }
+    log(topSellingProducts.toString());
+    return topSellingProducts;
+  }
+
+  Future<List<VendorData>> getTopVendorPieChart() async {
+    log("Getting Top Vendor Pie Chart");
+    List<VendorData> topVendorPieChart = [];
+    final res = await ApiClient.getTopVendorPieChart();
+    //add in VendorData
+    for (var item in res) {
+      log(item.toString());
+      topVendorPieChart
+          .add(VendorData(item['SupplierName'], item['Percentage']));
+    }
+    log(topVendorPieChart.toString());
+    return topVendorPieChart;
   }
 }

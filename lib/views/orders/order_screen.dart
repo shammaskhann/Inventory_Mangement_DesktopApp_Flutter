@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:shopify_admin_dashboard/data/graphmodels/PastWeekOrders.dart';
+import 'package:shopify_admin_dashboard/data/models/graphmodels/PastWeekOrders.dart';
 import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
 import 'package:shopify_admin_dashboard/views/components/tag_container.dart';
@@ -14,7 +14,7 @@ import 'package:shopify_admin_dashboard/views/orders/controller/order_controller
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../constant/theme/app_themes.dart';
-import '../../data/graphmodels/SiteVisit.dart';
+import '../../data/models/graphmodels/SiteVisit.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
@@ -22,15 +22,6 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OrderController orderController = Get.put(OrderController());
-    final List<SiteVisit> data = [
-      SiteVisit(time: '12:00 AM', visit: 60),
-      SiteVisit(time: '3:00 AM', visit: 50),
-      SiteVisit(time: '6:00 AM', visit: 5),
-      SiteVisit(time: '9:00 AM', visit: 30),
-      SiteVisit(time: '12:00 PM', visit: 50),
-      SiteVisit(time: '3:00 PM', visit: 25),
-      SiteVisit(time: '6:00 PM', visit: 5),
-    ];
     return Container(
       color: AppTheme.darkThemeBackgroudClr,
       width: Get.height * 0.88,
@@ -122,7 +113,11 @@ class OrderScreen extends StatelessWidget {
                                       .toString()),
                                 );
                               } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
+                                return const InfoBlock2(
+                                  title: "Today's Orders",
+                                  value: 0,
+                                  isGreaterThanLastWeek: false,
+                                );
                               } else {
                                 return const CircularProgressIndicator();
                               }
@@ -171,6 +166,62 @@ class OrderScreen extends StatelessWidget {
                           return Container(
                             height: Get.height * 0.2,
                             child: const Center(child: LoadingIndicator()),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Container(
+                            height: Get.height * 0.25,
+                            child: SfCartesianChart(
+                              plotAreaBorderWidth: 0,
+                              primaryXAxis: const CategoryAxis(
+                                isVisible: true,
+                                majorGridLines: MajorGridLines(width: 0),
+                                axisLine: AxisLine(color: AppTheme.whiteselClr),
+                                labelStyle:
+                                    TextStyle(color: AppTheme.whiteselClr),
+                              ),
+                              primaryYAxis: const NumericAxis(
+                                isVisible: true,
+                                majorGridLines: MajorGridLines(width: 0.5),
+                                minorGridLines: MinorGridLines(width: 0),
+                                axisLine: AxisLine(color: AppTheme.whiteselClr),
+                                labelStyle:
+                                    TextStyle(color: AppTheme.whiteselClr),
+                              ),
+                              series: <CartesianSeries<PastWeekOrders, String>>[
+                                SplineSeries<PastWeekOrders, String>(
+                                  dataLabelSettings: const DataLabelSettings(
+                                      textStyle: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontWeight: FontWeight.bold),
+                                      isVisible: true),
+                                  animationDelay: 10,
+                                  splineType: SplineType.monotonic,
+                                  color: AppTheme.grasGreenClr,
+                                  dataSource: [
+                                    PastWeekOrders('Mon', 0),
+                                    PastWeekOrders('Tue', 0),
+                                    PastWeekOrders('Wed', 0),
+                                    PastWeekOrders('Thu', 0),
+                                    PastWeekOrders('Fri', 0),
+                                    PastWeekOrders('Sat', 0),
+                                    PastWeekOrders('Sun', 0),
+                                  ],
+                                  xValueMapper: (PastWeekOrders orders, _) =>
+                                      orders.day,
+                                  yValueMapper: (PastWeekOrders orders, _) =>
+                                      orders.orders,
+                                ),
+                                // SplineSeries<SiteVisit, String>(
+                                //   splineType: SplineType.cardinal,
+                                //   color: AppTheme.grasGreenClr,
+                                //   dataSource: data,
+                                //   xValueMapper: (SiteVisit orders, _) =>
+                                //       orders.time,
+                                //   yValueMapper: (SiteVisit orders, _) =>
+                                //       orders.visit,
+                                // )
+                              ],
+                            ),
                           );
                         } else {
                           return Container(
