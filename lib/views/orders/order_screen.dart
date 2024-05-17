@@ -26,7 +26,7 @@ class OrderScreen extends StatelessWidget {
       color: AppTheme.darkThemeBackgroudClr,
       width: Get.height * 0.88,
       child: Padding(
-        padding: const EdgeInsets.only(right: 90.0, left: 30, top: 30),
+        padding: const EdgeInsets.only(right: 30.0, left: 30, top: 30),
         child: ListView(
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -155,7 +155,7 @@ class OrderScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: Get.height * 0.02,
+                    height: Get.height * 0.015,
                   ),
                   // ignore: sized_box_for_whitespace
                   FutureBuilder(
@@ -282,13 +282,13 @@ class OrderScreen extends StatelessWidget {
             Container(
               decoration: const BoxDecoration(color: AppTheme.secondaryClr),
               child: Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10),
                 child: Row(children: [
-                  const Text(
+                  Text(
                     '   Recent Orders',
                     style: TextStyle(
                         color: AppTheme.whiteselClr,
-                        fontSize: 20,
+                        fontSize: Get.width * 0.012,
                         fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
@@ -304,7 +304,7 @@ class OrderScreen extends StatelessWidget {
                         hint: Text(
                           'Select Item',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: Get.width * 0.012,
                             color: Theme.of(context).hintColor,
                           ),
                         ),

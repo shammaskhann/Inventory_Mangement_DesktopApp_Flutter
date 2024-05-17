@@ -10,17 +10,17 @@ class OrderListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = Get.width;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // const SizedBox(
-          //   width: 60,
-          // ),
           SizedBox(
-            width: width * 0.1,
+            width: width * 0.01,
+          ),
+          SizedBox(
+            width: width * 0.07,
             child: const Text(
               'Order ID',
               style: TextStyle(
@@ -30,7 +30,6 @@ class OrderListHeader extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
           SizedBox(
             width: width * 0.1,
             child: const Text(
@@ -42,7 +41,6 @@ class OrderListHeader extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
           SizedBox(
             width: width * 0.1,
             child: const Text(
@@ -54,7 +52,6 @@ class OrderListHeader extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
           SizedBox(
             width: width * 0.1,
             child: const Text(
@@ -66,7 +63,6 @@ class OrderListHeader extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
           SizedBox(
             width: width * 0.1,
             child: const Text(
@@ -78,7 +74,6 @@ class OrderListHeader extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
           SizedBox(
             width: width * 0.1,
             child: const Text(
@@ -90,7 +85,6 @@ class OrderListHeader extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
           SizedBox(
             width: width * 0.1,
             child: const Text(

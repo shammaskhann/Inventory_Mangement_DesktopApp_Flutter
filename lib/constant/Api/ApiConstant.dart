@@ -1,7 +1,7 @@
 class ApiConstant {
   static String baseUrl = 'http://192.168.18.123:3000'; //home
   //  static String baseUrl = 'http://10.133.148.237:3000/'; //office
-  // static String baseUrl = 'http://10.133.151.200:3000';
+  // static String baseUrl = 'http://10.133.150.112:3000';
   // static String baseUrl =
   //     'https://rest-api-node-js-express-sql-server.vercel.app';
   // static String customerApi = '/api/customers';
@@ -17,4 +17,5 @@ class ApiConstant {
   static String graphPastWeekOrders = '/api/graph-charts/getPastWeekOrder';
   static String top5SellingProducts = '/api/products//getTop5SellingProduct';
   static String topVendorPieChart = '/api/graph-charts/getTopVendorPieChart';
+  static String getOrderAccToParam = '/api/orders/getOrderAccToParam';
 }

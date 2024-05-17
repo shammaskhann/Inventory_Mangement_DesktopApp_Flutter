@@ -1,13 +1,16 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
+import 'package:shopify_admin_dashboard/views/inventory/controller/inventory_controller.dart';
 
 class InventoryScreen extends StatelessWidget {
   const InventoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    InventoryController invController = Get.put(InventoryController());
     return Container(
       color: AppTheme.darkThemeBackgroudClr,
       child: Padding(
@@ -42,6 +45,57 @@ class InventoryScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
+            Row(children: [
+              Spacer(),
+              Obx(
+                () => DropdownButtonHideUnderline(
+                  child: DropdownButton2<String>(
+                    dropdownStyleData: DropdownStyleData(
+                        decoration: BoxDecoration(
+                      color: AppTheme.secondaryClr,
+                      borderRadius: BorderRadius.circular(10),
+                    )),
+                    isExpanded: true,
+                    hint: Text(
+                      'Select Item',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).hintColor,
+                      ),
+                    ),
+                    items: invController.categories
+                        .map((String item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: AppTheme.whiteselClr,
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                    value: invController.seletedCategory.value,
+                    onChanged: (String? value) {
+                      if (value != null) {
+                        invController.seletedCategory.value = value!;
+                      } else {
+                        invController.seletedCategory.value = 'All';
+                      }
+                    },
+                    buttonStyleData: const ButtonStyleData(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      height: 40,
+                      width: 180,
+                    ),
+                    menuItemStyleData: const MenuItemStyleData(
+                      height: 40,
+                    ),
+                  ),
+                ),
+              )
+            ]),
+            const SizedBox(height: 10),
             //header preceeding the list name sku category price quantity status
             Container(
               color: AppTheme.secondaryClr,

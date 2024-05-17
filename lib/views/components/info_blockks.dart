@@ -23,7 +23,7 @@ class InfoBlock extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
       child: Container(
-        height: 100,
+        height: Get.width * 0.06,
         // width: Get.width * 0.1,
         decoration: BoxDecoration(
           color: AppTheme.secondaryClr,

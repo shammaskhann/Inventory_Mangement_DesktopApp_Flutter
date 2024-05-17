@@ -8,9 +8,15 @@ class OrderController extends GetxController {
     'Today',
     'Yesterday',
     'Last 7 days',
-    'Last 30 days',
   ];
   RxString selectedTimeSpan = 'Today'.obs;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    await ApiClient.getOrderAccToParam('Today');
+  }
+
   Future<List> getOrderList(String selTimeSpan) async {
     await Future.delayed(Duration(seconds: 2));
     return [

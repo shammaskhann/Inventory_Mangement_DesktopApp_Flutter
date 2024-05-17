@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItems.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../../../constant/theme/app_themes.dart';
 
 SidebarXTheme sidebarXTheme() {
+  double fontSize = Get.width * 0.008; //thats equal to 14
+  double iconSize = Get.width * 0.015; //thats equal to 24
   return SidebarXTheme(
     width: Get.width * 0.12, // Extended width
     height: double.infinity,
@@ -13,21 +16,21 @@ SidebarXTheme sidebarXTheme() {
     decoration: BoxDecoration(
       color: Colors.grey[900], // Dark background color
     ),
-    iconTheme: const IconThemeData(
+    iconTheme: IconThemeData(
       color: Colors.white, // Light icon color
-      size: 24,
+      size: iconSize,
     ),
-    selectedIconTheme: const IconThemeData(
+    selectedIconTheme: IconThemeData(
       color: AppTheme.selectedIconClr,
-      size: 24,
+      size: iconSize,
     ),
-    textStyle: const TextStyle(
+    textStyle: TextStyle(
       color: Colors.white, // Light text color
-      fontSize: 14,
+      fontSize: fontSize,
     ),
-    selectedTextStyle: const TextStyle(
+    selectedTextStyle: TextStyle(
       color: AppTheme.selectedIconClr,
-      fontSize: 14,
+      fontSize: fontSize,
       fontWeight: FontWeight.bold,
     ),
     itemDecoration: BoxDecoration(
@@ -44,13 +47,13 @@ SidebarXTheme sidebarXTheme() {
     itemTextPadding: const EdgeInsets.all(10),
     selectedItemTextPadding: const EdgeInsets.all(10),
     hoverColor: Colors.grey[700], // Darker hover color
-    hoverTextStyle: const TextStyle(
+    hoverTextStyle: TextStyle(
       color: Colors.white, // Light hover text color
-      fontSize: 14,
+      fontSize: fontSize,
     ),
-    hoverIconTheme: const IconThemeData(
+    hoverIconTheme: IconThemeData(
       color: Colors.white, // Light hover icon color
-      size: 24,
+      size: iconSize,
     ),
   );
 }

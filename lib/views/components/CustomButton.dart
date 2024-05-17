@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 
 class CustomButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 50,
-        width: 200,
+        width: Get.width * 0.13,
         decoration: BoxDecoration(
           color: AppTheme.grasGreenClr,
           borderRadius: BorderRadius.circular(10),

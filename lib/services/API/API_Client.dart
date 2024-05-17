@@ -8,11 +8,11 @@ class ApiClient {
     try {
       final Uri url = Uri.parse(
           "${ApiConstant.baseUrl}${ApiConstant.tagGetNoOfOrdersToday}");
-      log("Getting Today's Sales: $url");
+      //  log("Getting Today's Sales: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Today's Sales: $response");
+        // log("Today's Sales: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -27,11 +27,11 @@ class ApiClient {
     try {
       final Uri url = Uri.parse(
           "${ApiConstant.baseUrl}${ApiConstant.tagGetTotalSalesToday}");
-      log("Getting Today's Sales: $url");
+      // log("Getting Today's Sales: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Today's Sales: $response");
+        // log("Today's Sales: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -46,11 +46,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.tagGetTotalRevenue}");
-      log("Getting Total Revenue: $url");
+      // log("Getting Total Revenue: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Total Revenue: $response");
+        //  log("Total Revenue: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -65,14 +65,14 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.tagGetTotalProducts}");
-      log("Getting Total Products: $url");
+      //  log("Getting Total Products: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
         log("Total Products: $response");
         return response;
       } else {
-        log("Error: ${result.body}");
+        //log("Error: ${result.body}");
         return null;
       }
     } catch (e) {
@@ -84,11 +84,11 @@ class ApiClient {
     try {
       final Uri url = Uri.parse(
           "${ApiConstant.baseUrl}${ApiConstant.tagGetTotalOrderPastWeek}");
-      log("Getting Total Products Past Week: $url");
+      //  log("Getting Total Products Past Week: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Total Products Past Week: $response");
+        // log("Total Products Past Week: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -103,11 +103,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.graphPastWeekOrders}");
-      log("Getting Graph Past Week Order: $url");
+      // log("Getting Graph Past Week Order: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Graph Past Week Order: $response");
+        // log("Graph Past Week Order: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -122,11 +122,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.top5SellingProducts}");
-      log("Getting Top 5 Selling Products: $url");
+      //log("Getting Top 5 Selling Products: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Top 5 Selling Products: $response");
+        // log("Top 5 Selling Products: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -141,11 +141,30 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.topVendorPieChart}");
-      log("Getting Top Vendor Pie Chart: $url");
+      //log("Getting Top Vendor Pie Chart: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Top Vendor Pie Chart: $response");
+        //log("Top Vendor Pie Chart: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getOrderAccToParam(String Period) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getOrderAccToParam}/$Period");
+      log("Getting Order According to Param: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Order According to Param: $response");
         return response;
       } else {
         log("Error: ${result.body}");

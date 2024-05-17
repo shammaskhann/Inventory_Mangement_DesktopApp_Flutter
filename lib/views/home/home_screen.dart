@@ -22,19 +22,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<VendorData> data = [
-      VendorData('Apple', 30.7692307692308),
-      VendorData('Samsung', 23.0769230769231),
-      VendorData('Sony', 23.0769230769231),
-      VendorData('Google', 15.3846153846154),
-      VendorData('Amazon', 7.69230769230769),
-    ];
     HomeController homeScreenController = Get.put(HomeController());
     return Scaffold(
       backgroundColor: AppTheme.darkThemeBackgroudClr,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(right: 90.0, left: 30, top: 30),
+          padding: const EdgeInsets.only(right: 0.0, left: 30, top: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -200,10 +193,13 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                   ),
+                  const SizedBox(
+                    width: 20,
+                  ),
                 ],
               ),
               const SizedBox(
-                height: 30,
+                height: 0,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -219,7 +215,7 @@ class HomeScreen extends StatelessWidget {
                           width: Get.width * 0.5,
                           decoration:
                               const BoxDecoration(color: AppTheme.secondaryClr),
-                          child: const Padding(
+                          child: Padding(
                             padding:
                                 EdgeInsets.only(top: 10, bottom: 10, left: 10),
                             child: Row(children: [
@@ -227,7 +223,7 @@ class HomeScreen extends StatelessWidget {
                                 '   TOP SELLING PRODUCTS',
                                 style: TextStyle(
                                     color: AppTheme.whiteselClr,
-                                    fontSize: 20,
+                                    fontSize: Get.width * 0.01,
                                     fontWeight: FontWeight.bold),
                               ),
                               Spacer(),
@@ -282,10 +278,11 @@ class HomeScreen extends StatelessWidget {
                                                   child: Text(
                                                     snapshot.data![index].SKU
                                                         .toString(),
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       color:
                                                           AppTheme.whiteselClr,
-                                                      fontSize: 18,
+                                                      fontSize:
+                                                          Get.width * 0.01,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -297,10 +294,11 @@ class HomeScreen extends StatelessWidget {
                                                   child: Text(
                                                     snapshot.data![index]
                                                         .productName,
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       color:
                                                           AppTheme.whiteselClr,
-                                                      fontSize: 18,
+                                                      fontSize:
+                                                          Get.width * 0.01,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -312,10 +310,11 @@ class HomeScreen extends StatelessWidget {
                                                   child: Text(
                                                     snapshot.data![index]
                                                         .vendorName,
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       color:
                                                           AppTheme.whiteselClr,
-                                                      fontSize: 18,
+                                                      fontSize:
+                                                          Get.width * 0.01,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -327,10 +326,11 @@ class HomeScreen extends StatelessWidget {
                                                   child: Text(
                                                     snapshot
                                                         .data![index].category,
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       color:
                                                           AppTheme.whiteselClr,
-                                                      fontSize: 18,
+                                                      fontSize:
+                                                          Get.width * 0.01,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -343,10 +343,11 @@ class HomeScreen extends StatelessWidget {
                                                     snapshot.data![index]
                                                         .quantitySold
                                                         .toString(),
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       color:
                                                           AppTheme.whiteselClr,
-                                                      fontSize: 18,
+                                                      fontSize:
+                                                          Get.width * 0.01,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -369,9 +370,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      const Text('Top Suppliers',
+                      Text('Top Suppliers',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: Get.width * 0.011,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.whiteselClr)),
                       // VendorProductChart(

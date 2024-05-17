@@ -25,54 +25,59 @@ class CustomerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final text16Font = width * 0.01;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
-            width: 65,
+          SizedBox(
+            width: width * 0.01,
           ),
           SizedBox(
-            width: width * 0.1,
+            width: width * 0.07,
             child: Text(
               orderId,
-              style: const TextStyle(
+              style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: text16Font,
                   fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
             width: width * 0.1,
             child: Text(
               customer,
-              style: const TextStyle(
+              style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: text16Font,
                   fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
             width: width * 0.1,
             child: Text(
               product,
-              style: const TextStyle(
+              style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: text16Font,
                   fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
             width: width * 0.1,
             child: Text(
               date,
-              style: const TextStyle(
+              style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: text16Font,
                   fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
@@ -83,46 +88,55 @@ class CustomerWidget extends StatelessWidget {
                   color: (status == 'Delivered')
                       ? Colors.greenAccent
                       : Colors.yellowAccent,
-                  fontSize: 16,
+                  fontSize: text16Font,
                   fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
             width: width * 0.1,
             child: Text(
               channel,
-              style: const TextStyle(
+              style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: text16Font,
                   fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
             width: width * 0.1,
             child: Text(
               total,
-              style: const TextStyle(
+              style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: text16Font,
                   fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
             ),
           ),
+          const Spacer(),
           Row(
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(
+                icon: Icon(
                   Icons.edit,
                   color: AppTheme.whiteselClr,
+                  size: width * 0.012,
                 ),
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(
+                icon: Icon(
                   Icons.delete,
                   color: AppTheme.whiteselClr,
+                  size: width * 0.012,
                 ),
               ),
+              SizedBox(
+                width: width * 0.005,
+              )
             ],
           )
         ],

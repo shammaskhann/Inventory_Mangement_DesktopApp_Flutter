@@ -17,4 +17,6 @@ class AppIcons {
   static const String totalProductIcon = 'assets/icons/totalProduts.png';
   static const String todaySalesIon = 'assets/icons/todaySalesIon.png';
   static const String revenueIcon = 'assets/icons/revenue.png';
+  static const String trackingIcon = 'assets/icons/tracking.png';
+  static const String payableAmountIcon = 'assets/icons/payableAmount.png';
 }

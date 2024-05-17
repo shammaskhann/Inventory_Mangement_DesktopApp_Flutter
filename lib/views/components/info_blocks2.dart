@@ -20,7 +20,7 @@ class InfoBlock2 extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: Container(
-        height: Get.height * 0.08,
+        height: Get.height * 0.1,
         width: Get.width * 0.1,
         decoration: BoxDecoration(
           color: AppTheme.lightGreyClr.withOpacity(0.1),
@@ -33,31 +33,32 @@ class InfoBlock2 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title,
-                  style: const TextStyle(
-                      fontSize: 14,
+                  style: TextStyle(
+                      fontSize: Get.height * 0.015,
                       fontWeight: FontWeight.w400,
                       color: AppTheme.whiteselClr)),
-              const Divider(
+              Divider(
                 color: AppTheme.lightGreyClr,
-                endIndent: 40,
+                endIndent: Get.width * 0.01,
               ),
               Row(
                 children: [
                   const SizedBox(width: 5),
                   Text(value.toString(),
-                      style: const TextStyle(
-                          fontSize: 18,
+                      style: TextStyle(
+                          fontSize: Get.height * 0.02,
                           fontWeight: FontWeight.bold,
                           color: AppTheme.whiteselClr)),
                   const SizedBox(width: 5),
                   if (isGreaterThanLastWeek) ...[
-                    const Icon(
+                    Icon(
                       Icons.arrow_drop_up,
                       color: AppTheme.grasGreenClr,
+                      size: Get.height * 0.02,
                     ),
                     Text('${percValue!.toStringAsFixed(2)}%',
-                        style: const TextStyle(
-                            fontSize: 14,
+                        style: TextStyle(
+                            fontSize: Get.height * 0.015,
                             fontWeight: FontWeight.bold,
                             color: AppTheme.grasGreenClr)),
                   ],

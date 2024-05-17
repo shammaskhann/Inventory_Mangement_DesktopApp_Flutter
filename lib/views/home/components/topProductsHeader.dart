@@ -12,11 +12,11 @@ class TopProductHeader extends StatelessWidget {
       children: [
         SizedBox(
           width: Get.width * 0.07,
-          child: const Text(
+          child: Text(
             'SKU',
             style: TextStyle(
               color: AppTheme.whiteselClr,
-              fontSize: 18,
+              fontSize: Get.width * 0.01,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -24,11 +24,11 @@ class TopProductHeader extends StatelessWidget {
         ),
         SizedBox(
           width: Get.width * 0.1,
-          child: const Text(
+          child: Text(
             'Product Name',
             style: TextStyle(
               color: AppTheme.whiteselClr,
-              fontSize: 18,
+              fontSize: Get.width * 0.01,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -36,11 +36,11 @@ class TopProductHeader extends StatelessWidget {
         ),
         SizedBox(
           width: Get.width * 0.1,
-          child: const Text(
+          child: Text(
             'Vendor Name',
             style: TextStyle(
               color: AppTheme.whiteselClr,
-              fontSize: 18,
+              fontSize: Get.width * 0.01,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -48,11 +48,11 @@ class TopProductHeader extends StatelessWidget {
         ),
         SizedBox(
           width: Get.width * 0.1,
-          child: const Text(
+          child: Text(
             'Category',
             style: TextStyle(
               color: AppTheme.whiteselClr,
-              fontSize: 18,
+              fontSize: Get.width * 0.01,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -60,11 +60,11 @@ class TopProductHeader extends StatelessWidget {
         ),
         SizedBox(
           width: Get.width * 0.07,
-          child: const Text(
+          child: Text(
             'Quantity Sold',
             style: TextStyle(
               color: AppTheme.whiteselClr,
-              fontSize: 18,
+              fontSize: Get.width * 0.01,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,

@@ -8,7 +8,7 @@ import '../../../constant/theme/app_themes.dart';
 Widget navBarHeader() {
   return Container(
     height: Get.height * 0.1,
-    child: const Center(
+    child: Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -23,22 +23,14 @@ Widget navBarHeader() {
           //   width: 5,
           // ),
           Text(
-            'Electro',
+            'Electro\nStock',
             style: TextStyle(
                 fontFamily: 'NicoMoji',
                 color: AppTheme.grasGreenClr,
-                fontSize: 22,
+                fontSize: Get.width * 0.013,
                 fontWeight: FontWeight.w300,
                 letterSpacing: 1.5),
-          ),
-          Text(
-            'Stock',
-            style: TextStyle(
-                fontFamily: 'NicoMoji',
-                color: AppTheme.oliverGreenClr,
-                fontSize: 22,
-                fontWeight: FontWeight.w300,
-                letterSpacing: 1.5),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

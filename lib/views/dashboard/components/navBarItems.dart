@@ -6,7 +6,7 @@ import 'package:sidebarx/sidebarx.dart';
 import '../../../constant/icons/app_icons.dart';
 import '../../../constant/theme/app_themes.dart';
 
-const double iconSize = 24;
+double iconSize = Get.width * 0.015;
 DashboardController dashboardController = Get.find();
 List<SidebarXItem> navBarItems = [
   SidebarXItem(
@@ -189,7 +189,7 @@ List<SidebarXItem> navBarItems = [
     onTap: () {
       dashboardController.changeIndex(8);
     },
-    label: 'Marketing',
+    label: 'Invoices',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
@@ -211,7 +211,7 @@ List<SidebarXItem> navBarItems = [
     onTap: () {
       dashboardController.changeIndex(9);
     },
-    label: 'Marketing Campaigns',
+    label: 'Vendors',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
@@ -233,7 +233,7 @@ List<SidebarXItem> navBarItems = [
     onTap: () {
       dashboardController.changeIndex(10);
     },
-    label: 'Marketing Automation',
+    label: 'Shipment',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
