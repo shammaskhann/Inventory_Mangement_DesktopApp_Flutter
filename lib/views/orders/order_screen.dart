@@ -10,6 +10,7 @@ import 'package:shopify_admin_dashboard/views/components/tag_container.dart';
 import 'package:shopify_admin_dashboard/views/components/info_blocks2.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/customer_wdiget.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/orderlist_header.dart';
+import 'package:intl/intl.dart';
 import 'package:shopify_admin_dashboard/views/orders/controller/order_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -24,11 +25,12 @@ class OrderScreen extends StatelessWidget {
     OrderController orderController = Get.put(OrderController());
     return Container(
       color: AppTheme.darkThemeBackgroudClr,
-      width: Get.height * 0.88,
+      width: Get.width * 0.88,
       child: Padding(
         padding: const EdgeInsets.only(right: 30.0, left: 30, top: 30),
         child: ListView(
-          //crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -343,40 +345,58 @@ class OrderScreen extends StatelessWidget {
               ),
             ),
             const OrderListHeader(),
-            FutureBuilder(
-              future: orderController
-                  .getOrderList(orderController.selectedTimeSpan.value),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(
-                      height: Get.height * 0.2,
-                      child: const Center(child: LoadingIndicator()));
-                } else {
-                  return Container(
-                    decoration:
-                        const BoxDecoration(color: AppTheme.secondaryClr),
-                    child: ListView.builder(
+            Obx(
+              () => FutureBuilder(
+                future: orderController
+                    .getOrderList(orderController.selectedTimeSpan.value),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                        height: Get.height * 0.2,
+                        child: const Center(child: LoadingIndicator()));
+                  } else {
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
-                        return CustomerWidget(
-                          orderId: snapshot.data![index]['orderID'].toString(),
-                          customer: snapshot.data![index]['CustomerName'],
-                          product: snapshot.data![index]['Product'],
-                          date: snapshot.data![index]['OrderDate'],
-                          status: snapshot.data![index]['Status'],
-                          channel: snapshot.data![index]['Channel'],
-                          total: snapshot.data![index]['Total'].toString(),
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                color: AppTheme.secondaryClr),
+                            child: CustomerWidget(
+                              orderId:
+                                  snapshot.data![index]['OrderID'].toString(),
+                              customer: snapshot.data![index]['CustomerName'],
+                              product: snapshot.data![index]['ProductName'],
+                              date: formatDate(
+                                      snapshot.data![index]['OrderDate']) ??
+                                  'N/A',
+                              status: snapshot.data![index]['CurrentStatus'],
+                              channel: snapshot.data![index]
+                                  ['SalesChannelName'],
+                              total: snapshot.data![index]['PaymentAmount']
+                                  .toString(),
+                            ),
+                          ),
                         );
                       },
-                    ),
-                  );
-                }
-              },
-            ),
+                    );
+                  }
+                },
+              ),
+            )
           ],
         ),
       ),
     );
   }
+}
+
+String formatDate(String date) {
+  final DateTime parsedDate = DateTime.parse(date);
+  final DateFormat formatter = DateFormat('dd-MM-yyyy');
+  final String formattedDate = formatter.format(parsedDate);
+  return formattedDate;
 }

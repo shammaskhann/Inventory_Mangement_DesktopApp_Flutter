@@ -174,4 +174,137 @@ class ApiClient {
       log(e.toString());
     }
   }
+
+  static Future getCustomers() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getCustomers}");
+      log("Getting Customers: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Customers: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getInventory() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getInventory}");
+      log("Getting Inventory: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Inventory: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getSuppliers() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getSuppliers}");
+      log("Getting Suppliers: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Suppliers: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getShippers() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getShippers}");
+      log("Getting Shippers: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Shippers: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getSalesChannel() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getSalesChannel}");
+      log("Getting Sales Chart: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Sales Chart: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getInvoices() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getInvoices}");
+      log("Getting Invoices: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Invoices: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getPurchaseOrder() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getPurchaseOrder}");
+      log("Getting Purchase Order: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Purchase Order: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

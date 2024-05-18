@@ -1,9 +1,9 @@
 class ApiConstant {
-  static String baseUrl = 'http://192.168.18.123:3000'; //home
+  //static String baseUrl  = 'http://192.168.18.123:3000'; //home
   //  static String baseUrl = 'http://10.133.148.237:3000/'; //office
   // static String baseUrl = 'http://10.133.150.112:3000';
-  // static String baseUrl =
-  //     'https://rest-api-node-js-express-sql-server.vercel.app';
+  static String baseUrl =
+      'https://rest-api-node-js-express-sql-server.vercel.app';
   // static String customerApi = '/api/customers';
   static String checkDbConnection = '/api/db-connection-status';
 
@@ -18,4 +18,11 @@ class ApiConstant {
   static String top5SellingProducts = '/api/products//getTop5SellingProduct';
   static String topVendorPieChart = '/api/graph-charts/getTopVendorPieChart';
   static String getOrderAccToParam = '/api/orders/getOrderAccToParam';
+  static String getShippers = '/api/shippers/getShippers';
+  static String getSuppliers = '/api/suppliers/getSuppliers';
+  static String getPurchaseOrder = '/api/purchaseOrder/getPurchaseOrder';
+  static String getInventory = '/api/inventory/getInventory';
+  static String getSalesChannel = '/api/saleschannel/getSalesChannel';
+  static String getCustomers = '/api/customers/getCustomers';
+  static String getInvoices = '/api/invoices/getInvoices';
 }

@@ -25,7 +25,7 @@ class CustomerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final text16Font = width * 0.01;
+    final text16Font = width * 0.009;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
       child: Row(
@@ -87,7 +87,9 @@ class CustomerWidget extends StatelessWidget {
               style: TextStyle(
                   color: (status == 'Delivered')
                       ? Colors.greenAccent
-                      : Colors.yellowAccent,
+                      : (status == 'Out for Delivery')
+                          ? Colors.blueAccent
+                          : Colors.yellowAccent,
                   fontSize: text16Font,
                   fontWeight: FontWeight.w400),
               textAlign: TextAlign.center,

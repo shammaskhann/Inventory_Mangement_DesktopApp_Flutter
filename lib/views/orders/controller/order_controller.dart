@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/data/models/graphmodels/PastWeekOrders.dart';
+import 'package:shopify_admin_dashboard/data/models/orders/order_model.dart';
 import 'package:shopify_admin_dashboard/services/API/API_Client.dart';
 import 'package:intl/intl.dart';
 
@@ -18,45 +19,12 @@ class OrderController extends GetxController {
   }
 
   Future<List> getOrderList(String selTimeSpan) async {
-    await Future.delayed(Duration(seconds: 2));
-    return [
-      {
-        'orderID': 1001,
-        'CustomerName': 'John Doe',
-        'Product': 'Laptop',
-        'OrderDate': '2021-09-01',
-        'Status': 'Delivered',
-        'Channel': 'Online',
-        'Total': 899.99
-      },
-      {
-        'orderID': 1002,
-        'CustomerName': 'Jane Doe',
-        'Product': 'Mobile',
-        'OrderDate': '2021-09-02',
-        'Status': 'Pending',
-        'Channel': 'Offline',
-        'Total': 499.99
-      },
-      {
-        'orderID': 1003,
-        'CustomerName': 'John Doe',
-        'Product': 'Tablet',
-        'OrderDate': '2021-09-03',
-        'Status': 'Delivered',
-        'Channel': 'Online',
-        'Total': 299.99
-      },
-      {
-        'orderID': 1004,
-        'CustomerName': 'Jane Doe',
-        'Product': 'Laptop',
-        'OrderDate': '2021-09-04',
-        'Status': 'Pending',
-        'Channel': 'Offline',
-        'Total': 899.99
-      },
-    ];
+    final result = await ApiClient.getOrderAccToParam(selTimeSpan);
+    // List<OrderView> orderList = [];
+    // result.forEach((element) {
+    //   orderList.add(OrderView.fromJson(element));
+    // });
+    return result;
   }
 
   Future getTodayOrders() async {

@@ -74,28 +74,6 @@ List<SidebarXItem> navBarItems = [
             );
     },
   ),
-  //product
-  SidebarXItem(
-    onTap: () {
-      dashboardController.changeIndex(3);
-    },
-    label: 'Products',
-    iconBuilder: (selected, hovered) {
-      return selected
-          ? Image.asset(
-              AppIcons.productIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.selectedIconClr,
-            )
-          : Image.asset(
-              AppIcons.productIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
-    },
-  ),
   //purchase order
   SidebarXItem(
     onTap: () {
@@ -233,7 +211,7 @@ List<SidebarXItem> navBarItems = [
     onTap: () {
       dashboardController.changeIndex(10);
     },
-    label: 'Shipment',
+    label: 'Shippers',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
