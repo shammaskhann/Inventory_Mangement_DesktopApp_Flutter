@@ -15,14 +15,29 @@ class ApiConstant {
   static String tagGetTotalOrderPastWeek =
       '/api/smalltaginfo/getOrderCountPastWeek';
   static String graphPastWeekOrders = '/api/graph-charts/getPastWeekOrder';
-  static String top5SellingProducts = '/api/products//getTop5SellingProduct';
+
   static String topVendorPieChart = '/api/graph-charts/getTopVendorPieChart';
-  static String getOrderAccToParam = '/api/orders/getOrderAccToParam';
+
   static String getShippers = '/api/shippers/getShippers';
   static String getSuppliers = '/api/suppliers/getSuppliers';
   static String getPurchaseOrder = '/api/purchaseOrder/getPurchaseOrder';
-  static String getInventory = '/api/inventory/getInventory';
+
   static String getSalesChannel = '/api/saleschannel/getSalesChannel';
   static String getCustomers = '/api/customers/getCustomers';
   static String getInvoices = '/api/invoices/getInvoices';
+  //Product
+  static String postCustomer = '/api/customers/addCustomer';
+  static String top5SellingProducts = '/api/products//getTop5SellingProduct';
+  static String getInventory = '/api/inventory/getInventory';
+
+//Orders
+  static String postOrder = '/api/orders/insertOrder';
+  static String getOrderAccToParam = '/api/orders/getOrderAccToParam';
+  //dropDowns
+  static String shipperDropDown = '/api/dropdown/getShipperDropDown';
+  static String customerDropDown = '/api/dropdown/getCustomerDropDown';
+  static String discountDropDown = '/api/dropdown/getDiscountCodeDropDown';
+  static String giftCardDropDown = '/api/dropdown/getGiftCardDropDown';
+  static String productDropDown = '/api/dropdown/getProductsDropDown';
+  static String saleChannelDropDown = '/api/dropdown/getSalesChannelDropDown';
 }

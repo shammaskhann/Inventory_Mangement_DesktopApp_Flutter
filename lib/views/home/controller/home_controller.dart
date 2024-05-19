@@ -63,7 +63,7 @@ class HomeController extends GetxController {
     final res = await ApiClient.getTopSellingProducts();
     //add in TopSellingProductModel
     for (var item in res) {
-      log(item.toString());
+      //log(item.toString());
       topSellingProducts.add(TopSellingProductModel(
           SKU: item['SKU'],
           productName: item['Name'],
@@ -71,7 +71,7 @@ class HomeController extends GetxController {
           category: item['CategoryName'],
           quantitySold: item['TotalQuantitySold']));
     }
-    log(topSellingProducts.toString());
+    //log(topSellingProducts.toString());
     return topSellingProducts;
   }
 
@@ -81,11 +81,11 @@ class HomeController extends GetxController {
     final res = await ApiClient.getTopVendorPieChart();
     //add in VendorData
     for (var item in res) {
-      log(item.toString());
+      //log(item.toString());
       topVendorPieChart
           .add(VendorData(item['SupplierName'], item['Percentage']));
     }
-    log(topVendorPieChart.toString());
+    //log(topVendorPieChart.toString());
     return topVendorPieChart;
   }
 }

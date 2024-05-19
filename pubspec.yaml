@@ -44,6 +44,7 @@ dependencies:
   syncfusion_flutter_charts: ^25.1.42+1
   shimmer: ^3.0.0
   dropdown_button2: ^2.3.9
+  mask_text_input_formatter: ^2.9.0
 
 dev_dependencies:
   flutter_test:

@@ -160,11 +160,11 @@ class ApiClient {
     try {
       final Uri url = Uri.parse(
           "${ApiConstant.baseUrl}${ApiConstant.getOrderAccToParam}/$Period");
-      log("Getting Order According to Param: $url");
+      //log("Getting Order According to Param: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Order According to Param: $response");
+        //log("Order According to Param: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -179,11 +179,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getCustomers}");
-      log("Getting Customers: $url");
+      //log("Getting Customers: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Customers: $response");
+        //log("Customers: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -198,11 +198,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getInventory}");
-      log("Getting Inventory: $url");
+      //log("Getting Inventory: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Inventory: $response");
+        //log("Inventory: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -217,11 +217,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getSuppliers}");
-      log("Getting Suppliers: $url");
+      //log("Getting Suppliers: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Suppliers: $response");
+        //log("Suppliers: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -236,11 +236,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getShippers}");
-      log("Getting Shippers: $url");
+      //log("Getting Shippers: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Shippers: $response");
+        //log("Shippers: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -255,11 +255,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getSalesChannel}");
-      log("Getting Sales Chart: $url");
+      //log("Getting Sales Chart: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Sales Chart: $response");
+        //log("Sales Chart: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -274,11 +274,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getInvoices}");
-      log("Getting Invoices: $url");
+      //log("Getting Invoices: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Invoices: $response");
+        //log("Invoices: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -293,11 +293,225 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getPurchaseOrder}");
-      log("Getting Purchase Order: $url");
+      //log("Getting Purchase Order: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Purchase Order: $response");
+        //log("Purchase Order: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future postCustomer(
+      {required String name,
+      required String email,
+      required String address,
+      required String phone}) async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postCustomer}");
+      //log("Posting Customer: $url");
+      final result = await http.post(
+        url,
+        body: jsonEncode({
+          "customerName": name,
+          "customerEmail": email,
+          "customerNum": phone,
+          "customerAddress": address,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Customer Posted: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getShipperDropDown() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.shipperDropDown}");
+      //log("Getting Shipper Drop Down: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Shipper Drop Down: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getCustomerDropDown() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.customerDropDown}");
+      //log("Getting Customer Drop Down: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Customer Drop Down: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getDiscountCodeDropDown() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.discountDropDown}");
+      //log("Getting Discount Code Drop Down: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Discount Code Drop Down: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getGiftCardDropDown() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.giftCardDropDown}");
+      //log("Getting Gift Card Drop Down: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Gift Card Drop Down: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getProductsDropDown() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.productDropDown}");
+      //log("Getting Product Drop Down: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Product Drop Down: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getSaleChannelDropDown() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.saleChannelDropDown}");
+      //log("Getting Sale Channel Drop Down: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Sale Channel Drop Down: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+// var products = [
+//     {'productID': 101, 'quantity': 2},
+//     {'productID': 102, 'quantity': 3},
+//     // Add more products as needed
+//   ];
+
+//   var body = jsonEncode({
+//     'orderDate': '2021-12-01', // Replace with actual data
+//     'customerID': 1, // Replace with actual data
+//     'discountCode': 'DISCOUNT10', // Replace with actual data
+//     'fulfillmentStatus': 'Fulfilled', // Replace with actual data
+//     'fulfilledDate': '2021-12-02', // Replace with actual data
+//     'salesChannelID': 1, // Replace with actual data
+//     'giftCard': 0, // Replace with actual data
+//     'paymentMethod': 'Credit Card', // Replace with actual data
+//     'paymentDate': '2021-12-01', // Replace with actual data
+//     'paymentStatus': 'Paid', // Replace with actual data
+//     'shipperID': 1, // Replace with actual data
+//     'products': products,
+//   });
+  static Future postOrder(
+      {required String orderDate,
+      required int customerID,
+      required String discountCode,
+      required String fulfillmentStatus,
+      required String fulfilledDate,
+      required int salesChannelID,
+      required int giftCard,
+      required String paymentMethod,
+      required String paymentDate,
+      required String paymentStatus,
+      required int shipperID,
+      required List<Map<String, dynamic>> products}) async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postOrder}");
+      //log("Posting Order: $url");
+      final result = await http.post(
+        url,
+        body: jsonEncode({
+          'orderDate': orderDate,
+          'customerID': customerID,
+          'discountCode': discountCode,
+          'fulfillmentStatus': fulfillmentStatus,
+          'fulfilledDate': fulfilledDate,
+          'salesChannelID': salesChannelID,
+          'giftCard': giftCard,
+          'paymentMethod': paymentMethod,
+          'paymentDate': paymentDate,
+          'paymentStatus': paymentStatus,
+          'shipperID': shipperID,
+          'products': products,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Order Posted: $response");
         return response;
       } else {
         log("Error: ${result.body}");

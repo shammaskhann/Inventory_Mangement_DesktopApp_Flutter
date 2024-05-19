@@ -82,18 +82,7 @@ class PurchaseOrderScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
-                    width: Get.width * 0.1,
-                    child: Text(
-                      'Destination',
-                      style: TextStyle(
-                        color: AppTheme.whiteselClr,
-                        fontSize: Get.width * 0.009,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+
                   SizedBox(
                     width: Get.width * 0.07,
                     child: Text(
@@ -195,17 +184,6 @@ class PurchaseOrderScreen extends StatelessWidget {
                                 width: Get.width * 0.1,
                                 child: Text(
                                   snapshot.data![index].supplierName,
-                                  style: TextStyle(
-                                    color: AppTheme.whiteselClr,
-                                    fontSize: Get.width * 0.009,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.1,
-                                child: Text(
-                                  snapshot.data![index].destination,
                                   style: TextStyle(
                                     color: AppTheme.whiteselClr,
                                     fontSize: Get.width * 0.009,

@@ -1,28 +1,33 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:shopify_admin_dashboard/data/models/graphmodels/PastWeekOrders.dart';
-import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
-import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
-import 'package:shopify_admin_dashboard/views/components/tag_container.dart';
-import 'package:shopify_admin_dashboard/views/components/info_blocks2.dart';
+import 'package:shopify_admin_dashboard/data/models/dropdowns/custommer_dropdown.dart';
+import 'package:shopify_admin_dashboard/data/models/dropdowns/giftcard_dropdown.dart';
+import 'package:shopify_admin_dashboard/data/models/dropdowns/product_dropdown.dart';
+import 'package:shopify_admin_dashboard/data/models/dropdowns/salechannel_dropdown.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/customer_wdiget.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/orderlist_header.dart';
-import 'package:intl/intl.dart';
-import 'package:shopify_admin_dashboard/views/orders/controller/order_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../constant/theme/app_themes.dart';
-import '../../data/models/graphmodels/SiteVisit.dart';
+import '../../data/models/dropdowns/discount_dropdown.dart';
+import '../../data/models/graphmodels/PastWeekOrders.dart';
+import '../../shared/loading_indicator.dart';
+import '../components/CustomButton.dart';
+import '../components/info_blocks2.dart';
+import '../components/tag_container.dart';
+import 'controller/order_controller.dart';
+import 'package:intl/intl.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    OrderController orderController = Get.put(OrderController());
+    final OrderController orderController = Get.put(OrderController());
     return Container(
       color: AppTheme.darkThemeBackgroudClr,
       width: Get.width * 0.88,
@@ -71,7 +76,9 @@ class OrderScreen extends StatelessWidget {
                     color: AppTheme.whiteselClr,
                     size: 17,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    showAddOrderDialog(context, orderController);
+                  },
                 ),
               ],
             ),
@@ -368,16 +375,32 @@ class OrderScreen extends StatelessWidget {
                             child: CustomerWidget(
                               orderId:
                                   snapshot.data![index]['OrderID'].toString(),
-                              customer: snapshot.data![index]['CustomerName'],
-                              product: snapshot.data![index]['ProductName'],
+                              customer:
+                                  snapshot.data![index]['Customer'] ?? 'N/A',
+                              product: snapshot.data![index]['Product'],
                               date: formatDate(
                                       snapshot.data![index]['OrderDate']) ??
                                   'N/A',
-                              status: snapshot.data![index]['CurrentStatus'],
-                              channel: snapshot.data![index]
-                                  ['SalesChannelName'],
-                              total: snapshot.data![index]['PaymentAmount']
+                              status: snapshot.data![index]
+                                  ['FulfillmentStatus'],
+                              channel: snapshot.data![index]['ChannelName'],
+                              total: snapshot.data![index]['Total'].toString(),
+                              subTotal:
+                                  snapshot.data![index]['SubTotal'].toString(),
+                              shipping:
+                                  snapshot.data![index]['Shipping'].toString(),
+                              discountAmount: snapshot.data![index]
+                                      ['DiscountAmount']
                                   .toString(),
+                              giftCard: snapshot.data![index]['GiftCard']
+                                      .toString() ??
+                                  'N/A',
+                              disountCode: snapshot.data![index]
+                                  ['DiscountCode'],
+                              paymentStatus: snapshot.data![index]
+                                  ['PaymentStatus'],
+                              quantity:
+                                  snapshot.data![index]['quantity'].toString(),
                             ),
                           ),
                         );
@@ -388,6 +411,399 @@ class OrderScreen extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  void showAddOrderDialog(BuildContext context, OrderController controller) {
+    Get.dialog(
+      Dialog(
+        elevation: 1,
+        backgroundColor: Colors.white,
+        child: Container(
+          width: Get.width * 0.4,
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Center(
+                  child: Text(
+                    'Add Order',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                //Select Customer DropDown through Name and save the id in controller rxint selectedCustomerID
+
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Obx(
+                      () => DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          focusColor: Colors.transparent,
+
+                          value: controller.selectedCustomerID.value == 0
+                              ? null
+                              : controller.selectedCustomerID.value
+                                  .toString(), //
+                          //     controller.selectedCustomerID.value.toString() ?? null,
+                          isExpanded: true,
+                          hint: const Text('Select Customer'),
+                          items: controller.customerDropDown
+                              .map((CustomerDropDown item) =>
+                                  DropdownMenuItem<String>(
+                                    value: item.customerID.toString(),
+                                    child: Text(item.name.toString()),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              log('Selected Customer ID: $value');
+                              controller.selectedCustomerID.value =
+                                  int.parse(value);
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                TextFormField(
+                  controller: controller.orderDateController,
+                  decoration: const InputDecoration(
+                    labelText: 'Order Date',
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the order date';
+                    }
+                    return null;
+                  },
+                  onTap: () async {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    final DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2025),
+                    );
+                    if (picked != null) {
+                      if (picked.isAfter(DateTime.now())) {
+                        //dont pick the date
+                        Get.snackbar(
+                            'Error', 'Order date cannot be in the future',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.redAccent);
+                      } else {
+                        controller.orderDateController.text =
+                            DateFormat('yyyy-MM-dd').format(picked);
+                      }
+                    }
+                    ;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Obx(
+                      () => DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          focusColor: Colors.transparent,
+                          value: controller.selectedDiscountID.value == ''
+                              ? null
+                              : controller.selectedDiscountID.value.toString(),
+                          isExpanded: true,
+                          hint: const Text('Select Discount Code'),
+                          items: controller.discountDropDown
+                              .map((DiscountDropDown item) =>
+                                  DropdownMenuItem<String>(
+                                    value: item.discountCode,
+                                    child: Text(item.discountCode.toString()),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              controller.selectedDiscountID.value = value;
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                //dropdown
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Obx(
+                      () => DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          focusColor: Colors.transparent,
+                          value: controller.fulfillmentStatusController.value ==
+                                  ''
+                              ? null
+                              : controller.fulfillmentStatusController.value,
+                          isExpanded: true,
+                          hint: const Text('Select Fulfillment Status'),
+                          items: ['Processing', 'Shipped', 'Cancelled']
+                              .map((String item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(item),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              controller.fulfillmentStatusController.value =
+                                  value;
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Obx(
+                      () => DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          focusColor: Colors.transparent,
+                          value: controller.selectedSalesChannelID.value == 0
+                              ? null
+                              : controller.selectedSalesChannelID.value
+                                  .toString(),
+                          isExpanded: true,
+                          hint: const Text('Select Sales Channel'),
+                          items: controller.salesChannelDropDown
+                              .map((SalesChannelDropDown item) =>
+                                  DropdownMenuItem<String>(
+                                    value: item.channelId.toString(),
+                                    child: Text(item.name.toString()),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              controller.selectedSalesChannelID.value =
+                                  int.parse(value);
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Obx(
+                      () => DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          focusColor: Colors.transparent,
+                          value: controller.selectedGiftCardID.value == 0
+                              ? null
+                              : controller.selectedGiftCardID.value.toString(),
+                          isExpanded: true,
+                          hint: const Text('Select Gift Card'),
+                          items: controller.giftCardDropDown
+                              .map((GiftCardDropDown item) =>
+                                  DropdownMenuItem<String>(
+                                    value: item.giftCardNumber.toString(),
+                                    child: Text(item.giftCardNumber.toString()),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              controller.selectedGiftCardID.value =
+                                  int.parse(value);
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                //dropdown
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Obx(
+                      () => DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          focusColor: Colors.transparent,
+                          value: controller.paymentMethodController.value == ''
+                              ? null
+                              : controller.paymentMethodController.value,
+                          isExpanded: true,
+                          hint: const Text('Select Payment Method'),
+                          items: [
+                            'Credit Card',
+                            'Debit Card',
+                            'Easy Paisa',
+                            'Cash on Delivery',
+                            'Bank Transfer'
+                          ]
+                              .map((String item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(item),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              controller.paymentMethodController.value = value;
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                TextFormField(
+                  controller: controller.paymentDateController,
+                  decoration: const InputDecoration(
+                    labelText: 'Payment Date',
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the payment date';
+                    }
+                    return null;
+                  },
+                  onTap: () async {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    final DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2025),
+                    );
+                    if (picked != null) {
+                      if (picked.isBefore(DateTime.now())) {
+                        //dont pick the date
+                        Get.snackbar(
+                            'Error', 'Payment date cannot be in the future',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.redAccent);
+                      } else {
+                        controller.paymentDateController.text =
+                            DateFormat('yyyy-MM-dd').format(picked);
+                      }
+                    }
+                    ;
+                  },
+                ),
+
+                const SizedBox(
+                  height: 10,
+                ),
+                //prouct dropdown
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Obx(
+                      () => DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          focusColor: Colors.transparent,
+                          value: controller.selectedProductID.value == 0
+                              ? null
+                              : controller.selectedProductID.value.toString(),
+                          isExpanded: true,
+                          hint: const Text('Select Product'),
+                          items: controller.productDropDown
+                              .map((ProductDropDown item) =>
+                                  DropdownMenuItem<String>(
+                                    value: item.sku.toString(),
+                                    child: Text(item.name.toString()),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              controller.selectedProductID.value =
+                                  int.parse(value);
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.remove),
+                      onPressed: () {
+                        controller.decrement();
+                      },
+                    ),
+                    Obx(
+                      () => Text(controller.quantity.value.toString()),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        controller.increment();
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                CustomButton(
+                  onTap: () {},
+                  title: 'Add Order',
+                  icon: const SizedBox(),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

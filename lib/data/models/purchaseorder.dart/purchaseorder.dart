@@ -1,7 +1,6 @@
 class PurchaseOrder {
   final int purchaseOrderID;
   final String supplierName;
-  final String destination;
   final String status;
   final String product;
   final int orderedQuantity;
@@ -11,7 +10,6 @@ class PurchaseOrder {
   PurchaseOrder({
     required this.purchaseOrderID,
     required this.supplierName,
-    required this.destination,
     required this.status,
     required this.product,
     required this.orderedQuantity,
@@ -23,7 +21,6 @@ class PurchaseOrder {
     return PurchaseOrder(
       purchaseOrderID: json['PurchaseOrderID'],
       supplierName: json['SupplierName'],
-      destination: json['Destination'],
       status: json['Status'],
       product: json['Product'],
       orderedQuantity: json['orderedQuantity'],
@@ -36,7 +33,6 @@ class PurchaseOrder {
     return {
       'PurchaseOrderID': purchaseOrderID,
       'SupplierName': supplierName,
-      'Destination': destination,
       'Status': status,
       'Product': product,
       'orderedQuantity': orderedQuantity,

@@ -17,54 +17,51 @@ class OrderListHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: width * 0.01,
+            width: width * 0.05,
+            child: Text(
+              'OrderID',
+              style: TextStyle(
+                  color: AppTheme.whiteselClr,
+                  fontSize: width * 0.009,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(
             width: width * 0.07,
-            child: const Text(
-              'Order ID',
-              style: TextStyle(
-                  color: AppTheme.whiteselClr,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: width * 0.1,
-            child: const Text(
+            child: Text(
               'Customer',
               style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: width * 0.009,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-            width: width * 0.1,
-            child: const Text(
+            width: width * 0.11,
+            child: Text(
               'Product',
               style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: width * 0.009,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-            width: width * 0.1,
-            child: const Text(
-              'Date',
+            width: width * 0.05,
+            child: Text(
+              'OrderDate',
               style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: width * 0.009,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-            width: width * 0.1,
+            width: width * 0.07,
             child: const Text(
               'Status',
               style: TextStyle(
@@ -86,12 +83,67 @@ class OrderListHeader extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: width * 0.1,
-            child: const Text(
+            width: width * 0.05,
+            child: Text(
+              'Discount Code',
+              style: TextStyle(
+                  color: AppTheme.whiteselClr,
+                  fontSize: width * 0.009,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            width: width * 0.05,
+            child: Text(
+              'GiftCard',
+              style: TextStyle(
+                  color: AppTheme.whiteselClr,
+                  fontSize: width * 0.009,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            width: width * 0.05,
+            child: Text(
+              'Sub-Total',
+              style: TextStyle(
+                  color: AppTheme.whiteselClr,
+                  fontSize: width * 0.009,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            width: width * 0.05,
+            child: Text(
+              'Shipping',
+              style: TextStyle(
+                  color: AppTheme.whiteselClr,
+                  fontSize: width * 0.009,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            width: width * 0.05,
+            child: Text(
               'Total',
               style: TextStyle(
                   color: AppTheme.whiteselClr,
-                  fontSize: 16,
+                  fontSize: width * 0.009,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            width: width * 0.05,
+            child: Text(
+              'Payment Status',
+              style: TextStyle(
+                  color: AppTheme.whiteselClr,
+                  fontSize: width * 0.009,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),

@@ -13,6 +13,7 @@ import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItems.d
 import 'package:shopify_admin_dashboard/views/dashboard/controller/dashboard_controller.dart';
 import 'package:shopify_admin_dashboard/views/home/home_screen.dart';
 import 'package:shopify_admin_dashboard/views/inventory/inventory_screen.dart';
+import 'package:shopify_admin_dashboard/views/orders/controller/order_controller.dart';
 import 'package:shopify_admin_dashboard/views/orders/order_screen.dart';
 import 'package:shopify_admin_dashboard/views/purchase%20order/purchase_order_screen.dart';
 import 'package:shopify_admin_dashboard/views/sales_channel/saleschaneel_screen.dart';
@@ -26,7 +27,6 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DashboardController dashboardController = Get.put(DashboardController());
-
     return Scaffold(
         backgroundColor: AppTheme.darkThemeBackgroudClr,
         body: Row(
@@ -49,19 +49,19 @@ class DashboardScreen extends StatelessWidget {
                     return const OrderScreen();
                   case 2:
                     return const InventoryScreen();
-                  case 4:
+                  case 3:
                     return const PurchaseOrderScreen();
-                  case 5:
+                  case 4:
                     return const SupplierScreen();
-                  case 6:
+                  case 5:
                     return const SalesChannelScreen();
-                  case 7:
+                  case 6:
                     return const CustomerScreen();
-                  case 8:
+                  case 7:
                     return const InvoiceScreen();
-                  case 9:
+                  case 8:
                     return const LoadingIndicator();
-                  case 10:
+                  case 9:
                     return const ShipperScreen();
 
                   default:

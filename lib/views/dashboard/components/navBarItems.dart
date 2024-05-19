@@ -77,7 +77,7 @@ List<SidebarXItem> navBarItems = [
   //purchase order
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(4);
+      dashboardController.changeIndex(3);
     },
     label: 'Purchase Orders',
     iconBuilder: (selected, hovered) {
@@ -99,7 +99,7 @@ List<SidebarXItem> navBarItems = [
   //abondened cart
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(5);
+      dashboardController.changeIndex(4);
     },
     label: 'Vendors',
     iconBuilder: (selected, hovered) {
@@ -121,7 +121,7 @@ List<SidebarXItem> navBarItems = [
   //sale channel
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(6);
+      dashboardController.changeIndex(5);
     },
     label: 'Sale Channels',
     iconBuilder: (selected, hovered) {
@@ -143,7 +143,7 @@ List<SidebarXItem> navBarItems = [
   //customer
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(7);
+      dashboardController.changeIndex(6);
     },
     label: 'Customers',
     iconBuilder: (selected, hovered) {
@@ -165,7 +165,7 @@ List<SidebarXItem> navBarItems = [
   //marketing
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(8);
+      dashboardController.changeIndex(7);
     },
     label: 'Invoices',
     iconBuilder: (selected, hovered) {
@@ -187,7 +187,7 @@ List<SidebarXItem> navBarItems = [
   //mareting campaign
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(9);
+      dashboardController.changeIndex(8);
     },
     label: 'Vendors',
     iconBuilder: (selected, hovered) {
@@ -209,7 +209,7 @@ List<SidebarXItem> navBarItems = [
   //marketing automation
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(10);
+      dashboardController.changeIndex(9);
     },
     label: 'Shippers',
     iconBuilder: (selected, hovered) {
@@ -231,7 +231,7 @@ List<SidebarXItem> navBarItems = [
   //discount
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(11);
+      dashboardController.changeIndex(10);
     },
     label: 'Discounts',
     iconBuilder: (selected, hovered) {
