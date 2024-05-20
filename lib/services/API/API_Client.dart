@@ -69,7 +69,7 @@ class ApiClient {
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Total Products: $response");
+        // log("Total Products: $response");
         return response;
       } else {
         //log("Error: ${result.body}");
@@ -179,11 +179,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getCustomers}");
-      //log("Getting Customers: $url");
+      log("Getting Customers: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        //log("Customers: $response");
+        log("Customers: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -329,7 +329,7 @@ class ApiClient {
       );
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Customer Posted: $response");
+        //log("Customer Posted: $response");
         return response;
       } else {
         log("Error: ${result.body}");
@@ -479,14 +479,14 @@ class ApiClient {
       required int customerID,
       required String discountCode,
       required String fulfillmentStatus,
-      required String fulfilledDate,
+      required String? fulfilledDate,
       required int salesChannelID,
-      required int giftCard,
+      required int? giftCard,
       required String paymentMethod,
-      required String paymentDate,
+      required String? paymentDate,
       required String paymentStatus,
       required int shipperID,
-      required List<Map<String, dynamic>> products}) async {
+      required List<Map<String, int>> products}) async {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postOrder}");
@@ -505,13 +505,59 @@ class ApiClient {
           'paymentDate': paymentDate,
           'paymentStatus': paymentStatus,
           'shipperID': shipperID,
-          'products': products,
+          'productIDs': products,
         }),
         headers: {"Content-Type": "application/json"},
       );
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Order Posted: $response");
+        //log("Order Posted: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getDiscountCodes() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getDiscount}");
+      //log("Getting Discount Codes: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Discount Codes: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future postDiscountCode(
+      {required String discountcode, required double discountamount}) async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postDiscount}");
+      //log("Posting Discount Code: $url");
+      final result = await http.post(
+        url,
+        body: jsonEncode({
+          'discountcode': discountcode,
+          'discountamount': discountamount,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Discount Code Posted: $response");
         return response;
       } else {
         log("Error: ${result.body}");

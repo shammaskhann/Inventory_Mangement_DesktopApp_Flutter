@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/custommer_dropdown.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/discount_dropdown.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/giftcard_dropdown.dart';
@@ -18,16 +19,9 @@ import 'package:intl/intl.dart';
 class OrderController extends GetxController {
   //TextEditingController for Order Insertion
   final orderDateController = TextEditingController();
-  final customerIDController = TextEditingController();
-  final discountCodeController = TextEditingController();
-  RxString fulfillmentStatusController = ''.obs;
-  final fulfilledDateController = TextEditingController();
-  final salesChannelIDController = TextEditingController();
-  final giftCardController = TextEditingController();
-  RxString paymentMethodController = ''.obs;
-  final paymentDateController = TextEditingController();
-  final paymentStatusController = TextEditingController();
-  final shipperIDController = TextEditingController();
+
+  final fulfilledDateController = TextEditingController(); //nullable
+  final paymentDateController = TextEditingController(); //nullable
 
   //dropdowns
   List<CustomerDropDown> customerDropDown = [];
@@ -41,11 +35,15 @@ class OrderController extends GetxController {
   RxInt selectedCustomerID = 0.obs;
 //  RxList<ProductDropDown> selectedProductID =
 //       List<ProductDropDown>.empty(growable: true).obs;
+  RxString fulfillmentStatusController = ''.obs;
+  RxString paymentMethodController = ''.obs;
+  RxString paymentStatusController = ''.obs;
   RxString selectedDiscountID = ''.obs;
   RxInt selectedGiftCardID = 0.obs;
   RxInt selectedShipperID = 0.obs;
   RxInt selectedSalesChannelID = 0.obs;
   RxInt selectedProductID = 0.obs;
+  RxList<RxMap<String, int>> selectedProductList = <RxMap<String, int>>[].obs;
   //Order post Model
   final List<String> timeSpan = [
     'All',
@@ -56,6 +54,8 @@ class OrderController extends GetxController {
   RxString selectedTimeSpan = 'All'.obs;
   final formKey = GlobalKey<FormState>();
   final quantity = 1.obs;
+
+  bool orderLoading = true;
 
   @override
   void onInit() async {
@@ -75,6 +75,7 @@ class OrderController extends GetxController {
     log('GiftCard drop Initiated ${giftCardDropDown.length}');
     salesChannelDropDown = await getSalesChannelDropDown();
     log('SalesChannel drop Initiated ${salesChannelDropDown.length}');
+    orderLoading = false;
   }
 
   @override
@@ -92,6 +93,7 @@ class OrderController extends GetxController {
     // result.forEach((element) {
     //   orderList.add(OrderView.fromJson(element));
     // });
+    log(result.toString());
     return result;
   }
 
@@ -171,33 +173,88 @@ class OrderController extends GetxController {
     return salesChannelDropDown;
   }
 
-  void addOrder() {
-    if (formKey.currentState!.validate()) {
-      // Handle your order insertion
-      // For example:
-      // OrderModel order = OrderModel(
-      //   orderDate: orderDateController.text,
-      //   customerID: customerIDController.text,
-      //   discountCode: discountCodeController.text,
-      //   fulfillmentStatus: fulfillmentStatusController.text,
-      //   fulfilledDate: fulfilledDateController.text,
-      //   salesChannelID: salesChannelIDController.text,
-      //   giftCard: giftCardController.text,
-      //   paymentMethod: paymentMethodController.text,
-      //   paymentDate: paymentDateController.text,
-      //   paymentStatus: paymentStatusController.text,
-      //   shipperID: shipperIDController.text,
+  void addOrder() async {
+    //check for validation if the selectedproduct,customerID,OrderDate,Shipper,Supplier payment are not empty
+    if (selectedProductList.isNotEmpty &&
+        selectedCustomerID.value != 0 &&
+        orderDateController.text != '' &&
+        selectedShipperID.value != 0 &&
+        selectedSalesChannelID.value != 0 &&
+        paymentMethodController.value != '' &&
+        paymentStatusController.value != '') {
+      OrderModel order = OrderModel(
+        orderDate: orderDateController.text,
+        customerID: selectedCustomerID.value,
+        discountCode: selectedDiscountID.value,
+        fulfillmentStatus: fulfillmentStatusController.value,
+        fulfilledDate: fulfilledDateController.text == ''
+            ? null
+            : fulfilledDateController.text,
+        salesChannelID: selectedSalesChannelID.value,
+        giftCard: selectedGiftCardID.value.toString(),
+        paymentMethod: paymentMethodController.value,
+        paymentDate: paymentDateController.text == ''
+            ? null
+            : paymentDateController.text,
+        paymentStatus: paymentStatusController.value,
+        shipperID: selectedShipperID.value,
+        productIDs: selectedProductList.toList(),
+      );
 
-      //   // Set other fields...
-      // );
-      // Insert your order
+      log(order.toJson().toString());
+      final response = await ApiClient.postOrder(
+        orderDate: orderDateController.text,
+        customerID: selectedCustomerID.value,
+        discountCode: selectedDiscountID.value,
+        fulfillmentStatus: fulfillmentStatusController.value,
+        fulfilledDate: fulfilledDateController.text,
+        salesChannelID: selectedSalesChannelID.value,
+        giftCard:
+            selectedGiftCardID.value == 0 ? null : selectedGiftCardID.value,
+        paymentMethod: paymentMethodController.value,
+        paymentDate: paymentDateController.text,
+        paymentStatus: paymentStatusController.value,
+        shipperID: selectedShipperID.value,
+        products: selectedProductList.toList(),
+      );
+      String msg = response['message'];
+      log(response.toString());
+      if (msg == "Product Added Successfully!") {
+        Get.snackbar('Success', 'Order Added Successfully',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: AppTheme.grasGreenClr);
+        orderDateController.clear();
+        fulfilledDateController.clear();
+        paymentDateController.clear();
+        selectedCustomerID.value = 0;
+        selectedDiscountID.value = '';
+        fulfillmentStatusController.value = '';
+        paymentMethodController.value = '';
+        paymentStatusController.value = '';
+        selectedGiftCardID.value = 0;
+        selectedShipperID.value = 0;
+        selectedSalesChannelID.value = 0;
+        selectedProductList.clear();
+
+        Get.close(1);
+      } else {
+        Get.snackbar(
+          'Error',
+          'Error in adding order',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+        );
+      }
+      //show snackbar and clear the form and exit the dialog
+    } else {
+      Get.snackbar(
+        'Error',
+        'Please fill all the fields',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+      );
     }
   }
-
-  // Future postOrder() async {
-  //   final res = await ApiClient.postOrder(order);
-  //   return res;
-  // }
 
   void increment() {
     if (quantity.value < 10) {

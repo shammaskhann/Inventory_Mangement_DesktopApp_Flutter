@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -167,6 +169,7 @@ class CustomerScreen extends StatelessWidget {
                         );
                       } else {
                         if (snapshot.hasError) {
+                          log('Error: ${snapshot.error}');
                           return Container(
                             height: Get.height * 0.6,
                             width: Get.width * 0.8,

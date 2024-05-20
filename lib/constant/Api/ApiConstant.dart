@@ -40,4 +40,8 @@ class ApiConstant {
   static String giftCardDropDown = '/api/dropdown/getGiftCardDropDown';
   static String productDropDown = '/api/dropdown/getProductsDropDown';
   static String saleChannelDropDown = '/api/dropdown/getSalesChannelDropDown';
+
+  //discount
+  static String getDiscount = '  /api/discount/getDiscountCodes';
+  static String postDiscount = '/api/discount/insertDiscountCode';
 }

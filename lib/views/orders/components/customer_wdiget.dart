@@ -156,7 +156,7 @@ class CustomerWidget extends StatelessWidget {
             SizedBox(
               width: width * 0.05,
               child: Text(
-                discountAmount,
+                subTotal,
                 style: TextStyle(
                     color: AppTheme.whiteselClr,
                     fontSize: text16Font,

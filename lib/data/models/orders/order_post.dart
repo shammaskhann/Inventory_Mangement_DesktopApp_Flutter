@@ -1,16 +1,16 @@
 class OrderModel {
-  final String orderDate;
-  final int customerID;
-  final String discountCode;
-  final String fulfillmentStatus;
-  final String fulfilledDate;
+  final String orderDate; //done
+  final int customerID; //done
+  final String discountCode; //done
+  final String fulfillmentStatus; //done
+  final String? fulfilledDate;
   final int salesChannelID;
   final String giftCard;
   final String paymentMethod;
-  final String paymentDate;
+  final String? paymentDate;
   final String paymentStatus;
   final int shipperID;
-  final List<int> productIDs;
+  final List<Map<String, dynamic>> productIDs;
 
   OrderModel({
     required this.orderDate,

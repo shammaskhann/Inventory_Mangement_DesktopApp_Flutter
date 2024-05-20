@@ -4,7 +4,7 @@ class Customer {
   final String email;
   final String phoneNumber;
   final String address;
-  final int? totalAmountSpent;
+  final double? totalAmountSpent;
 
   Customer({
     required this.customerId,
