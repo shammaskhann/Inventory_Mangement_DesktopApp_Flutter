@@ -42,6 +42,6 @@ class ApiConstant {
   static String saleChannelDropDown = '/api/dropdown/getSalesChannelDropDown';
 
   //discount
-  static String getDiscount = '  /api/discount/getDiscountCodes';
+  static String getDiscount = '/api/discount/getDiscountCodes';
   static String postDiscount = '/api/discount/insertDiscountCode';
 }

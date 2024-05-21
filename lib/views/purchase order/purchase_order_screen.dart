@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
@@ -21,9 +23,9 @@ class PurchaseOrderScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            Row(
+            const Row(
               children: [
-                const Text(
+                Text(
                   'Purchase Orders',
                   style: TextStyle(
                     color: AppTheme.whiteselClr,
@@ -32,11 +34,6 @@ class PurchaseOrderScreen extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                CustomButton(
-                  title: 'ADD Purchase-Order',
-                  onTap: () {},
-                  icon: const SizedBox(),
-                ),
               ],
             ),
             const SizedBox(height: 20),
@@ -216,7 +213,7 @@ class PurchaseOrderScreen extends StatelessWidget {
                               SizedBox(
                                 width: Get.width * 0.07,
                                 child: Text(
-                                  snapshot.data![index].status,
+                                  snapshot.data![index].status ?? "NULL",
                                   style: TextStyle(
                                     color: (snapshot.data![index].status ==
                                             'Pending')

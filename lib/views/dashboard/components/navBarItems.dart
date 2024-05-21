@@ -163,43 +163,43 @@ List<SidebarXItem> navBarItems = [
     },
   ),
   //marketing
+  // SidebarXItem(
+  //   onTap: () {
+  //     dashboardController.changeIndex(7);
+  //   },
+  //   label: 'Invoices',
+  //   iconBuilder: (selected, hovered) {
+  //     return selected
+  //         ? Image.asset(
+  //             AppIcons.marketingIcon,
+  //             height: iconSize,
+  //             width: iconSize,
+  //             color: AppTheme.selectedIconClr,
+  //           )
+  //         : Image.asset(
+  //             AppIcons.marketingIcon,
+  //             height: iconSize,
+  //             width: iconSize,
+  //             color: AppTheme.unselectedIconClr,
+  //           );
+  //   },
+  // ),
+  //mareting campaign
   SidebarXItem(
     onTap: () {
       dashboardController.changeIndex(7);
     },
-    label: 'Invoices',
+    label: 'Payments',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
-              AppIcons.marketingIcon,
+              AppIcons.payableAmountIcon,
               height: iconSize,
               width: iconSize,
               color: AppTheme.selectedIconClr,
             )
           : Image.asset(
-              AppIcons.marketingIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
-    },
-  ),
-  //mareting campaign
-  SidebarXItem(
-    onTap: () {
-      dashboardController.changeIndex(8);
-    },
-    label: 'Vendors',
-    iconBuilder: (selected, hovered) {
-      return selected
-          ? Image.asset(
-              AppIcons.campaignIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.selectedIconClr,
-            )
-          : Image.asset(
-              AppIcons.campaignIcon,
+              AppIcons.payableAmountIcon,
               height: iconSize,
               width: iconSize,
               color: AppTheme.unselectedIconClr,
@@ -209,19 +209,19 @@ List<SidebarXItem> navBarItems = [
   //marketing automation
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(9);
+      dashboardController.changeIndex(8);
     },
     label: 'Shippers',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
-              AppIcons.marketingAutomationIcon,
+              AppIcons.trackingIcon,
               height: iconSize,
               width: iconSize,
               color: AppTheme.selectedIconClr,
             )
           : Image.asset(
-              AppIcons.marketingAutomationIcon,
+              AppIcons.trackingIcon,
               height: iconSize,
               width: iconSize,
               color: AppTheme.unselectedIconClr,
@@ -231,7 +231,7 @@ List<SidebarXItem> navBarItems = [
   //discount
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(10);
+      dashboardController.changeIndex(9);
     },
     label: 'Discounts',
     iconBuilder: (selected, hovered) {

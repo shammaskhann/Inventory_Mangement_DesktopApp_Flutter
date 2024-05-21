@@ -11,6 +11,7 @@ import 'package:shopify_admin_dashboard/views/dashboard/components/navBarHeader.
 import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItemTheme.dart';
 import 'package:shopify_admin_dashboard/views/dashboard/components/navBarItems.dart';
 import 'package:shopify_admin_dashboard/views/dashboard/controller/dashboard_controller.dart';
+import 'package:shopify_admin_dashboard/views/discount/discount_screen.dart';
 import 'package:shopify_admin_dashboard/views/home/home_screen.dart';
 import 'package:shopify_admin_dashboard/views/inventory/inventory_screen.dart';
 import 'package:shopify_admin_dashboard/views/orders/controller/order_controller.dart';
@@ -57,15 +58,12 @@ class DashboardScreen extends StatelessWidget {
                     return const SalesChannelScreen();
                   case 6:
                     return const CustomerScreen();
-                  case 7:
-                    return const InvoiceScreen();
                   case 8:
-                    return const LoadingIndicator();
-                  case 9:
                     return const ShipperScreen();
-
+                  case 9:
+                    return const DiscountScreen();
                   default:
-                    return LoadingIndicator();
+                    return const LoadingIndicator();
                 }
               }),
             ),

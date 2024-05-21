@@ -1,7 +1,7 @@
 class PurchaseOrder {
   final int purchaseOrderID;
   final String supplierName;
-  final String status;
+  String? status = 'Pending'; // make status nullable
   final String product;
   final int orderedQuantity;
   final double totalCost;
@@ -10,7 +10,7 @@ class PurchaseOrder {
   PurchaseOrder({
     required this.purchaseOrderID,
     required this.supplierName,
-    required this.status,
+    this.status, // remove required
     required this.product,
     required this.orderedQuantity,
     required this.totalCost,
@@ -21,7 +21,7 @@ class PurchaseOrder {
     return PurchaseOrder(
       purchaseOrderID: json['PurchaseOrderID'],
       supplierName: json['SupplierName'],
-      status: json['Status'],
+      status: json['Status'], // status can now be null
       product: json['Product'],
       orderedQuantity: json['orderedQuantity'],
       totalCost: json['TotalCost'].toDouble(),
