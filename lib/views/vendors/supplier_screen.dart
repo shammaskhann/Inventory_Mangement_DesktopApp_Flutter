@@ -31,11 +31,11 @@ class SupplierScreen extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                CustomButton(
-                  title: 'ADD Supplier',
-                  onTap: () {},
-                  icon: const SizedBox(),
-                ),
+                // CustomButton(
+                //   title: 'ADD Supplier',
+                //   onTap: () {},
+                //   icon: const SizedBox(),
+                // ),
               ],
             ),
             const SizedBox(height: 20),

@@ -201,7 +201,7 @@ class OrderController extends GetxController {
         productIDs: selectedProductList.toList(),
       );
 
-      log(order.toJson().toString());
+      //log(order.toJson().toString());
       final response = await ApiClient.postOrder(
         orderDate: orderDateController.text,
         customerID: selectedCustomerID.value,
@@ -218,7 +218,7 @@ class OrderController extends GetxController {
         products: selectedProductList.toList(),
       );
       String msg = response['message'];
-      log(response.toString());
+      //log(response.toString());
       if (msg == "Product Added Successfully!") {
         Get.snackbar('Success', 'Order Added Successfully',
             snackPosition: SnackPosition.BOTTOM,
@@ -271,6 +271,23 @@ class OrderController extends GetxController {
     } else {
       Get.snackbar('Error', 'Quantity cannot be less than 1',
           snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+  Future getPaymentByOrderID(int OrderID) async {
+    try {
+      return await ApiClient.getPaymentByOrderID(OrderID);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future getDeliveryByOrderID(int OrderID) async {
+    try {
+      return await ApiClient.getShipmentByOrderID(OrderID);
+    } catch (e) {
+      log(e.toString());
     }
   }
 }

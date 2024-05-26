@@ -211,7 +211,7 @@ List<SidebarXItem> navBarItems = [
     onTap: () {
       dashboardController.changeIndex(8);
     },
-    label: 'Shippers',
+    label: 'Logistics',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(

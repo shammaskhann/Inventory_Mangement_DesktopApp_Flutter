@@ -19,4 +19,10 @@ class PurchaseOrderController extends GetxController {
     }
     return purchaseOrders;
   }
+
+  Future getIvoiceDetail(int id) async {
+    final res = await ApiClient.getInvoiceID(id);
+    log(res.toString());
+    return res;
+  }
 }

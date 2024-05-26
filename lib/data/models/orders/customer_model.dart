@@ -4,7 +4,7 @@ class Customer {
   final String email;
   final String phoneNumber;
   final String address;
-  final double? totalAmountSpent;
+  final double totalAmountSpent;
 
   Customer({
     required this.customerId,
@@ -12,7 +12,7 @@ class Customer {
     required this.email,
     required this.phoneNumber,
     required this.address,
-    this.totalAmountSpent,
+    required this.totalAmountSpent,
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class Customer {
       email: json['Email'],
       phoneNumber: json['PhoneNumber'],
       address: json['Address'],
-      totalAmountSpent: json['TotalAmountSpent'],
+      totalAmountSpent: json['TotalAmountSpent'].toDouble(),
     );
   }
 

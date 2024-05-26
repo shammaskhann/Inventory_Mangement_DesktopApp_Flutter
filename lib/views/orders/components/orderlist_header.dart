@@ -118,6 +118,17 @@ class OrderListHeader extends StatelessWidget {
           SizedBox(
             width: width * 0.05,
             child: Text(
+              'Discount Amount',
+              style: TextStyle(
+                  color: AppTheme.whiteselClr,
+                  fontSize: width * 0.0085,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            width: width * 0.05,
+            child: Text(
               'Shipping',
               style: TextStyle(
                   color: AppTheme.whiteselClr,

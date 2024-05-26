@@ -567,4 +567,106 @@ class ApiClient {
       log(e.toString());
     }
   }
+
+  static Future getInvoiceID(int invoiceID) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getInvoiceID}/$invoiceID");
+      //log("Getting Invoice ID: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Invoice ID: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getPaymentByOrderID(int orderID) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getPaymentByOrderID}/$orderID");
+      //log("Getting Payment By Order ID: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        log("Payment By Order ID: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getShipments() async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getShipments}");
+      //log("Getting Shipments: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Shipments: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getShipmentByOrderID(int orderID) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getShipmentByOrderID}/$orderID");
+      //log("Getting Shipment By Order ID: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Shipment By Order ID: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future updateShipmentStatus(
+      {required int orderID, required String newStatus}) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.updateShipmentStatus}/$orderID");
+      //log("Updating Shipment Status: $url");
+      final result = await http.put(
+        url,
+        body: jsonEncode({
+          'NewStatus': newStatus,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Shipment Status Updated: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

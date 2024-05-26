@@ -1,5 +1,5 @@
 class ApiConstant {
-  //static String baseUrl  = 'http://192.168.18.123:3000'; //home
+  // static String baseUrl = 'http://192.168.18.122:3000'; //home
   //  static String baseUrl = 'http://10.133.148.237:3000/'; //office
   // static String baseUrl = 'http://10.133.150.112:3000';
   static String baseUrl =
@@ -24,6 +24,8 @@ class ApiConstant {
 
   static String getSalesChannel = '/api/saleschannel/getSalesChannel';
   static String getCustomers = '/api/customers/getCustomers';
+  //Invoice
+  static String getInvoiceID = '/api/invoices/getInvoice';
   static String getInvoices = '/api/invoices/getInvoices';
   //Product
   static String postCustomer = '/api/customers/addCustomer';
@@ -44,4 +46,12 @@ class ApiConstant {
   //discount
   static String getDiscount = '/api/discount/getDiscountCodes';
   static String postDiscount = '/api/discount/insertDiscountCode';
+
+  //payment
+  static String getPaymentByOrderID = '/api/payment/getPayment';
+
+  //shipment & tracking
+  static String getShipments = '/api/shipment/getShipments';
+  static String getShipmentByOrderID = '/api/shipment/getShipment';
+  static String updateShipmentStatus = '/api/shipment/updateShipmentStatus';
 }

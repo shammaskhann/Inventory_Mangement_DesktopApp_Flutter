@@ -306,7 +306,7 @@ void showAddDiscountDailog(DiscountController controller) {
                     borderSide: BorderSide(color: AppTheme.grasGreenClr),
                   ),
                 ),
-                style: const TextStyle(color: AppTheme.whiteselClr),
+                style: const TextStyle(color: Colors.black),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter discount code';
@@ -329,7 +329,7 @@ void showAddDiscountDailog(DiscountController controller) {
                     borderSide: BorderSide(color: AppTheme.grasGreenClr),
                   ),
                 ),
-                style: const TextStyle(color: AppTheme.whiteselClr),
+                style: const TextStyle(color: Colors.black),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter discount amount';

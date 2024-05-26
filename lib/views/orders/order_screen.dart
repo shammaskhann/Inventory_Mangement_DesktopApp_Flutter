@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/custommer_dropdown.dart';
@@ -9,6 +11,7 @@ import 'package:shopify_admin_dashboard/data/models/dropdowns/giftcard_dropdown.
 import 'package:shopify_admin_dashboard/data/models/dropdowns/product_dropdown.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/salechannel_dropdown.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/shipper_dropdown.dart';
+import 'package:shopify_admin_dashboard/views/components/dailogDetail.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/customer_wdiget.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/orderlist_header.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -377,49 +380,80 @@ class OrderScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                                color: AppTheme.secondaryClr),
-                            child: CustomerWidget(
-                              orderId:
-                                  snapshot.data?[index]['OrderID'].toString() ??
-                                      'N/A',
-                              customer:
-                                  snapshot.data?[index]['Customer'] ?? 'N/A',
-                              product:
-                                  snapshot.data?[index]['Product'] ?? 'N/A',
-                              date: formatDate(
-                                      snapshot.data![index]['OrderDate']) ??
-                                  'N/A',
-                              status: snapshot.data?[index]
-                                      ['FulfillmentStatus'] ??
-                                  'N/A',
-                              channel:
-                                  snapshot.data?[index]['ChannelName'] ?? 'N/A',
-                              total:
-                                  snapshot.data?[index]['Total'].toString() ??
-                                      'N/A',
-                              subTotal: snapshot.data?[index]['Subtotal']
-                                      .toString() ??
-                                  'N/A',
-                              shipping: snapshot.data?[index]['Shipping']
-                                      .toString() ??
-                                  'N/A',
-                              discountAmount: snapshot.data?[index]
-                                          ['DiscountAmount']
-                                      .toString() ??
-                                  'N/A',
-                              giftCard: snapshot.data?[index]['GiftCard']
-                                      .toString() ??
-                                  'N/A',
-                              disountCode: snapshot.data?[index]
-                                      ['DiscountCode'] ??
-                                  'N/A',
-                              paymentStatus: snapshot.data![index]
-                                  ['PaymentStatus'],
-                              quantity: snapshot.data?[index]['quantity']
-                                      .toString() ??
-                                  'N/A',
+                          child: FocusedMenuHolder(
+                            openWithTap: true,
+                            menuOffset: 10,
+                            bottomOffsetHeight: 100,
+                            menuWidth: Get.width * 0.15,
+                            animateMenuItems: true,
+                            menuBoxDecoration: const BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            duration: const Duration(milliseconds: 100),
+                            menuItems: <FocusedMenuItem>[
+                              FocusedMenuItem(
+                                title: const Text('View Payment Status'),
+                                onPressed: () {
+                                  paymentDetailDailog(orderController,
+                                      snapshot.data?[index]['OrderID']);
+                                },
+                                trailingIcon: const Icon(Icons.payment),
+                              ),
+                              FocusedMenuItem(
+                                title: const Text('View Delivery Status'),
+                                onPressed: () {
+                                  deliveryDetailDailog(orderController,
+                                      snapshot.data?[index]['OrderID']);
+                                },
+                                trailingIcon: const Icon(Icons.local_shipping),
+                              ),
+                            ],
+                            onPressed: () {},
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  color: AppTheme.secondaryClr),
+                              child: CustomerWidget(
+                                orderId: snapshot.data?[index]['OrderID']
+                                        .toString() ??
+                                    'N/A',
+                                customer:
+                                    snapshot.data?[index]['Customer'] ?? 'N/A',
+                                product:
+                                    snapshot.data?[index]['Product'] ?? 'N/A',
+                                date: formatDate(
+                                        snapshot.data![index]['OrderDate']) ??
+                                    'N/A',
+                                status: snapshot.data?[index]
+                                        ['FulfillmentStatus'] ??
+                                    'N/A',
+                                channel: snapshot.data?[index]['ChannelName'] ??
+                                    'N/A',
+                                total:
+                                    snapshot.data?[index]['Total'].toString() ??
+                                        'N/A',
+                                subTotal: snapshot.data?[index]['Subtotal']
+                                        .toString() ??
+                                    'N/A',
+                                shipping: snapshot.data?[index]['Shipping']
+                                        .toString() ??
+                                    'N/A',
+                                discountAmount: snapshot.data?[index]
+                                            ['DiscountAmount']
+                                        .toString() ??
+                                    'N/A',
+                                giftCard: snapshot.data?[index]['GiftCard']
+                                        .toString() ??
+                                    'N/A',
+                                disountCode: snapshot.data?[index]
+                                        ['DiscountCode'] ??
+                                    'N/A',
+                                paymentStatus: snapshot.data![index]
+                                    ['PaymentStatus'],
+                                quantity: snapshot.data?[index]['quantity']
+                                        .toString() ??
+                                    'N/A',
+                              ),
                             ),
                           ),
                         );
@@ -1046,4 +1080,161 @@ String? formatDate(String date) {
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   final String formattedDate = formatter.format(parsedDate);
   return formattedDate;
+}
+
+paymentDetailDailog(OrderController controller, int OrderID) {
+  Get.dialog(
+    Dialog(
+      elevation: 1,
+      backgroundColor: Colors.white,
+      child: Container(
+          width: Get.width * 0.35,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Payment Details',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 20),
+              FutureBuilder(
+                future: controller.getPaymentByOrderID(OrderID),
+                builder: (context, snapshot) {
+                  log('Payment Details: ${snapshot.data}');
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DailogDetailWidget(
+                            title: 'Payment ID',
+                            value: snapshot.data?[0]['PaymentID'].toString(),
+                          ),
+                          DailogDetailWidget(
+                            title: 'Payment date',
+                            value: snapshot.data?[0]["PaymentDate"] != null
+                                ? formatDate(snapshot.data?[0]["PaymentDate"])
+                                : 'N/A',
+                          ),
+                          DailogDetailWidget(
+                            title: 'Payment Method',
+                            value: snapshot.data?[0]['PaymentMethod'],
+                          ),
+                          DailogDetailWidget(
+                            title: 'Payment Amount',
+                            value: snapshot.data?[0]['Amount'].toString(),
+                          ),
+                          DailogDetailWidget(
+                            title: 'Payment Status',
+                            value: snapshot.data?[0]['PaymentStatus'],
+                          ),
+                          //const Spacer(),
+                          Align(
+                              alignment: Alignment.bottomCenter,
+                              child: CustomButton(
+                                title: 'Close',
+                                icon: const SizedBox(),
+                                onTap: () {
+                                  Get.back();
+                                },
+                              ))
+                        ]);
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+            ],
+          )),
+    ),
+  );
+}
+
+deliveryDetailDailog(OrderController controller, int OrderID) {
+  Get.dialog(
+    Dialog(
+      elevation: 1,
+      backgroundColor: Colors.white,
+      child: Container(
+          // height: Get.height * 0.7,
+          width: Get.width * 0.4,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Delivery Details',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 10),
+              FutureBuilder(
+                future: controller.getDeliveryByOrderID(OrderID),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DailogDetailWidget(
+                            title: 'Order ID',
+                            value: snapshot.data?[0]['OrderID'].toString(),
+                          ),
+                          DailogDetailWidget(
+                            title: 'Customer Name',
+                            value: snapshot.data?[0]['Name'],
+                          ),
+                          DailogDetailWidget(
+                            title: 'Address',
+                            value: snapshot.data?[0]['Address'],
+                          ),
+                          DailogDetailWidget(
+                            title: 'Shipper Name',
+                            value: snapshot.data?[0]['ShipperName'],
+                          ),
+                          DailogDetailWidget(
+                            title: 'Shipping Services',
+                            value: snapshot.data?[0]['ShippingServices'],
+                          ),
+                          DailogDetailWidget(
+                            title: 'Shipping Rates',
+                            value:
+                                snapshot.data?[0]['ShippingRates'].toString(),
+                          ),
+                          DailogDetailWidget(
+                            title: 'Current Status',
+                            value: snapshot.data?[0]['CurrentStatus'],
+                          ),
+                          DailogDetailWidget(
+                            title: 'Estimated Delivery Date',
+                            value: formatDate(
+                                snapshot.data?[0]['EstimatedDeliveryDate']),
+                          ),
+                          Align(
+                              alignment: Alignment.bottomCenter,
+                              child: CustomButton(
+                                title: 'Close',
+                                icon: const SizedBox(),
+                                onTap: () {
+                                  Get.back();
+                                },
+                              ))
+                        ]);
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+            ],
+          )),
+    ),
+  );
 }

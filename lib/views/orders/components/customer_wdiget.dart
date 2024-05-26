@@ -156,7 +156,7 @@ class CustomerWidget extends StatelessWidget {
             SizedBox(
               width: width * 0.05,
               child: Text(
-                subTotal,
+                "\$$subTotal",
                 style: TextStyle(
                     color: AppTheme.whiteselClr,
                     fontSize: text16Font,
@@ -167,7 +167,7 @@ class CustomerWidget extends StatelessWidget {
             SizedBox(
               width: width * 0.05,
               child: Text(
-                shipping,
+                "\$$discountAmount",
                 style: TextStyle(
                     color: AppTheme.whiteselClr,
                     fontSize: text16Font,
@@ -178,7 +178,18 @@ class CustomerWidget extends StatelessWidget {
             SizedBox(
               width: width * 0.05,
               child: Text(
-                total,
+                "\$$shipping",
+                style: TextStyle(
+                    color: AppTheme.whiteselClr,
+                    fontSize: text16Font,
+                    fontWeight: FontWeight.w400),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              width: width * 0.05,
+              child: Text(
+                "\$$total",
                 style: TextStyle(
                     color: AppTheme.whiteselClr,
                     fontSize: text16Font,
