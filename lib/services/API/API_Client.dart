@@ -669,4 +669,30 @@ class ApiClient {
       log(e.toString());
     }
   }
+
+  static Future updatePaymentStatus(
+      {required int orderID, required String newStatus}) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.updatePaymentStatus}/$orderID");
+      //log("Updating Payment Status: $url");
+      final result = await http.put(
+        url,
+        body: jsonEncode({
+          'NewStatus': newStatus,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Payment Status Updated: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

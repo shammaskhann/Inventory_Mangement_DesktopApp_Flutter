@@ -49,6 +49,7 @@ class ApiConstant {
 
   //payment
   static String getPaymentByOrderID = '/api/payment/getPayment';
+  static String updatePaymentStatus = '/api/payment/updatePaymentStatus';
 
   //shipment & tracking
   static String getShipments = '/api/shipment/getShipments';

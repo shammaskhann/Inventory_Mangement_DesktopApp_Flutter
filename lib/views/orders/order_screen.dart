@@ -11,6 +11,7 @@ import 'package:shopify_admin_dashboard/data/models/dropdowns/giftcard_dropdown.
 import 'package:shopify_admin_dashboard/data/models/dropdowns/product_dropdown.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/salechannel_dropdown.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/shipper_dropdown.dart';
+import 'package:shopify_admin_dashboard/views/components/customDailogDetail.dart';
 import 'package:shopify_admin_dashboard/views/components/dailogDetail.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/customer_wdiget.dart';
 import 'package:shopify_admin_dashboard/views/orders/components/orderlist_header.dart';
@@ -373,92 +374,104 @@ class OrderScreen extends StatelessWidget {
                         height: Get.height * 0.2,
                         child: const Center(child: LoadingIndicator()));
                   } else {
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: FocusedMenuHolder(
-                            openWithTap: true,
-                            menuOffset: 10,
-                            bottomOffsetHeight: 100,
-                            menuWidth: Get.width * 0.15,
-                            animateMenuItems: true,
-                            menuBoxDecoration: const BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0))),
-                            duration: const Duration(milliseconds: 100),
-                            menuItems: <FocusedMenuItem>[
-                              FocusedMenuItem(
-                                title: const Text('View Payment Status'),
-                                onPressed: () {
-                                  paymentDetailDailog(orderController,
-                                      snapshot.data?[index]['OrderID']);
-                                },
-                                trailingIcon: const Icon(Icons.payment),
-                              ),
-                              FocusedMenuItem(
-                                title: const Text('View Delivery Status'),
-                                onPressed: () {
-                                  deliveryDetailDailog(orderController,
-                                      snapshot.data?[index]['OrderID']);
-                                },
-                                trailingIcon: const Icon(Icons.local_shipping),
-                              ),
-                            ],
-                            onPressed: () {},
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  color: AppTheme.secondaryClr),
-                              child: CustomerWidget(
-                                orderId: snapshot.data?[index]['OrderID']
-                                        .toString() ??
-                                    'N/A',
-                                customer:
-                                    snapshot.data?[index]['Customer'] ?? 'N/A',
-                                product:
-                                    snapshot.data?[index]['Product'] ?? 'N/A',
-                                date: formatDate(
-                                        snapshot.data![index]['OrderDate']) ??
-                                    'N/A',
-                                status: snapshot.data?[index]
-                                        ['FulfillmentStatus'] ??
-                                    'N/A',
-                                channel: snapshot.data?[index]['ChannelName'] ??
-                                    'N/A',
-                                total:
-                                    snapshot.data?[index]['Total'].toString() ??
-                                        'N/A',
-                                subTotal: snapshot.data?[index]['Subtotal']
-                                        .toString() ??
-                                    'N/A',
-                                shipping: snapshot.data?[index]['Shipping']
-                                        .toString() ??
-                                    'N/A',
-                                discountAmount: snapshot.data?[index]
-                                            ['DiscountAmount']
-                                        .toString() ??
-                                    'N/A',
-                                giftCard: snapshot.data?[index]['GiftCard']
-                                        .toString() ??
-                                    'N/A',
-                                disountCode: snapshot.data?[index]
-                                        ['DiscountCode'] ??
-                                    'N/A',
-                                paymentStatus: snapshot.data![index]
-                                    ['PaymentStatus'],
-                                quantity: snapshot.data?[index]['quantity']
-                                        .toString() ??
-                                    'N/A',
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
+                    return GetBuilder(
+                        init: orderController,
+                        builder: (controller) {
+                          return ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: FocusedMenuHolder(
+                                  openWithTap: true,
+                                  menuOffset: 10,
+                                  bottomOffsetHeight: 100,
+                                  menuWidth: Get.width * 0.15,
+                                  animateMenuItems: true,
+                                  menuBoxDecoration: const BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
+                                  duration: const Duration(milliseconds: 100),
+                                  menuItems: <FocusedMenuItem>[
+                                    FocusedMenuItem(
+                                      title: const Text('View Payment Status'),
+                                      onPressed: () {
+                                        paymentDetailDailog(orderController,
+                                            snapshot.data?[index]['OrderID']);
+                                      },
+                                      trailingIcon: const Icon(Icons.payment),
+                                    ),
+                                    FocusedMenuItem(
+                                      title: const Text('View Delivery Status'),
+                                      onPressed: () {
+                                        deliveryDetailDailog(orderController,
+                                            snapshot.data?[index]['OrderID']);
+                                      },
+                                      trailingIcon:
+                                          const Icon(Icons.local_shipping),
+                                    ),
+                                  ],
+                                  onPressed: () {},
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        color: AppTheme.secondaryClr),
+                                    child: CustomerWidget(
+                                      orderId: snapshot.data?[index]['OrderID']
+                                              .toString() ??
+                                          'N/A',
+                                      customer: snapshot.data?[index]
+                                              ['Customer'] ??
+                                          'N/A',
+                                      product: snapshot.data?[index]
+                                              ['Product'] ??
+                                          'N/A',
+                                      date: formatDate(snapshot.data?[index]
+                                              ['OrderDate']) ??
+                                          'N/A',
+                                      status: snapshot.data?[index]
+                                              ['FulfillmentStatus'] ??
+                                          'N/A',
+                                      channel: snapshot.data?[index]
+                                              ['ChannelName'] ??
+                                          'N/A',
+                                      total: snapshot.data?[index]['Total']
+                                              .toString() ??
+                                          'N/A',
+                                      subTotal: snapshot.data?[index]
+                                                  ['Subtotal']
+                                              .toString() ??
+                                          'N/A',
+                                      shipping: snapshot.data?[index]
+                                                  ['Shipping']
+                                              .toString() ??
+                                          'N/A',
+                                      discountAmount: snapshot.data?[index]
+                                                  ['DiscountAmount']
+                                              .toString() ??
+                                          'N/A',
+                                      giftCard: snapshot.data?[index]
+                                                  ['GiftCard']
+                                              .toString() ??
+                                          'N/A',
+                                      disountCode: snapshot.data?[index]
+                                              ['DiscountCode'] ??
+                                          'N/A',
+                                      paymentStatus: snapshot.data![index]
+                                          ['PaymentStatus'],
+                                      quantity: snapshot.data?[index]
+                                                  ['quantity']
+                                              .toString() ??
+                                          'N/A',
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        });
                   }
                 },
               ),
@@ -1130,7 +1143,21 @@ paymentDetailDailog(OrderController controller, int OrderID) {
                             title: 'Payment Amount',
                             value: snapshot.data?[0]['Amount'].toString(),
                           ),
-                          DailogDetailWidget(
+                          CustomDailogDetailWidget(
+                            iconButton: (snapshot.data?[0]['PaymentStatus'] ==
+                                    'Paid')
+                                ? const Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                  )
+                                : IconButton(
+                                    onPressed: () {
+                                      updatePaymentStatusDailog(
+                                          controller,
+                                          OrderID,
+                                          snapshot.data?[0]['PaymentStatus']);
+                                    },
+                                    icon: const Icon(Icons.edit)),
                             title: 'Payment Status',
                             value: snapshot.data?[0]['PaymentStatus'],
                           ),
@@ -1210,8 +1237,22 @@ deliveryDetailDailog(OrderController controller, int OrderID) {
                             value:
                                 snapshot.data?[0]['ShippingRates'].toString(),
                           ),
-                          DailogDetailWidget(
-                            title: 'Current Status',
+                          CustomDailogDetailWidget(
+                            iconButton: (snapshot.data?[0]['CurrentStatus'] ==
+                                    'Delivered')
+                                ? const Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                  )
+                                : IconButton(
+                                    onPressed: () {
+                                      updateTrackingStatusDailog(
+                                          controller,
+                                          OrderID,
+                                          snapshot.data?[0]['CurrentStatus']);
+                                    },
+                                    icon: const Icon(Icons.edit)),
+                            title: 'Delivery Status',
                             value: snapshot.data?[0]['CurrentStatus'],
                           ),
                           DailogDetailWidget(
@@ -1233,6 +1274,152 @@ deliveryDetailDailog(OrderController controller, int OrderID) {
                 },
               ),
               const SizedBox(height: 10),
+            ],
+          )),
+    ),
+  );
+}
+
+updatePaymentStatusDailog(
+    OrderController controller, int OrderID, String currentStatus) {
+  Get.dialog(
+    Dialog(
+      elevation: 1,
+      backgroundColor: AppTheme.whiteselClr,
+      child: Container(
+          width: Get.width * 0.35,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Update Payment Status',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Obx(
+                    () => DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusColor: Colors.transparent,
+                        value: controller.newPaymentStatus.value == ''
+                            ? null
+                            : controller.newPaymentStatus.value,
+                        isExpanded: true,
+                        hint: Text("${currentStatus}"),
+                        items: ['Pending', 'Paid', 'Cancelled']
+                            .map((String item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                ))
+                            .toList(),
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            controller.newPaymentStatus.value = value;
+                          }
+                        },
+                      ),
+                    ),
+                  )),
+              const SizedBox(height: 20),
+              Center(
+                child: CustomButton(
+                  title: 'Update',
+                  icon: const Icon(
+                    Icons.update_rounded,
+                    color: AppTheme.whiteselClr,
+                  ),
+                  onTap: () async {
+                    await controller.updatePaymentStatus(OrderID);
+                    Get.back();
+                  },
+                ),
+              ),
+            ],
+          )),
+    ),
+  );
+}
+
+updateTrackingStatusDailog(
+    OrderController controller, int orderID, String currentStatus) {
+  Get.dialog(
+    Dialog(
+      elevation: 1,
+      backgroundColor: AppTheme.whiteselClr,
+      child: Container(
+          width: Get.width * 0.35,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Update Tracking Status',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Obx(
+                    () => DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusColor: Colors.transparent,
+                        value: controller.newTrackingStatus.value == ''
+                            ? null
+                            : controller.newTrackingStatus.value,
+                        isExpanded: true,
+                        hint: Text("${currentStatus}"),
+                        items: [
+                          'In Transit',
+                          'Pending Pickup',
+                          'Out for Delivery',
+                          'Delivered',
+                          'Cancelled'
+                        ]
+                            .map((String item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                ))
+                            .toList(),
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            controller.newTrackingStatus.value = value;
+                          }
+                        },
+                      ),
+                    ),
+                  )),
+              const SizedBox(height: 20),
+              Center(
+                child: CustomButton(
+                  title: 'Update',
+                  icon: const Icon(
+                    Icons.update_rounded,
+                    color: AppTheme.whiteselClr,
+                  ),
+                  onTap: () async {
+                    await controller.updateTrackingStatus(orderID);
+                    Get.back();
+                  },
+                ),
+              ),
             ],
           )),
     ),

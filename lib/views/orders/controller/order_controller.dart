@@ -17,6 +17,11 @@ import 'package:shopify_admin_dashboard/services/API/API_Client.dart';
 import 'package:intl/intl.dart';
 
 class OrderController extends GetxController {
+  bool rrfread = false;
+  //Update Payment Staus Controller
+  RxString newPaymentStatus = ''.obs;
+  // Update TrackingStatus
+  RxString newTrackingStatus = ''.obs;
   //TextEditingController for Order Insertion
   final orderDateController = TextEditingController();
 
@@ -201,7 +206,7 @@ class OrderController extends GetxController {
         productIDs: selectedProductList.toList(),
       );
 
-      //log(order.toJson().toString());
+      log(order.toJson().toString());
       final response = await ApiClient.postOrder(
         orderDate: orderDateController.text,
         customerID: selectedCustomerID.value,
@@ -286,6 +291,38 @@ class OrderController extends GetxController {
   Future getDeliveryByOrderID(int OrderID) async {
     try {
       return await ApiClient.getShipmentByOrderID(OrderID);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future updatePaymentStatus(
+    int orderID,
+  ) async {
+    try {
+      String newStatus =
+          (newPaymentStatus.value == '') ? 'Pending' : newPaymentStatus.value;
+      var response = await ApiClient.updatePaymentStatus(
+          orderID: orderID, newStatus: newStatus);
+      rrfread = !rrfread;
+      update();
+      newPaymentStatus.value = '';
+      return response;
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  updateTrackingStatus(int orderID) async {
+    try {
+      String newStatus = (newTrackingStatus.value == '')
+          ? 'In Transit'
+          : newTrackingStatus.value;
+      var response = await ApiClient.updateShipmentStatus(
+          orderID: orderID, newStatus: newStatus);
+      rrfread = !rrfread;
+      update();
+      newTrackingStatus.value = '';
     } catch (e) {
       log(e.toString());
     }
