@@ -97,7 +97,9 @@ class HomeScreen extends StatelessWidget {
                         } else if (snapshot.connectionState ==
                             ConnectionState.done) {
                           return InfoBlock(
-                              value: snapshot.data.toString(),
+                              value: (snapshot.data.toString() == "null")
+                                  ? "0"
+                                  : snapshot.data.toString(),
                               title: 'Today\'s Sale',
                               iconData: Icons.trending_up,
                               avatarBackgroundColor: Colors.lightBlue);
@@ -236,6 +238,8 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Container(
                           width: Get.width * 0.5,
+                          decoration:
+                              const BoxDecoration(color: AppTheme.secondaryClr),
                           child: FutureBuilder(
                             future:
                                 homeScreenController.getTopSellingProducts(),
@@ -265,94 +269,107 @@ class HomeScreen extends StatelessWidget {
                                       itemCount: snapshot.data!.length,
                                       itemBuilder: (context, index) {
                                         return Container(
-                                          color: (index % 2 == 0)
-                                              ? AppTheme.secondaryClr
-                                              : AppTheme.darkThemeBackgroudClr,
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                vertical: 8.0),
-                                            child: Row(
+                                                vertical: 0.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                SizedBox(
-                                                  width: Get.width * 0.07,
-                                                  child: Text(
-                                                    snapshot.data![index].SKU
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppTheme.whiteselClr,
-                                                      fontSize:
-                                                          Get.width * 0.01,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: Get.width * 0.07,
+                                                      child: Text(
+                                                        snapshot
+                                                            .data![index].SKU
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          color: AppTheme
+                                                              .whiteselClr,
+                                                          fontSize:
+                                                              Get.width * 0.01,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
                                                     ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.1,
+                                                      child: Text(
+                                                        snapshot.data![index]
+                                                            .productName,
+                                                        style: TextStyle(
+                                                          color: AppTheme
+                                                              .whiteselClr,
+                                                          fontSize:
+                                                              Get.width * 0.01,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.1,
+                                                      child: Text(
+                                                        snapshot.data![index]
+                                                            .vendorName,
+                                                        style: TextStyle(
+                                                          color: AppTheme
+                                                              .whiteselClr,
+                                                          fontSize:
+                                                              Get.width * 0.01,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.1,
+                                                      child: Text(
+                                                        snapshot.data![index]
+                                                            .category,
+                                                        style: TextStyle(
+                                                          color: AppTheme
+                                                              .whiteselClr,
+                                                          fontSize:
+                                                              Get.width * 0.01,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.07,
+                                                      child: Text(
+                                                        snapshot.data![index]
+                                                            .quantitySold
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          color: AppTheme
+                                                              .whiteselClr,
+                                                          fontSize:
+                                                              Get.width * 0.01,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                  width: Get.width * 0.1,
-                                                  child: Text(
-                                                    snapshot.data![index]
-                                                        .productName,
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppTheme.whiteselClr,
-                                                      fontSize:
-                                                          Get.width * 0.01,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: Get.width * 0.1,
-                                                  child: Text(
-                                                    snapshot.data![index]
-                                                        .vendorName,
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppTheme.whiteselClr,
-                                                      fontSize:
-                                                          Get.width * 0.01,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: Get.width * 0.1,
-                                                  child: Text(
-                                                    snapshot
-                                                        .data![index].category,
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppTheme.whiteselClr,
-                                                      fontSize:
-                                                          Get.width * 0.01,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: Get.width * 0.07,
-                                                  child: Text(
-                                                    snapshot.data![index]
-                                                        .quantitySold
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppTheme.whiteselClr,
-                                                      fontSize:
-                                                          Get.width * 0.01,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
+                                                const Divider(
+                                                  indent: 10,
+                                                  endIndent: 10,
+                                                  color: AppTheme.lightGreyClr,
                                                 ),
                                               ],
                                             ),
@@ -368,72 +385,86 @@ class HomeScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  Column(
-                    children: [
-                      Text('Top Suppliers',
-                          style: TextStyle(
-                              fontSize: Get.width * 0.011,
-                              fontWeight: FontWeight.bold,
-                              color: AppTheme.whiteselClr)),
-                      // VendorProductChart(
-                      //   data: data,
-                      // )
-                      Container(
-                          padding: const EdgeInsets.only(top: 8),
-                          height: Get.height * 0.4,
-                          width: Get.width * 0.3,
-                          child: FutureBuilder(
-                              future:
-                                  homeScreenController.getTopVendorPieChart(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                    child: LoadingIndicator(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                        //padding: const EdgeInsets.only(top: 8),
+                        height: Get.height * 0.5,
+                        width: Get.width * 0.3,
+                        decoration: BoxDecoration(
+                            color: AppTheme.secondaryClr,
+                            borderRadius: BorderRadius.circular(10),
+                            //elevation: 5,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: AppTheme.darkThemeBackgroudClr
+                                      .withOpacity(0.5),
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                  spreadRadius: 2)
+                            ]),
+                        child: FutureBuilder(
+                            future: homeScreenController.getTopVendorPieChart(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: LoadingIndicator(),
+                                );
+                              } else if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                if (snapshot.hasError) {
+                                  return SizedBox(
+                                    child: Text('${snapshot.error}'),
                                   );
-                                } else if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  if (snapshot.hasError) {
-                                    return SizedBox(
-                                      child: Text('${snapshot.error}'),
-                                    );
-                                  } else if (snapshot.hasData) {
-                                    return SfCircularChart(
-                                      legend: const Legend(
-                                        isVisible: true,
-                                        overflowMode:
-                                            LegendItemOverflowMode.wrap,
-                                        position: LegendPosition.bottom,
-                                        textStyle: TextStyle(
-                                            color: AppTheme.whiteselClr),
-                                      ),
-                                      margin: const EdgeInsets.all(0),
-                                      series: <PieSeries<VendorData, String>>[
-                                        PieSeries<VendorData, String>(
-                                          radius: '100%',
-                                          dataSource: snapshot.data!,
-                                          xValueMapper:
-                                              (VendorData vendor, _) =>
-                                                  vendor.vendorName,
-                                          yValueMapper:
-                                              (VendorData vendor, _) =>
-                                                  vendor.percentage,
-                                          dataLabelMapper:
-                                              (VendorData vendor, _) =>
-                                                  vendor.vendorName,
-                                          // Display the vendor name on the data labels
-                                          dataLabelSettings:
-                                              const DataLabelSettings(
-                                                  isVisible: true),
-                                          enableTooltip: true,
-                                        )
-                                      ],
-                                    );
-                                  }
+                                } else if (snapshot.hasData) {
+                                  return SfCircularChart(
+                                    legend: const Legend(
+                                      isVisible: true,
+                                      overflowMode: LegendItemOverflowMode.wrap,
+                                      position: LegendPosition.bottom,
+                                      textStyle: TextStyle(
+                                          color: AppTheme.whiteselClr),
+                                    ),
+                                    margin: const EdgeInsets.all(0),
+                                    annotations: [
+                                      CircularChartAnnotation(
+                                        widget: Container(
+                                          child: Text(
+                                            'Sales Channel',
+                                            style: TextStyle(
+                                                color: AppTheme.whiteselClr,
+                                                fontSize: Get.width * 0.01,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                    series: <DoughnutSeries<VendorData,
+                                        String>>[
+                                      DoughnutSeries<VendorData, String>(
+                                        innerRadius: '60%',
+                                        radius: '80%',
+                                        dataSource: snapshot.data!,
+                                        xValueMapper: (VendorData vendor, _) =>
+                                            vendor.vendorName,
+                                        yValueMapper: (VendorData vendor, _) =>
+                                            vendor.percentage,
+                                        dataLabelMapper: (VendorData vendor,
+                                                _) =>
+                                            "${vendor.percentage.toStringAsFixed(2)}%",
+                                        // Display the vendor name on the data labels
+                                        dataLabelSettings:
+                                            const DataLabelSettings(
+                                                isVisible: true),
+                                        enableTooltip: true,
+                                      )
+                                    ],
+                                  );
                                 }
-                                return const SizedBox();
-                              }))
-                    ],
+                              }
+                              return const SizedBox();
+                            })),
                   )
                 ],
               ),

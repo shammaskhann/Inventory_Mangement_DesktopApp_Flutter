@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
+import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
 import 'package:shopify_admin_dashboard/views/purchase%20order/controller/purchaseorder_controller.dart';
 import 'package:intl/intl.dart';
@@ -138,8 +139,11 @@ class PurchaseOrderScreen extends StatelessWidget {
                 future: purchaseOrderController.getPurchaseOrders(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.0),
+                      child: Center(
+                        child: LoadingIndicator(),
+                      ),
                     );
                   } else {
                     return Expanded(
@@ -286,10 +290,10 @@ void showInvoiceDailog(PurchaseOrderController controller, int id) async {
       elevation: 1,
       backgroundColor: AppTheme.whiteselClr,
       child: Container(
-        height: Get.height * 0.6,
         width: Get.width * 0.3,
         padding: const EdgeInsets.all(20),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
@@ -301,43 +305,42 @@ void showInvoiceDailog(PurchaseOrderController controller, int id) async {
               ),
             ),
             const SizedBox(height: 20),
-            Expanded(
-              child: FutureBuilder(
-                future: controller.getIvoiceDetail(id),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildInvoiceDetail(
-                          title: 'Invoice ID:',
-                          value: '${snapshot.data[0]['InvoiceID']}',
-                        ),
-                        _buildInvoiceDetail(
-                          title: 'Supplier Name:',
-                          value: '${snapshot.data[0]['SupplierName']}',
-                        ),
-                        _buildInvoiceDetail(
-                          title: 'Total Cost:',
-                          value: '\$${snapshot.data[0]['TotalCost']}',
-                        ),
-                        _buildInvoiceDetail(
-                          title: 'Payment Status:',
-                          value: '${snapshot.data[0]['PaymentStatus']}',
-                        ),
-                        _buildInvoiceDetail(
-                          title: 'Date of Issue:',
-                          value: formatDate(snapshot.data[0]['DateOfIssue']),
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),
+            FutureBuilder(
+              future: controller.getIvoiceDetail(id),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInvoiceDetail(
+                        title: 'Invoice ID:',
+                        value: '${snapshot.data[0]['InvoiceID']}',
+                      ),
+                      _buildInvoiceDetail(
+                        title: 'Supplier Name:',
+                        value: '${snapshot.data[0]['SupplierName']}',
+                      ),
+                      _buildInvoiceDetail(
+                        title: 'Total Cost:',
+                        value: '\$${snapshot.data[0]['TotalCost']}',
+                      ),
+                      _buildInvoiceDetail(
+                        title: 'Payment Status:',
+                        value: '${snapshot.data[0]['PaymentStatus']}',
+                      ),
+                      _buildInvoiceDetail(
+                        title: 'Date of Issue:',
+                        value: formatDate(snapshot.data[0]['DateOfIssue']),
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
             const SizedBox(height: 20),
             Align(
@@ -359,6 +362,7 @@ void showInvoiceDailog(PurchaseOrderController controller, int id) async {
 
 Widget _buildInvoiceDetail({String? title, String? value}) {
   return Column(
+    mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(

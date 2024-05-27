@@ -98,7 +98,7 @@ class OrderController extends GetxController {
     // result.forEach((element) {
     //   orderList.add(OrderView.fromJson(element));
     // });
-    log(result.toString());
+    //log(result.toString());
     return result;
   }
 

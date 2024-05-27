@@ -179,11 +179,11 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.getCustomers}");
-      log("Getting Customers: $url");
+      //log("Getting Customers: $url");
       final result = await http.get(url);
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        log("Customers: $response");
+        //log("Customers: $response");
         return response;
       } else {
         log("Error: ${result.body}");

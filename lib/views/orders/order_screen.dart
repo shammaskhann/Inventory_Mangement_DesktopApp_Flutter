@@ -535,7 +535,7 @@ class OrderScreen extends StatelessWidget {
                                 .toList(),
                             onChanged: (String? value) {
                               if (value != null) {
-                                log('Selected Customer ID: $value');
+                                // log('Selected Customer ID: $value');
                                 controller.selectedCustomerID.value =
                                     int.parse(value);
                               }
@@ -1118,7 +1118,7 @@ paymentDetailDailog(OrderController controller, int OrderID) {
               FutureBuilder(
                 future: controller.getPaymentByOrderID(OrderID),
                 builder: (context, snapshot) {
-                  log('Payment Details: ${snapshot.data}');
+                  //log('Payment Details: ${snapshot.data}');
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else {

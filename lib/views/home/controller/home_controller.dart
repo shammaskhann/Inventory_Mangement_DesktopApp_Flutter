@@ -58,7 +58,7 @@ class HomeController extends GetxController {
   }
 
   Future<List<TopSellingProductModel>> getTopSellingProducts() async {
-    log("Getting Top Selling Products");
+    //("Getting Top Selling Products");
     List<TopSellingProductModel> topSellingProducts = [];
     final res = await ApiClient.getTopSellingProducts();
     //add in TopSellingProductModel
@@ -76,14 +76,14 @@ class HomeController extends GetxController {
   }
 
   Future<List<VendorData>> getTopVendorPieChart() async {
-    log("Getting Top Vendor Pie Chart");
+    // log("Getting Top Vendor Pie Chart");
     List<VendorData> topVendorPieChart = [];
     final res = await ApiClient.getTopVendorPieChart();
     //add in VendorData
     for (var item in res) {
       //log(item.toString());
       topVendorPieChart
-          .add(VendorData(item['SupplierName'], item['Percentage']));
+          .add(VendorData(item['Type'], item['Percentage'].toDouble()));
     }
     //log(topVendorPieChart.toString());
     return topVendorPieChart;

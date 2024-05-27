@@ -7,7 +7,7 @@ import 'package:shopify_admin_dashboard/services/API/API_Client.dart';
 class PurchaseOrderController extends GetxController {
   Future<List<PurchaseOrder>> getPurchaseOrders() async {
     final res = await ApiClient.getPurchaseOrder();
-    log(res.toString());
+    // log(res.toString());
     List<PurchaseOrder> purchaseOrders = [];
 
     if (res != null) {
