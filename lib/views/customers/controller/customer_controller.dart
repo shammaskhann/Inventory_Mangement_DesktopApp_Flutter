@@ -10,6 +10,12 @@ class CustomersController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+
+  final TextEditingController updateNameController = TextEditingController();
+  final TextEditingController updateEmailController = TextEditingController();
+  final TextEditingController updateAddressController = TextEditingController();
+  final TextEditingController updatePhoneController = TextEditingController();
+
   bool refrresh = false;
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -82,5 +88,38 @@ class CustomersController extends GetxController {
       }
     }
     return customers;
+  }
+
+  Future updateCustomer(int id) async {
+    final res = await ApiClient.updateCustomer(
+      customerID: id,
+      name: updateNameController.text,
+      email: updateEmailController.text,
+      phone: updatePhoneController.text,
+      address: updateAddressController.text,
+    );
+    updateNameController.clear();
+    updateEmailController.clear();
+    updateAddressController.clear();
+    updatePhoneController.clear();
+    String msg = res['message'];
+    if (msg == "Customer Updated Successfully!") {
+      Get.back(); // Close the dialog
+      Get.snackbar(
+        'Success',
+        msg,
+        backgroundColor: AppTheme.grasGreenClr,
+        colorText: Colors.white,
+      );
+      refrresh = !refrresh;
+      update();
+    } else {
+      Get.snackbar(
+        'Error',
+        msg,
+        backgroundColor: AppTheme.grasGreenClr,
+        colorText: Colors.white,
+      );
+    }
   }
 }

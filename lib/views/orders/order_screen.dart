@@ -32,6 +32,9 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final text16Font = width * 0.008;
+
     final OrderController orderController = Get.put(OrderController());
     return Container(
       color: AppTheme.darkThemeBackgroudClr,
@@ -374,7 +377,7 @@ class OrderScreen extends StatelessWidget {
                         height: Get.height * 0.2,
                         child: const Center(child: LoadingIndicator()));
                   } else {
-                    return GetBuilder(
+                    return GetBuilder<OrderController>(
                         init: orderController,
                         builder: (controller) {
                           return ListView.builder(
@@ -382,6 +385,9 @@ class OrderScreen extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: snapshot.data?.length,
                             itemBuilder: (context, index) {
+                              final status = snapshot.data?[index]
+                                      ['FulfillmentStatus'] ??
+                                  'N/A';
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: FocusedMenuHolder(
@@ -418,54 +424,312 @@ class OrderScreen extends StatelessWidget {
                                   child: Container(
                                     decoration: const BoxDecoration(
                                         color: AppTheme.secondaryClr),
-                                    child: CustomerWidget(
-                                      orderId: snapshot.data?[index]['OrderID']
-                                              .toString() ??
-                                          'N/A',
-                                      customer: snapshot.data?[index]
-                                              ['Customer'] ??
-                                          'N/A',
-                                      product: snapshot.data?[index]
-                                              ['Product'] ??
-                                          'N/A',
-                                      date: formatDate(snapshot.data?[index]
-                                              ['OrderDate']) ??
-                                          'N/A',
-                                      status: snapshot.data?[index]
-                                              ['FulfillmentStatus'] ??
-                                          'N/A',
-                                      channel: snapshot.data?[index]
-                                              ['ChannelName'] ??
-                                          'N/A',
-                                      total: snapshot.data?[index]['Total']
-                                              .toString() ??
-                                          'N/A',
-                                      subTotal: snapshot.data?[index]
-                                                  ['Subtotal']
-                                              .toString() ??
-                                          'N/A',
-                                      shipping: snapshot.data?[index]
-                                                  ['Shipping']
-                                              .toString() ??
-                                          'N/A',
-                                      discountAmount: snapshot.data?[index]
-                                                  ['DiscountAmount']
-                                              .toString() ??
-                                          'N/A',
-                                      giftCard: snapshot.data?[index]
-                                                  ['GiftCard']
-                                              .toString() ??
-                                          'N/A',
-                                      disountCode: snapshot.data?[index]
-                                              ['DiscountCode'] ??
-                                          'N/A',
-                                      paymentStatus: snapshot.data![index]
-                                          ['PaymentStatus'],
-                                      quantity: snapshot.data?[index]
-                                                  ['quantity']
-                                              .toString() ??
-                                          'N/A',
-                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10.0, horizontal: 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                snapshot.data?[index]['OrderID']
+                                                        .toString() ??
+                                                    'N/A',
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.07,
+                                              child: Text(
+                                                snapshot.data?[index]
+                                                            ['Customer']
+                                                        .toString() ??
+                                                    'N/A',
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.11,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    snapshot.data?[index]
+                                                                ['Product']
+                                                            .toString() ??
+                                                        'N/A',
+                                                    style: TextStyle(
+                                                        color: AppTheme
+                                                            .whiteselClr,
+                                                        fontSize: text16Font,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  Text(
+                                                    ' x${snapshot.data?[index]['quantity'].toString() ?? 'N/A'}',
+                                                    style: TextStyle(
+                                                        color: Colors.grey[400],
+                                                        fontSize: text16Font,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                formatDate(snapshot.data?[index]
+                                                        ['OrderDate']) ??
+                                                    'N/A',
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.07,
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment: (status ==
+                                                        'Processing')
+                                                    ? MainAxisAlignment.end
+                                                    : MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    status,
+                                                    style: TextStyle(
+                                                        color: (status ==
+                                                                'Processing')
+                                                            ? Colors
+                                                                .yellowAccent
+                                                            : (status ==
+                                                                    'Shipped')
+                                                                ? Colors
+                                                                    .greenAccent
+                                                                : Colors
+                                                                    .redAccent,
+                                                        fontSize: text16Font,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+
+                                                  //button for fulfillment
+                                                  if (status == 'Processing')
+                                                    IconButton(
+                                                      onPressed: () async {
+                                                        log('update fullfilmentOrder ID: ${snapshot.data?[index]['OrderID']}');
+
+                                                        await controller
+                                                            .updateFulfillmentStatus(
+                                                                snapshot.data?[
+                                                                        index][
+                                                                    'OrderID']);
+
+                                                        controller
+                                                            .update(); // Add this line
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.archive,
+                                                        color:
+                                                            Colors.yellowAccent,
+                                                      ),
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.1,
+                                              child: Text(
+                                                snapshot.data?[index]
+                                                            ['ChannelName']
+                                                        .toString() ??
+                                                    'N/A',
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                snapshot.data?[index]
+                                                        ['DiscountCode'] ??
+                                                    'N/A',
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                (snapshot.data?[index]
+                                                                ['GiftCard']
+                                                            .toString() ==
+                                                        'null')
+                                                    ? 'N/A'
+                                                    : snapshot.data![index]
+                                                            ['GiftCard']
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                "\$${snapshot.data?[index]['Subtotal'].toString() ?? 'N/A'}",
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                "\$${"\$${snapshot.data?[index]['DiscountAmount'].toString() ?? 'N/A'}"}",
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                "\$${snapshot.data?[index]['Shipping'].toString() ?? 'N/A'}",
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                "\$${snapshot.data?[index]['Total'].toString() ?? 'N/A'}",
+                                                style: TextStyle(
+                                                    color: AppTheme.whiteselClr,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                              child: Text(
+                                                snapshot.data?[index]
+                                                            ['PaymentStatus']
+                                                        .toString() ??
+                                                    'N/A',
+                                                style: TextStyle(
+                                                    color: (snapshot
+                                                                .data?[index][
+                                                                    'PaymentStatus']
+                                                                .toString() ==
+                                                            'Paid')
+                                                        ? Colors.greenAccent
+                                                        : Colors.yellowAccent,
+                                                    fontSize: text16Font,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+
+                                    // child: CustomerWidget(
+                                    //   orderId: snapshot.data?[index]
+                                    //           ['OrderID'] ??
+                                    //       'N/A',
+                                    //   customer: snapshot.data?[index]
+                                    //           ['Customer'] ??
+                                    //       'N/A',
+                                    //   product: snapshot.data?[index]
+                                    //           ['Product'] ??
+                                    //       'N/A',
+                                    //   date: formatDate(snapshot.data?[index]
+                                    //           ['OrderDate']) ??
+                                    //       'N/A',
+                                    //   status: snapshot.data?[index]
+                                    //           ['FulfillmentStatus'] ??
+                                    //       'N/A',
+                                    //   channel: snapshot.data?[index]
+                                    //           ['ChannelName'] ??
+                                    //       'N/A',
+                                    //   total: snapshot.data?[index]['Total']
+                                    //           .toString() ??
+                                    //       'N/A',
+                                    //   subTotal: snapshot.data?[index]
+                                    //               ['Subtotal']
+                                    //           .toString() ??
+                                    //       'N/A',
+                                    //   shipping: snapshot.data?[index]
+                                    //               ['Shipping']
+                                    //           .toString() ??
+                                    //       'N/A',
+                                    //   discountAmount: snapshot.data?[index]
+                                    //               ['DiscountAmount']
+                                    //           .toString() ??
+                                    //       'N/A',
+                                    //   giftCard: snapshot.data?[index]
+                                    //               ['GiftCard']
+                                    //           .toString() ??
+                                    //       'N/A',
+                                    //   disountCode: snapshot.data?[index]
+                                    //           ['DiscountCode'] ??
+                                    //       'N/A',
+                                    //   paymentStatus: snapshot.data![index]
+                                    //       ['PaymentStatus'],
+                                    //   quantity: snapshot.data?[index]
+                                    //               ['quantity']
+                                    //           .toString() ??
+                                    //       'N/A',
+                                    //   controller: orderController,
+                                    // ),
                                   ),
                                 ),
                               );

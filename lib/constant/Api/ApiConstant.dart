@@ -20,7 +20,13 @@ class ApiConstant {
 
   static String getShippers = '/api/shippers/getShippers';
   static String getSuppliers = '/api/suppliers/getSuppliers';
+
+  //Purchase Order
   static String getPurchaseOrder = '/api/purchaseOrder/getPurchaseOrder';
+  static String getUpdatePurchaseOrderStatus =
+      '/api/purchaseOrder/UpdatePurchaseOrderStatus';
+  static String getUpdatePurchaseOrderPaymenttatu =
+      '/api/purchaseOrder/UpdatePurchaseOrderPaymentStatus';
 
   static String getSalesChannel = '/api/saleschannel/getSalesChannel';
   static String getCustomers = '/api/customers/getCustomers';
@@ -28,13 +34,16 @@ class ApiConstant {
   static String getInvoiceID = '/api/invoices/getInvoice';
   static String getInvoices = '/api/invoices/getInvoices';
   //Product
+  //Customer
   static String postCustomer = '/api/customers/addCustomer';
+  static String postUpdateCustomer = '/api/customers/updateCustomer';
   static String top5SellingProducts = '/api/products//getTop5SellingProduct';
   static String getInventory = '/api/inventory/getInventory';
 
 //Orders
   static String postOrder = '/api/orders/insertOrder';
   static String getOrderAccToParam = '/api/orders/getOrderAccToParam';
+  static String getUpdateFulfillmentStatus = '/api/orders/fulfillOrder';
   //dropDowns
   static String shipperDropDown = '/api/dropdown/getShipperDropDown';
   static String customerDropDown = '/api/dropdown/getCustomerDropDown';

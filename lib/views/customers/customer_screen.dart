@@ -153,124 +153,143 @@ class CustomerScreen extends StatelessWidget {
               height: 10,
             ),
 //Customer Data
-            GetBuilder(
-                init: customersController,
-                builder: (controller) {
-                  return FutureBuilder(
-                    future: customersController.getCustomers(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Container(
-                          height: Get.height * 0.6,
-                          width: Get.width * 0.8,
-                          child: const Center(
-                            child: LoadingIndicator(),
-                          ),
-                        );
-                      } else {
-                        if (snapshot.hasError) {
-                          log('Error: ${snapshot.error}');
+            Expanded(
+              child: GetBuilder(
+                  init: customersController,
+                  builder: (controller) {
+                    return FutureBuilder(
+                      future: customersController.getCustomers(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Container(
                             height: Get.height * 0.6,
                             width: Get.width * 0.8,
                             child: const Center(
-                              child: Text(
-                                'Error loading data',
-                                style: TextStyle(color: AppTheme.whiteselClr),
-                              ),
+                              child: LoadingIndicator(),
                             ),
                           );
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            Customer customer = snapshot.data![index];
+                        } else {
+                          if (snapshot.hasError) {
+                            log('Error: ${snapshot.error}');
                             return Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              height: Get.height * 0.6,
                               width: Get.width * 0.8,
-                              color: index.isEven
-                                  ? AppTheme.darkThemeBackgroudClr
-                                  : AppTheme.secondaryClr,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: Get.width * 0.07,
-                                    child: Text(
-                                      '${customer.customerId}',
-                                      style: TextStyle(
-                                        color: AppTheme.whiteselClr,
-                                        fontSize: Get.width * 0.009,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.1,
-                                    child: Text(
-                                      customer.name,
-                                      style: TextStyle(
-                                        color: AppTheme.whiteselClr,
-                                        fontSize: Get.width * 0.009,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.1,
-                                    child: Text(
-                                      customer.phoneNumber,
-                                      style: TextStyle(
-                                        color: AppTheme.whiteselClr,
-                                        fontSize: Get.width * 0.009,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.13,
-                                    child: Text(
-                                      customer.email,
-                                      style: TextStyle(
-                                        color: AppTheme.whiteselClr,
-                                        fontSize: Get.width * 0.009,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.13,
-                                    child: Text(
-                                      customer.address,
-                                      style: TextStyle(
-                                        color: AppTheme.whiteselClr,
-                                        fontSize: Get.width * 0.009,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.1,
-                                    child: Text(
-                                      (customer.totalAmountSpent != null)
-                                          ? '\$${customer.totalAmountSpent}'
-                                          : 'N/A',
-                                      style: TextStyle(
-                                        color: AppTheme.whiteselClr,
-                                        fontSize: Get.width * 0.009,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
+                              child: const Center(
+                                child: Text(
+                                  'Error loading data',
+                                  style: TextStyle(color: AppTheme.whiteselClr),
+                                ),
                               ),
                             );
-                          },
-                        );
-                      }
-                    },
-                  );
-                }),
+                          }
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              Customer customer = snapshot.data![index];
+                              return Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                width: Get.width * 0.8,
+                                color: index.isEven
+                                    ? AppTheme.darkThemeBackgroudClr
+                                    : AppTheme.secondaryClr,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width * 0.07,
+                                      child: Text(
+                                        '${customer.customerId}',
+                                        style: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontSize: Get.width * 0.009,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.1,
+                                      child: Text(
+                                        customer.name,
+                                        style: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontSize: Get.width * 0.009,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.1,
+                                      child: Text(
+                                        customer.phoneNumber,
+                                        style: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontSize: Get.width * 0.009,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.13,
+                                      child: Text(
+                                        customer.email,
+                                        style: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontSize: Get.width * 0.009,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.13,
+                                      child: Text(
+                                        customer.address,
+                                        style: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontSize: Get.width * 0.009,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.1,
+                                      child: Text(
+                                        (customer.totalAmountSpent != null)
+                                            ? '\$${customer.totalAmountSpent}'
+                                            : 'N/A',
+                                        style: TextStyle(
+                                          color: AppTheme.whiteselClr,
+                                          fontSize: Get.width * 0.009,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    //edit Button
+                                    IconButton(
+                                      onPressed: () {
+                                        showEditCustomerDailog(
+                                            customer.customerId,
+                                            customer.name,
+                                            customer.email,
+                                            customer.address,
+                                            customer.phoneNumber);
+                                      },
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        color: AppTheme.whiteselClr,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
+                    );
+                  }),
+            ),
           ],
         ),
       ),
@@ -373,6 +392,117 @@ void showAddCustomerDialog() {
                 title: 'Add Customer',
                 onTap: () {
                   controller.addCustomer();
+                },
+                icon: const SizedBox(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+showEditCustomerDailog(int customerID, String name, String email,
+    String address, String phoneNumber) {
+  final controller = Get.put(CustomersController());
+  controller.nameController.text = name;
+  controller.emailController.text = email;
+  controller.addressController.text = address;
+  controller.phoneController.text = phoneNumber;
+
+  Get.dialog(
+    Dialog(
+      elevation: 1,
+      backgroundColor: AppTheme.whiteselClr,
+      child: Container(
+        width: Get.width * 0.4,
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Edit Customer',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: controller.nameController,
+                decoration: const InputDecoration(
+                  floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppTheme.grasGreenClr),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: controller.emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppTheme.grasGreenClr),
+                  ),
+                ),
+                validator: controller.validateEmail,
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: controller.addressController,
+                decoration: const InputDecoration(
+                  floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
+                  labelText: 'Address',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppTheme.grasGreenClr),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your address';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: controller.phoneController,
+                decoration: const InputDecoration(
+                  floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppTheme.grasGreenClr),
+                  ),
+                ),
+                validator: controller.validatePhone,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  PhoneNumberFormatter.maskFormatter
+                ],
+              ),
+              const SizedBox(height: 20),
+              CustomButton(
+                title: 'Update Customer',
+                onTap: () {
+                  controller.updateCustomer(customerID);
                 },
                 icon: const SizedBox(),
               ),

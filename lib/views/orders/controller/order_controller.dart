@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 
 class OrderController extends GetxController {
   bool rrfread = false;
+  RxBool listRef = false.obs;
   //Update Payment Staus Controller
   RxString newPaymentStatus = ''.obs;
   // Update TrackingStatus
@@ -323,6 +324,24 @@ class OrderController extends GetxController {
       rrfread = !rrfread;
       update();
       newTrackingStatus.value = '';
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future updateFulfillmentStatus(int orderID) async {
+    try {
+      var response =
+          await ApiClient.getUpdateFulfillmentStatus(orderID: orderID);
+      rrfread = !rrfread;
+      var temp = selectedTimeSpan.value;
+      if (temp == 'All') {
+        selectedTimeSpan.value = 'Today';
+      } else {
+        selectedTimeSpan.value = 'All';
+      }
+      selectedTimeSpan.value = temp;
+      update();
     } catch (e) {
       log(e.toString());
     }

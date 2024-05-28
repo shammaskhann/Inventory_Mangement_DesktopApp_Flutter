@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
@@ -34,7 +36,7 @@ class PurchaseOrderScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Spacer(),
+                Spacer(),
               ],
             ),
             const SizedBox(height: 20),
@@ -107,14 +109,20 @@ class PurchaseOrderScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     width: Get.width * 0.07,
-                    child: Text(
-                      'Status',
-                      style: TextStyle(
-                        color: AppTheme.whiteselClr,
-                        fontSize: Get.width * 0.009,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Status',
+                          style: TextStyle(
+                            color: AppTheme.whiteselClr,
+                            fontSize: Get.width * 0.009,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                   //invoice
@@ -135,140 +143,216 @@ class PurchaseOrderScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             //list of purchase orders
-            FutureBuilder(
-                future: purchaseOrderController.getPurchaseOrders(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20.0),
-                      child: Center(
-                        child: LoadingIndicator(),
-                      ),
-                    );
-                  } else {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            color: index.isEven
-                                ? AppTheme.darkThemeBackgroudClr
-                                : AppTheme.secondaryClr,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 0, vertical: 15),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: Get.width * 0.07,
-                                  child: Text(
-                                    snapshot.data![index].purchaseOrderID
-                                        .toString(),
-                                    style: TextStyle(
-                                      color: AppTheme.whiteselClr,
-                                      fontSize: Get.width * 0.009,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.1,
-                                  child: Text(
-                                    snapshot.data![index].product,
-                                    style: TextStyle(
-                                      color: AppTheme.whiteselClr,
-                                      fontSize: Get.width * 0.009,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.1,
-                                  child: Text(
-                                    snapshot.data![index].supplierName,
-                                    style: TextStyle(
-                                      color: AppTheme.whiteselClr,
-                                      fontSize: Get.width * 0.009,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.07,
-                                  child: Text(
-                                    snapshot.data![index].orderedQuantity
-                                        .toString(),
-                                    style: TextStyle(
-                                      color: AppTheme.whiteselClr,
-                                      fontSize: Get.width * 0.009,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.07,
-                                  child: Text(
-                                      snapshot.data![index].totalCost
-                                          .toString(),
-                                      style: TextStyle(
-                                        color: AppTheme.whiteselClr,
-                                        fontSize: Get.width * 0.009,
-                                      ),
-                                      textAlign: TextAlign.center),
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.07,
-                                  child: Text(
-                                    snapshot.data![index].status ?? "NULL",
-                                    style: TextStyle(
-                                      color: (snapshot.data![index].status ==
-                                              'Pending')
-                                          ? Colors.yellowAccent
-                                          : Colors.greenAccent,
-                                      fontSize: Get.width * 0.009,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.1,
-                                  child: Text(
-                                    formatDate(
-                                      snapshot.data![index].expectedArrivalDate
-                                          .toString(),
-                                    ),
-                                    style: TextStyle(
-                                      color: AppTheme.whiteselClr,
-                                      fontSize: Get.width * 0.009,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    showInvoiceDailog(purchaseOrderController,
-                                        snapshot.data![index].purchaseOrderID);
-                                  },
-                                  child: Text(
-                                    'View Invoice',
-                                    style: TextStyle(
-                                      color: AppTheme.grasGreenClr,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: AppTheme.grasGreenClr,
-                                      fontSize: Get.width * 0.009,
-                                    ),
-                                  ),
-                                )
-                              ],
+            GetBuilder(
+                init: purchaseOrderController,
+                builder: (controller) {
+                  return FutureBuilder(
+                      future: purchaseOrderController.getPurchaseOrders(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20.0),
+                            child: Center(
+                              child: LoadingIndicator(),
                             ),
                           );
-                        },
-                      ),
-                    );
-                  }
+                        } else {
+                          return Expanded(
+                            child: ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  color: index.isEven
+                                      ? AppTheme.darkThemeBackgroudClr
+                                      : AppTheme.secondaryClr,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 15),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: Get.width * 0.07,
+                                        child: Text(
+                                          snapshot.data![index].purchaseOrderID
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: AppTheme.whiteselClr,
+                                            fontSize: Get.width * 0.009,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.1,
+                                        child: Text(
+                                          snapshot.data![index].product,
+                                          style: TextStyle(
+                                            color: AppTheme.whiteselClr,
+                                            fontSize: Get.width * 0.009,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.1,
+                                        child: Text(
+                                          snapshot.data![index].supplierName,
+                                          style: TextStyle(
+                                            color: AppTheme.whiteselClr,
+                                            fontSize: Get.width * 0.009,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.07,
+                                        child: Text(
+                                          snapshot.data![index].orderedQuantity
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: AppTheme.whiteselClr,
+                                            fontSize: Get.width * 0.009,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.07,
+                                        child: Text(
+                                            snapshot.data![index].totalCost
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: AppTheme.whiteselClr,
+                                              fontSize: Get.width * 0.009,
+                                            ),
+                                            textAlign: TextAlign.center),
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.07,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              snapshot.data![index].status ??
+                                                  "NULL",
+                                              style: TextStyle(
+                                                color: (snapshot.data![index]
+                                                            .status ==
+                                                        'Pending')
+                                                    ? Colors.yellowAccent
+                                                    : Colors.greenAccent,
+                                                fontSize: Get.width * 0.009,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            (snapshot.data![index].status ==
+                                                    'Pending')
+                                                ? IconButton(
+                                                    onPressed: () {
+                                                      purchaseOrderController
+                                                          .updatePurchaseOrderStatus(
+                                                              snapshot
+                                                                  .data![index]
+                                                                  .purchaseOrderID);
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.local_shipping,
+                                                        color: Colors.yellow))
+                                                : const Icon(Icons.check_circle,
+                                                    color: Colors.green),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.1,
+                                        child: Text(
+                                          formatDate(
+                                            snapshot.data![index]
+                                                .expectedArrivalDate
+                                                .toString(),
+                                          ),
+                                          style: TextStyle(
+                                            color: AppTheme.whiteselClr,
+                                            fontSize: Get.width * 0.009,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          showInvoiceDailog(
+                                              purchaseOrderController,
+                                              snapshot.data![index]
+                                                  .purchaseOrderID);
+                                        },
+                                        child: Text(
+                                          'View Invoice',
+                                          style: TextStyle(
+                                            color: AppTheme.grasGreenClr,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor:
+                                                AppTheme.grasGreenClr,
+                                            fontSize: Get.width * 0.009,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      //Minimilistic desgin Mark as Recieved button
+                                      (snapshot.data![index].status ==
+                                              'Pending')
+                                          ? InkWell(
+                                              onTap: () {
+                                                purchaseOrderController
+                                                    .updatePurchaseOrderStatus(
+                                                        snapshot.data![index]
+                                                            .purchaseOrderID);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color: AppTheme.grasGreenClr,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: const Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Mark as Recieved',
+                                                      style: TextStyle(
+                                                          color: AppTheme
+                                                              .whiteselClr,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          : const SizedBox(),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      });
                 }),
           ],
         ),
@@ -329,9 +413,13 @@ void showInvoiceDailog(PurchaseOrderController controller, int id) async {
                         title: 'Total Cost:',
                         value: '\$${snapshot.data[0]['TotalCost']}',
                       ),
-                      _buildInvoiceDetail(
+                      _CustombuildInvoiceDetail(
                         title: 'Payment Status:',
                         value: '${snapshot.data[0]['PaymentStatus']}',
+                        onPressed: () {
+                          controller.updatePurchaseOrderPaymentStatus(
+                              snapshot.data[0]['purchaseOrderid']);
+                        },
                       ),
                       _buildInvoiceDetail(
                         title: 'Date of Issue:',
@@ -380,6 +468,56 @@ Widget _buildInvoiceDetail({String? title, String? value}) {
           color: AppTheme.darkThemeBackgroudClr,
           fontSize: 18,
         ),
+      ),
+      const SizedBox(height: 10),
+    ],
+  );
+}
+
+Widget _CustombuildInvoiceDetail({String? title, String? value, onPressed}) {
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title ?? '',
+        style: const TextStyle(
+          color: AppTheme.darkThemeBackgroudClr,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      const SizedBox(height: 5),
+      Row(
+        children: [
+          Text(
+            value ?? '',
+            style: TextStyle(
+                color: (value == 'Paid')
+                    ? Colors.greenAccent
+                    : (value == 'Pending')
+                        ? Colors.yellowAccent
+                        : Colors.redAccent,
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 10),
+          (value == 'Pending')
+              ? TextButton(
+                  onPressed: onPressed,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.greenAccent),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    padding: const EdgeInsets.all(6),
+                    child: const Text(
+                      'Pay Now',
+                      style: TextStyle(color: Colors.greenAccent),
+                    ),
+                  ))
+              : const SizedBox(),
+        ],
       ),
       const SizedBox(height: 10),
     ],

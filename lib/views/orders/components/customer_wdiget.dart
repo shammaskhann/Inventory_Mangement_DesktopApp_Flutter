@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../constant/theme/app_themes.dart';
+import '../controller/order_controller.dart';
 
 class CustomerWidget extends StatelessWidget {
-  final String orderId;
+  final int orderId;
   final String customer;
   final String product;
   final String quantity;
@@ -17,6 +21,7 @@ class CustomerWidget extends StatelessWidget {
   final String subTotal;
   final String total;
   final String paymentStatus;
+  final controller;
 
   const CustomerWidget({
     Key? key,
@@ -34,12 +39,14 @@ class CustomerWidget extends StatelessWidget {
     required this.subTotal,
     required this.total,
     required this.paymentStatus,
+    required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final text16Font = width * 0.008;
+
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
         child: Row(
@@ -50,7 +57,7 @@ class CustomerWidget extends StatelessWidget {
             SizedBox(
               width: width * 0.05,
               child: Text(
-                orderId,
+                orderId.toString(),
                 style: TextStyle(
                     color: AppTheme.whiteselClr,
                     fontSize: text16Font,
@@ -107,17 +114,41 @@ class CustomerWidget extends StatelessWidget {
             ),
             SizedBox(
               width: width * 0.07,
-              child: Text(
-                status,
-                style: TextStyle(
-                    color: (status == 'Processing')
-                        ? Colors.yellowAccent
-                        : (status == 'Shipped')
-                            ? Colors.greenAccent
-                            : Colors.redAccent,
-                    fontSize: text16Font,
-                    fontWeight: FontWeight.w400),
-                textAlign: TextAlign.center,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: (status == 'Processing')
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.center,
+                children: [
+                  Text(
+                    status,
+                    style: TextStyle(
+                        color: (status == 'Processing')
+                            ? Colors.yellowAccent
+                            : (status == 'Shipped')
+                                ? Colors.greenAccent
+                                : Colors.redAccent,
+                        fontSize: text16Font,
+                        fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  //button for fulfillment
+                  if (status == 'Processing')
+                    IconButton(
+                      onPressed: () async {
+                        log('update fullfilmentOrder ID: $orderId');
+                        controller.rrfread = !controller.rrfread;
+                        await controller.updateFulfillmentStatus(orderId);
+                        bool val = controller.listRef.value;
+                        controller.listRef.value = !val;
+                      },
+                      icon: const Icon(
+                        Icons.archive,
+                        color: Colors.yellowAccent,
+                      ),
+                    ),
+                ],
               ),
             ),
             SizedBox(

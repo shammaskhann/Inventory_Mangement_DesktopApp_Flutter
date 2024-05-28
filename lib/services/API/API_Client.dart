@@ -695,4 +695,98 @@ class ApiClient {
       log(e.toString());
     }
   }
+
+  static Future updatePurchaseOrderStatus(int purchaseOrderID) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getUpdatePurchaseOrderStatus}/$purchaseOrderID");
+      //log("Updating Purchase Order Status: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Purchase Order Status Updated: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future updatePurchaseOrderPaymentStatus(int purchaseOrderID) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getUpdatePurchaseOrderPaymenttatu}/$purchaseOrderID");
+      //log("Updating Purchase Order Payment Status: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Purchase Order Payment Status Updated: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future updateCustomer(
+      {required int customerID,
+      required String name,
+      required String email,
+      required String phone,
+      required String address}) async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postUpdateCustomer}");
+      //log("Updating Customer: $url");
+      final result = await http.post(
+        url,
+        body: jsonEncode({
+          'CustomerID': customerID,
+          'Name': name,
+          'Email': email,
+          'PhoneNumber': phone,
+          'Address': address,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Customer Updated: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getUpdateFulfillmentStatus({required int orderID}) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getUpdateFulfillmentStatus}/$orderID");
+      //log("Updating Fulfillment Status: $url");
+      final result = await http.put(
+        url,
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Fulfillment Status Updated: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }
