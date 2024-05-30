@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/custommer_dropdown.dart';
 import 'package:shopify_admin_dashboard/data/models/dropdowns/discount_dropdown.dart';
@@ -17,6 +18,7 @@ import 'package:shopify_admin_dashboard/services/API/API_Client.dart';
 import 'package:intl/intl.dart';
 
 class OrderController extends GetxController {
+  RxBool customButtonLoading = false.obs;
   bool rrfread = false;
   RxBool listRef = false.obs;
   //Update Payment Staus Controller
@@ -180,6 +182,7 @@ class OrderController extends GetxController {
   }
 
   void addOrder() async {
+    customButtonLoading.value = true;
     //check for validation if the selectedproduct,customerID,OrderDate,Shipper,Supplier payment are not empty
     if (selectedProductList.isNotEmpty &&
         selectedCustomerID.value != 0 &&
@@ -224,6 +227,7 @@ class OrderController extends GetxController {
         products: selectedProductList.toList(),
       );
       String msg = response['message'];
+      customButtonLoading.value = false;
       //log(response.toString());
       if (msg == "Product Added Successfully!") {
         Get.snackbar('Success', 'Order Added Successfully',
@@ -244,6 +248,7 @@ class OrderController extends GetxController {
 
         Get.close(1);
       } else {
+        customButtonLoading.value = false;
         Get.snackbar(
           'Error',
           'Error in adding order',
@@ -253,6 +258,7 @@ class OrderController extends GetxController {
       }
       //show snackbar and clear the form and exit the dialog
     } else {
+      customButtonLoading.value = false;
       Get.snackbar(
         'Error',
         'Please fill all the fields',
@@ -300,6 +306,7 @@ class OrderController extends GetxController {
   Future updatePaymentStatus(
     int orderID,
   ) async {
+    customButtonLoading.value = true;
     try {
       String newStatus =
           (newPaymentStatus.value == '') ? 'Pending' : newPaymentStatus.value;
@@ -308,13 +315,17 @@ class OrderController extends GetxController {
       rrfread = !rrfread;
       update();
       newPaymentStatus.value = '';
+      customButtonLoading.value = false;
+      upd();
       return response;
     } catch (e) {
       log(e.toString());
+      customButtonLoading.value = false;
     }
   }
 
   updateTrackingStatus(int orderID) async {
+    customButtonLoading = true.obs;
     try {
       String newStatus = (newTrackingStatus.value == '')
           ? 'In Transit'
@@ -323,9 +334,12 @@ class OrderController extends GetxController {
           orderID: orderID, newStatus: newStatus);
       rrfread = !rrfread;
       update();
+      customButtonLoading.value = false;
       newTrackingStatus.value = '';
+      upd();
     } catch (e) {
       log(e.toString());
+      customButtonLoading.value = false;
     }
   }
 
@@ -334,16 +348,36 @@ class OrderController extends GetxController {
       var response =
           await ApiClient.getUpdateFulfillmentStatus(orderID: orderID);
       rrfread = !rrfread;
-      var temp = selectedTimeSpan.value;
-      if (temp == 'All') {
-        selectedTimeSpan.value = 'Today';
-      } else {
-        selectedTimeSpan.value = 'All';
-      }
-      selectedTimeSpan.value = temp;
+      upd();
       update();
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  void upd() {
+    var temp = selectedTimeSpan.value;
+    if (temp == 'All') {
+      selectedTimeSpan.value = 'Today';
+    } else {
+      selectedTimeSpan.value = 'All';
+    }
+    selectedTimeSpan.value = temp;
+  }
+
+  RxBool delLoad = false.obs;
+  Future deleteOrder(int orderID) async {
+    delLoad.value = true;
+    try {
+      var resp = await ApiClient.deleteOrder(orderID: orderID);
+      rrfread = !rrfread;
+      delLoad.value = false;
+      upd();
+
+      return resp;
+    } catch (e) {
+      log(e.toString());
+      delLoad.value = false;
     }
   }
 }

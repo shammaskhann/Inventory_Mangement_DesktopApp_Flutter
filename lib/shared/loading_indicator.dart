@@ -4,13 +4,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../constant/theme/app_themes.dart';
 
 class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({super.key});
+  bool isWhiteClr = false;
+  LoadingIndicator({this.isWhiteClr = false, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: SpinKitFadingCircle(
-        color: AppTheme.oliverGreenClr,
+        color: (isWhiteClr) ? AppTheme.whiteselClr : AppTheme.grasGreenClr,
         size: 50.0,
       ),
     );

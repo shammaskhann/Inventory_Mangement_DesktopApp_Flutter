@@ -165,7 +165,7 @@ class CustomerScreen extends StatelessWidget {
                           return Container(
                             height: Get.height * 0.6,
                             width: Get.width * 0.8,
-                            child: const Center(
+                            child: Center(
                               child: LoadingIndicator(),
                             ),
                           );
@@ -406,10 +406,10 @@ void showAddCustomerDialog() {
 showEditCustomerDailog(int customerID, String name, String email,
     String address, String phoneNumber) {
   final controller = Get.put(CustomersController());
-  controller.nameController.text = name;
-  controller.emailController.text = email;
-  controller.addressController.text = address;
-  controller.phoneController.text = phoneNumber;
+  controller.updateNameController.text = name;
+  controller.updateEmailController.text = email;
+  controller.updateAddressController.text = address;
+  controller.updatePhoneController.text = phoneNumber;
 
   Get.dialog(
     Dialog(
@@ -429,7 +429,7 @@ showEditCustomerDailog(int customerID, String name, String email,
               ),
               const SizedBox(height: 20),
               TextFormField(
-                controller: controller.nameController,
+                controller: controller.updateNameController,
                 decoration: const InputDecoration(
                   floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
                   labelText: 'Name',
@@ -448,7 +448,7 @@ showEditCustomerDailog(int customerID, String name, String email,
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: controller.emailController,
+                controller: controller.updateEmailController,
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
@@ -462,7 +462,7 @@ showEditCustomerDailog(int customerID, String name, String email,
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: controller.addressController,
+                controller: controller.updateAddressController,
                 decoration: const InputDecoration(
                   floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
                   labelText: 'Address',
@@ -481,7 +481,7 @@ showEditCustomerDailog(int customerID, String name, String email,
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: controller.phoneController,
+                controller: controller.updatePhoneController,
                 decoration: const InputDecoration(
                   floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
                   labelText: 'Phone Number',

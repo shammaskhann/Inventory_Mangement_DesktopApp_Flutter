@@ -151,7 +151,7 @@ class ShipperScreen extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return const Center(child: LoadingIndicator());
+                                return Center(child: LoadingIndicator());
                               } else {
                                 return ListView.builder(
                                   itemCount: snapshot.data?.length ?? 0,
@@ -329,60 +329,74 @@ String formatDate(String date) {
 
 updateTrackingStatusDailog(
     ShipperController controller, int orderID, String currentStatus) {
-  Get.defaultDialog(
-    title: 'Update Tracking Status',
-    content: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: Column(
-        children: [
-          const SizedBox(height: 10),
-          Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(5),
+  Get.dialog(Dialog(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      child: Container(
+        width: Get.width * 0.4,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Update Tracking Status',
+              style: TextStyle(
+                color: AppTheme.secondaryClr,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
-              child: Obx(
-                () => DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    focusColor: Colors.transparent,
-                    value: controller.trackingStatus.value == ''
-                        ? null
-                        : controller.trackingStatus.value,
-                    isExpanded: true,
-                    hint: Text("${currentStatus}"),
-                    items: [
-                      'In Transit',
-                      'Out for Delivery',
-                      'Pending Pickup',
-                      'Delivered'
-                    ]
-                        .map((String item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(item),
-                            ))
-                        .toList(),
-                    onChanged: (String? value) {
-                      if (value != null) {
-                        controller.trackingStatus.value = value;
-                      }
-                    },
-                  ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-              )),
-          const SizedBox(height: 10),
-          CustomButton(
-              title: 'Update',
-              onTap: () async {
-                await controller.updateTrackingStatus(orderID);
-                Get.back();
-              },
-              icon: const Icon(
-                Icons.update_rounded,
-                color: AppTheme.whiteselClr,
-              )),
-        ],
+                child: Obx(
+                  () => DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      focusColor: Colors.transparent,
+                      value: controller.trackingStatus.value == ''
+                          ? null
+                          : controller.trackingStatus.value,
+                      isExpanded: true,
+                      hint: Text("${currentStatus}"),
+                      items: [
+                        'In Transit',
+                        'Out for Delivery',
+                        'Pending Pickup',
+                        'Delivered'
+                      ]
+                          .map((String item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              ))
+                          .toList(),
+                      onChanged: (String? value) {
+                        if (value != null) {
+                          controller.trackingStatus.value = value;
+                        }
+                      },
+                    ),
+                  ),
+                )),
+            const SizedBox(height: 10),
+            Obx(
+              () => CustomButton(
+                  loading: controller.loading.value,
+                  title: 'Update',
+                  onTap: () async {
+                    await controller.updateTrackingStatus(orderID);
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.update_rounded,
+                    color: AppTheme.whiteselClr,
+                  )),
+            )
+          ],
+        ),
       ),
     ),
-  );
+  ));
 }

@@ -136,7 +136,7 @@ class SalesChannelScreen extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
                       height: Get.height * 0.5,
-                      child: const Center(child: LoadingIndicator()));
+                      child: Center(child: LoadingIndicator()));
                 } else {
                   return Expanded(
                     child: ListView.builder(

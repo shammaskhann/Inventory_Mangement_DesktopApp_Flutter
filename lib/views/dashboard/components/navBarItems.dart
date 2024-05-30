@@ -6,7 +6,9 @@ import 'package:sidebarx/sidebarx.dart';
 import '../../../constant/icons/app_icons.dart';
 import '../../../constant/theme/app_themes.dart';
 
-double iconSize = Get.width * 0.015;
+double iconSize = Get.width * 0.01;
+double selectedIconSize = Get.width * 0.012;
+double hoverIconSize = Get.width * 0.011;
 DashboardController dashboardController = Get.find();
 List<SidebarXItem> navBarItems = [
   SidebarXItem(
@@ -18,16 +20,23 @@ List<SidebarXItem> navBarItems = [
       return selected
           ? Image.asset(
               AppIcons.homeIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.homeIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.homeIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.homeIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //order
@@ -40,16 +49,23 @@ List<SidebarXItem> navBarItems = [
       return selected
           ? Image.asset(
               AppIcons.orderIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.orderIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.orderIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.orderIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //inventory
@@ -62,16 +78,23 @@ List<SidebarXItem> navBarItems = [
       return selected
           ? Image.asset(
               AppIcons.inventoryIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.inventoryIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.inventoryIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.inventoryIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //purchase order
@@ -84,16 +107,23 @@ List<SidebarXItem> navBarItems = [
       return selected
           ? Image.asset(
               AppIcons.purchaseOrderIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.purchaseOrderIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.purchaseOrderIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.purchaseOrderIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //abondened cart
@@ -106,16 +136,23 @@ List<SidebarXItem> navBarItems = [
       return selected
           ? Image.asset(
               AppIcons.abondenedCartIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.abondenedCartIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.abondenedCartIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.abondenedCartIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //sale channel
@@ -128,16 +165,23 @@ List<SidebarXItem> navBarItems = [
       return selected
           ? Image.asset(
               AppIcons.salechannelIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.salechannelIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.salechannelIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.salechannelIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //customer
@@ -150,16 +194,23 @@ List<SidebarXItem> navBarItems = [
       return selected
           ? Image.asset(
               AppIcons.customerIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.customerIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.customerIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.customerIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //marketing
@@ -185,69 +236,83 @@ List<SidebarXItem> navBarItems = [
   //   },
   // ),
   //mareting campaign
-  SidebarXItem(
-    onTap: () {
-      dashboardController.changeIndex(7);
-    },
-    label: 'Payments',
-    iconBuilder: (selected, hovered) {
-      return selected
-          ? Image.asset(
-              AppIcons.payableAmountIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.selectedIconClr,
-            )
-          : Image.asset(
-              AppIcons.payableAmountIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
-    },
-  ),
+  // SidebarXItem(
+  //   onTap: () {
+  //     dashboardController.changeIndex(7);
+  //   },
+  //   label: 'Payments',
+  //   iconBuilder: (selected, hovered) {
+  //     return selected
+  //         ? Image.asset(
+  //             AppIcons.payableAmountIcon,
+  //             height: iconSize,
+  //             width: iconSize,
+  //             color: AppTheme.selectedIconClr,
+  //           )
+  //         : Image.asset(
+  //             AppIcons.payableAmountIcon,
+  //             height: iconSize,
+  //             width: iconSize,
+  //             color: AppTheme.unselectedIconClr,
+  //           );
+  //   },
+  // ),
   //marketing automation
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(8);
+      dashboardController.changeIndex(7);
     },
     label: 'Logistics',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
               AppIcons.trackingIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.trackingIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.trackingIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.trackingIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
   //discount
   SidebarXItem(
     onTap: () {
-      dashboardController.changeIndex(9);
+      dashboardController.changeIndex(8);
     },
     label: 'Discounts',
     iconBuilder: (selected, hovered) {
       return selected
           ? Image.asset(
               AppIcons.discountIcon,
-              height: iconSize,
-              width: iconSize,
+              height: selectedIconSize,
+              width: selectedIconSize,
               color: AppTheme.selectedIconClr,
             )
-          : Image.asset(
-              AppIcons.discountIcon,
-              height: iconSize,
-              width: iconSize,
-              color: AppTheme.unselectedIconClr,
-            );
+          : hovered
+              ? Image.asset(
+                  AppIcons.discountIcon,
+                  height: hoverIconSize,
+                  width: hoverIconSize,
+                  color: AppTheme.grasGreenClr,
+                )
+              : Image.asset(
+                  AppIcons.discountIcon,
+                  height: iconSize,
+                  width: iconSize,
+                  color: AppTheme.unselectedIconClr,
+                );
     },
   ),
 ];

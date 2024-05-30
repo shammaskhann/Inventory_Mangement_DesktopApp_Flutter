@@ -33,12 +33,21 @@ class DashboardScreen extends StatelessWidget {
         body: Row(
           children: [
             SidebarX(
-              showToggleButton: false,
-              headerDivider: navBarHeader(),
+              footerDivider: Container(
+                height: 8,
+                color: AppTheme.darkThemeBackgroudClr,
+              ),
+              showToggleButton: true,
+              headerBuilder: (context, extended) {
+                return extended ? navBarHeader() : nonExtendedNavBarHeader();
+              },
+              // headerDivider: navBarHeader(),
+              theme: nonExtendedSidebarXTheme(),
               extendedTheme: sidebarXTheme(),
               controller: SidebarXController(
-                  selectedIndex: dashboardController.currentIndex.value,
-                  extended: true),
+                selectedIndex: dashboardController.currentIndex.value,
+                // extended: true,
+              ),
               items: navBarItems,
             ),
             Expanded(
@@ -58,12 +67,12 @@ class DashboardScreen extends StatelessWidget {
                     return const SalesChannelScreen();
                   case 6:
                     return const CustomerScreen();
-                  case 8:
+                  case 7:
                     return const ShipperScreen();
-                  case 9:
+                  case 8:
                     return const DiscountScreen();
                   default:
-                    return const LoadingIndicator();
+                    return LoadingIndicator();
                 }
               }),
             ),

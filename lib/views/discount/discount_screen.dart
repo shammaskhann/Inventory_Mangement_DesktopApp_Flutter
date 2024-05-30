@@ -51,7 +51,7 @@ class DiscountScreen extends StatelessWidget {
                   future: discountController.getChartdata(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: LoadingIndicator());
+                      return Center(child: LoadingIndicator());
                     } else {
                       return SfCartesianChart(
                         plotAreaBorderWidth: 0,
@@ -182,8 +182,7 @@ class DiscountScreen extends StatelessWidget {
                               return SizedBox(
                                   height: Get.height * 0.5,
                                   width: Get.width * 0.5,
-                                  child:
-                                      const Center(child: LoadingIndicator()));
+                                  child: Center(child: LoadingIndicator()));
                             } else {
                               return Expanded(
                                 child: ListView.builder(
@@ -251,7 +250,7 @@ class DiscountScreen extends StatelessWidget {
                                         ),
                                       );
                                     } else {
-                                      return const Expanded(
+                                      return Expanded(
                                         child:
                                             Center(child: LoadingIndicator()),
                                       );

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
@@ -15,7 +17,7 @@ class CustomersController extends GetxController {
   final TextEditingController updateEmailController = TextEditingController();
   final TextEditingController updateAddressController = TextEditingController();
   final TextEditingController updatePhoneController = TextEditingController();
-
+  RxBool loading = false.obs;
   bool refrresh = false;
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -38,6 +40,7 @@ class CustomersController extends GetxController {
   }
 
   Future addCustomer() async {
+    loading.value = true;
     if (formKey.currentState!.validate()) {
       // Add customer logic here
       final res = await ApiClient.postCustomer(
@@ -61,6 +64,7 @@ class CustomersController extends GetxController {
         );
         refrresh = !refrresh;
         update();
+        loading.value = false;
       } else {
         Get.snackbar(
           'Error',
@@ -68,6 +72,7 @@ class CustomersController extends GetxController {
           backgroundColor: AppTheme.grasGreenClr,
           colorText: Colors.white,
         );
+        loading.value = false;
       }
     } else {
       Get.snackbar(
@@ -76,6 +81,7 @@ class CustomersController extends GetxController {
         backgroundColor: AppTheme.grasGreenClr,
         colorText: Colors.white,
       );
+      loading.value = false;
     }
   }
 

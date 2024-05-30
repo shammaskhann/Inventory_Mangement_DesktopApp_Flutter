@@ -189,7 +189,7 @@ class OrderScreen extends StatelessWidget {
                             ConnectionState.waiting) {
                           return Container(
                             height: Get.height * 0.2,
-                            child: const Center(child: LoadingIndicator()),
+                            child: Center(child: LoadingIndicator()),
                           );
                         } else if (snapshot.hasError) {
                           return Container(
@@ -375,7 +375,7 @@ class OrderScreen extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container(
                         height: Get.height * 0.2,
-                        child: const Center(child: LoadingIndicator()));
+                        child: Center(child: LoadingIndicator()));
                   } else {
                     return GetBuilder<OrderController>(
                         init: orderController,
@@ -678,6 +678,37 @@ class OrderScreen extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),
+                                            IconButton(
+                                              onPressed: () {
+                                                //delete confirmation dailog
+                                                Get.defaultDialog(
+                                                  title: 'Delete Order',
+                                                  middleText:
+                                                      'Are you sure you want to delete this order?',
+                                                  textConfirm: 'Yes',
+                                                  textCancel: 'No',
+                                                  confirmTextColor:
+                                                      Colors.white,
+                                                  buttonColor: Colors.redAccent,
+                                                  cancelTextColor: Colors.black,
+                                                  onConfirm: () async {
+                                                    await controller
+                                                        .deleteOrder(snapshot
+                                                                .data?[index]
+                                                            ['OrderID']);
+                                                    controller.update();
+                                                    Get.back();
+                                                  },
+                                                  onCancel: () {
+                                                    Get.back();
+                                                  },
+                                                );
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.redAccent,
+                                              ),
+                                            )
                                           ],
                                         )),
 
@@ -1332,13 +1363,17 @@ class OrderScreen extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 20),
-                  CustomButton(
-                    onTap: () {
-                      final res = controller.addOrder();
-                    },
-                    title: 'Add Order',
-                    icon: const SizedBox(),
+                  Obx(
+                    () => CustomButton(
+                      loading: controller.customButtonLoading.value,
+                      onTap: () {
+                        final res = controller.addOrder();
+                      },
+                      title: 'Add Order',
+                      icon: const SizedBox(),
+                    ),
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -1580,7 +1615,7 @@ updatePaymentStatusDailog(
                             : controller.newPaymentStatus.value,
                         isExpanded: true,
                         hint: Text("${currentStatus}"),
-                        items: ['Pending', 'Paid', 'Cancelled']
+                        items: ['Pending', 'Paid']
                             .map((String item) => DropdownMenuItem<String>(
                                   value: item,
                                   child: Text(item),
@@ -1596,16 +1631,20 @@ updatePaymentStatusDailog(
                   )),
               const SizedBox(height: 20),
               Center(
-                child: CustomButton(
-                  title: 'Update',
-                  icon: const Icon(
-                    Icons.update_rounded,
-                    color: AppTheme.whiteselClr,
+                child: Obx(
+                  () => CustomButton(
+                    loading: controller.customButtonLoading.value,
+                    title: 'Update',
+                    icon: const Icon(
+                      Icons.update_rounded,
+                      color: AppTheme.whiteselClr,
+                    ),
+                    onTap: () async {
+                      await controller.updatePaymentStatus(OrderID);
+                      Get.back();
+                      Get.back();
+                    },
                   ),
-                  onTap: () async {
-                    await controller.updatePaymentStatus(OrderID);
-                    Get.back();
-                  },
                 ),
               ),
             ],
@@ -1654,8 +1693,8 @@ updateTrackingStatusDailog(
                           'In Transit',
                           'Pending Pickup',
                           'Out for Delivery',
-                          'Delivered',
-                          'Cancelled'
+                          'Delivered'
+                          // 'Cancelled'
                         ]
                             .map((String item) => DropdownMenuItem<String>(
                                   value: item,
@@ -1672,16 +1711,20 @@ updateTrackingStatusDailog(
                   )),
               const SizedBox(height: 20),
               Center(
-                child: CustomButton(
-                  title: 'Update',
-                  icon: const Icon(
-                    Icons.update_rounded,
-                    color: AppTheme.whiteselClr,
+                child: Obx(
+                  () => CustomButton(
+                    loading: controller.customButtonLoading.value,
+                    title: 'Update',
+                    icon: const Icon(
+                      Icons.update_rounded,
+                      color: AppTheme.whiteselClr,
+                    ),
+                    onTap: () async {
+                      await controller.updateTrackingStatus(orderID);
+                      Get.back();
+                      Get.back();
+                    },
                   ),
-                  onTap: () async {
-                    await controller.updateTrackingStatus(orderID);
-                    Get.back();
-                  },
                 ),
               ),
             ],

@@ -21,9 +21,9 @@ class InventoryScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            Row(
+            const Row(
               children: [
-                const Text(
+                Text(
                   'Inventory',
                   style: TextStyle(
                     color: AppTheme.whiteselClr,
@@ -31,16 +31,16 @@ class InventoryScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Spacer(),
-                CustomButton(
-                    title: 'Add Product',
-                    onTap: () {},
-                    icon: const Icon(
-                      Icons.add_circle_outline,
-                      color: AppTheme.whiteselClr,
-                      size: 18,
-                    )),
-                const SizedBox(
+                Spacer(),
+                // CustomButton(
+                //     title: 'Add Product',
+                //     onTap: () {},
+                //     icon: const Icon(
+                //       Icons.add_circle_outline,
+                //       color: AppTheme.whiteselClr,
+                //       size: 18,
+                //     )),
+                SizedBox(
                   width: 10,
                 )
               ],
@@ -209,7 +209,7 @@ class InventoryScreen extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
                     height: Get.height * 0.5,
-                    child: const Center(
+                    child: Center(
                       child: LoadingIndicator(),
                     ),
                   );

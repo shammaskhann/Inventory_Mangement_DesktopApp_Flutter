@@ -789,4 +789,26 @@ class ApiClient {
       log(e.toString());
     }
   }
+
+  static Future deleteOrder({required int orderID}) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.deleteOrder}/$orderID");
+      //log("Deleting Order: $url");
+      final result = await http.put(
+        url,
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Order Deleted: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

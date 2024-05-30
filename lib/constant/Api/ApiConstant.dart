@@ -1,5 +1,5 @@
 class ApiConstant {
-  // static String baseUrl = 'http://192.168.18.122:3000'; //home
+  // static String baseUrl = 'http://192.168.18.119:3000'; //home
   //  static String baseUrl = 'http://10.133.148.237:3000/'; //office
   // static String baseUrl = 'http://10.133.150.112:3000';
   static String baseUrl =
@@ -44,6 +44,7 @@ class ApiConstant {
   static String postOrder = '/api/orders/insertOrder';
   static String getOrderAccToParam = '/api/orders/getOrderAccToParam';
   static String getUpdateFulfillmentStatus = '/api/orders/fulfillOrder';
+  static String deleteOrder = '/api/orders/deleteOrder';
   //dropDowns
   static String shipperDropDown = '/api/dropdown/getShipperDropDown';
   static String customerDropDown = '/api/dropdown/getCustomerDropDown';

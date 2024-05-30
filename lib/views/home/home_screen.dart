@@ -248,8 +248,7 @@ class HomeScreen extends StatelessWidget {
                                   ConnectionState.waiting) {
                                 return Container(
                                     height: Get.height * 0.4,
-                                    child: const Center(
-                                        child: LoadingIndicator()));
+                                    child: Center(child: LoadingIndicator()));
                               } else if (snapshot.connectionState ==
                                   ConnectionState.active) {
                                 // Handle the case when the future is still running
@@ -408,7 +407,7 @@ class HomeScreen extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return const Center(
+                                return Center(
                                   child: LoadingIndicator(),
                                 );
                               } else if (snapshot.connectionState ==

@@ -37,7 +37,7 @@ class SplashScreen extends StatelessWidget {
                     letterSpacing: 1.5,
                     color: AppTheme.oliverGreenClr)),
             const SizedBox(height: 15),
-            const LoadingIndicator(),
+            LoadingIndicator(),
             AnimatedTextKit(
               animatedTexts: [
                 // TyperAnimatedText(

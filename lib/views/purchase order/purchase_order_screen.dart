@@ -151,8 +151,8 @@ class PurchaseOrderScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: Center(
                               child: LoadingIndicator(),
                             ),
