@@ -1,5 +1,4 @@
 class ApiConstant {
-  // static String baseUrl = 'http://192.168.18.119:3000'; //home
   //  static String baseUrl = 'http://10.133.148.237:3000/'; //office
   // static String baseUrl = 'http://10.133.150.112:3000';
   static String baseUrl =
@@ -37,7 +36,7 @@ class ApiConstant {
   //Customer
   static String postCustomer = '/api/customers/addCustomer';
   static String postUpdateCustomer = '/api/customers/updateCustomer';
-  static String top5SellingProducts = '/api/products//getTop5SellingProduct';
+  static String top5SellingProducts = '/api/products/getTop5SellingProduct';
   static String getInventory = '/api/inventory/getInventory';
 
 //Orders

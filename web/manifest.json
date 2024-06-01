@@ -1,7 +1,7 @@
 {
     "name": "shopify_admin_dashboard",
     "short_name": "shopify_admin_dashboard",
-    "start_url": ".",
+    "start_url": "/deploy_inv_mangement/",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",

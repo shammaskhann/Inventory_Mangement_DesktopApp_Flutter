@@ -1,5 +1,5 @@
 class OrderModel {
-  final String orderDate; //done
+  // final String orderDate; //done
   final int customerID; //done
   final String discountCode; //done
   final String fulfillmentStatus; //done
@@ -13,7 +13,7 @@ class OrderModel {
   final List<Map<String, dynamic>> productIDs;
 
   OrderModel({
-    required this.orderDate,
+    // required this.orderDate,
     required this.customerID,
     required this.discountCode,
     required this.fulfillmentStatus,
@@ -29,7 +29,7 @@ class OrderModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'orderDate': orderDate,
+      // 'orderDate': orderDate,
       'customerID': customerID,
       'discountCode': discountCode,
       'fulfillmentStatus': fulfillmentStatus,

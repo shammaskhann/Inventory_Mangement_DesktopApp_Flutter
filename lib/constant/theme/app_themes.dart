@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const String LIGHT = 'light';
   static const String DARK = 'dark';
-
+  static const kPrimaryColor = secondaryClr;
+  //Color(0xff04B4FC);
   static const primaryClr = lightGreyClr;
   static const appBarClr = Color(0xff1a1a1a);
   static const drawerClr = Color(0xffebebeb);

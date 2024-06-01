@@ -475,7 +475,8 @@ class ApiClient {
 //     'products': products,
 //   });
   static Future postOrder(
-      {required String orderDate,
+      {
+      // required String orderDate,
       required int customerID,
       required String discountCode,
       required String fulfillmentStatus,
@@ -494,7 +495,7 @@ class ApiClient {
       final result = await http.post(
         url,
         body: jsonEncode({
-          'orderDate': orderDate,
+          // 'orderDate': orderDate,
           'customerID': customerID,
           'discountCode': discountCode,
           'fulfillmentStatus': fulfillmentStatus,
