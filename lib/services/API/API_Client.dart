@@ -812,4 +812,51 @@ class ApiClient {
       log(e.toString());
     }
   }
+
+  // ignore: non_constant_identifier_names
+  static Future loginCustomer(String Email, String Password) async {
+    try {
+      final Uri url =
+          Uri.parse("${ApiConstant.baseUrl}${ApiConstant.customerLogin}");
+      //log("Logging in Customer: $url");
+      final result = await http.post(
+        url,
+        body: jsonEncode({
+          'Email': Email,
+          'Password': Password,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Customer Logged in: $response");
+        return response;
+      } else {
+        log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getInventoryByCategory(int CategoryID) async {
+    try {
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getInventoryByCategoryID}/$CategoryID");
+      //log("Getting Inventory By Category: $url");
+      final result = await http.get(url);
+      log(result.body);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Inventory By Category: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

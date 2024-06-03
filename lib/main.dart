@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:shopify_admin_dashboard/routes/routes.dart';
+import 'package:shopify_admin_dashboard/views/User/controller/UserController.dart';
 
 void main() {
+  Get.put(UserController());
   runApp(const MyApp());
 }
 

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:shopify_admin_dashboard/routes/page_name.dart';
+import 'package:shopify_admin_dashboard/services/API/API_Client.dart';
+import 'package:shopify_admin_dashboard/views/User/controller/UserController.dart';
 import 'package:shopify_admin_dashboard/views/User/home-web/home-page.dart';
 
 class LoginController extends GetxController {
+  UserController userController = Get.find<UserController>();
   RxBool isLoading = false.obs;
   RxBool isPasswordVisible = false.obs;
   final emailController = TextEditingController();
@@ -24,17 +28,61 @@ class LoginController extends GetxController {
     return true;
   }
 
-  void login() {
+//   CREATE PROCEDURE LoginCustomer
+//     @Email NVARCHAR(50),
+//     @Password NVARCHAR(50)
+// AS
+// BEGIN
+//     IF EXISTS (SELECT 1 FROM Customers WHERE Email = @Email AND Password = @Password)
+//     BEGIN
+//         SELECT CustomerID, Name, Email, PhoneNumber, Address, Password
+//         FROM Customers
+//         WHERE Email = @Email AND Password = @Password;
+//     END
+//     ELSE
+//     BEGIN
+//         SELECT 'Invalid credentials' AS ErrorMessage;
+//     END
+// END;
+  // response from sql server
+// CustomerID	Name	Email	PhoneNumber	Address	Password
+// 12	Shammas Khan	skspawnpersonal@gmail.com	0345-0491-621	21st Street Street karachi	O8bZl6bC
+  void login() async {
     if (validateEmail(emailController.text) &&
         validatePassword(passwordController.text)) {
       isLoading.value = true;
-      Future.delayed(Duration(seconds: 2), () {
+
+      final res = await ApiClient.loginCustomer(
+          emailController.text, passwordController.text);
+      isLoading.value = false;
+
+      if (res != null && res['ErrorMessage'] == null) {
+        userController.userName = res['Name'];
+        userController.email = res['Email'];
+        userController.phoneNum = res['PhoneNumber'];
+        userController.address = res['Address'];
+        userController.password = res['Password'];
         isLoading.value = false;
         Get.offAllNamed(PageName.home_web_page);
-        Get.snackbar("Login", "Login Successful");
-      });
+      } else {
+        isLoading.value = false;
+        Get.snackbar(
+          "Login",
+          "Invalid Email or Password",
+          maxWidth: Get.width * 0.5,
+          backgroundColor: AppTheme.grasGreenClr,
+          colorText: AppTheme.whiteselClr,
+        );
+      }
     } else {
-      Get.snackbar("Login", "Invalid Email or Password");
+      isLoading.value = false;
+      Get.snackbar(
+        "Login",
+        "Invalid Email or Password",
+        maxWidth: Get.width * 0.5,
+        backgroundColor: AppTheme.grasGreenClr,
+        colorText: AppTheme.whiteselClr,
+      );
     }
   }
 }

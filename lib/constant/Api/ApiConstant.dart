@@ -64,4 +64,12 @@ class ApiConstant {
   static String getShipments = '/api/shipment/getShipments';
   static String getShipmentByOrderID = '/api/shipment/getShipment';
   static String updateShipmentStatus = '/api/shipment/updateShipmentStatus';
+
+  //WebPage
+  //Customer Login
+  static String customerLogin = '/api/customers/login';
+  static String customerRegister = '/api/customers/register';
+
+  //get Inv but CategoryID
+  static String getInventoryByCategoryID = '/api/inventory/inventory';
 }
