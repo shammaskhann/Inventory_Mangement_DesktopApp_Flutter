@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/views/authentication/controller/singup_controller.dart';
-
+import 'package:shopify_admin_dashboard/shared/phoneNumerInputFormatter.dart';
 import 'package:shopify_admin_dashboard/views/components/action_button.dart';
 
 import '../../../constant/theme/app_themes.dart';
@@ -48,7 +49,7 @@ class _SignUpState extends State<SignUp> {
             child: Center(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -70,7 +71,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 20,
                       ),
                       TextField(
                         controller: signupController.usernameController,
@@ -82,7 +83,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 20,
                       ),
                       TextField(
                         controller: signupController.emailController,
@@ -95,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 20,
                       ),
                       Obx(
                         () => TextField(
@@ -120,15 +121,47 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
+                      //phone number with formatter
                       const SizedBox(
-                        height: 64,
+                        height: 20,
+                      ),
+                      TextField(
+                        controller: signupController.phoneNumController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          PhoneNumberFormatter.maskFormatter
+                        ],
+                        decoration: const InputDecoration(
+                          labelText: 'Phone Number',
+                          suffixIcon: Icon(
+                            Icons.phone,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        controller: signupController.addressController,
+                        decoration: const InputDecoration(
+                          labelText: 'Address',
+                          suffixIcon: Icon(
+                            Icons.location_on_outlined,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 40,
                       ),
                       Obx(
-                        () => actionButton("Create Account",
-                            signupController.isLoading.value, () {}),
+                        () => actionButton(
+                            "Create Account", signupController.isLoading.value,
+                            () {
+                          signupController.signup();
+                        }),
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

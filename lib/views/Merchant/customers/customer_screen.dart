@@ -350,6 +350,25 @@ void showAddCustomerDialog() {
                 validator: controller.validateEmail,
               ),
               const SizedBox(height: 10),
+              //Passowrd
+              TextFormField(
+                controller: controller.passwordController,
+                decoration: const InputDecoration(
+                  floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppTheme.grasGreenClr),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
+              ),
               TextFormField(
                 controller: controller.addressController,
                 decoration: const InputDecoration(
@@ -459,6 +478,26 @@ showEditCustomerDailog(int customerID, String name, String email,
                   ),
                 ),
                 validator: controller.validateEmail,
+              ),
+              const SizedBox(height: 10),
+              //password
+              TextFormField(
+                controller: controller.updatePasswordController,
+                decoration: const InputDecoration(
+                  floatingLabelStyle: TextStyle(color: AppTheme.grasGreenClr),
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppTheme.grasGreenClr),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 10),
               TextFormField(

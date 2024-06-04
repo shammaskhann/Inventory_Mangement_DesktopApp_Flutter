@@ -12,10 +12,13 @@ class CustomersController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   final TextEditingController updateNameController = TextEditingController();
   final TextEditingController updateEmailController = TextEditingController();
   final TextEditingController updateAddressController = TextEditingController();
+  final TextEditingController updatePasswordController =
+      TextEditingController();
   final TextEditingController updatePhoneController = TextEditingController();
   RxBool loading = false.obs;
   bool refrresh = false;
@@ -48,6 +51,7 @@ class CustomersController extends GetxController {
         email: emailController.text,
         phone: phoneController.text,
         address: addressController.text,
+        password: passwordController.text,
       );
       nameController.clear();
       emailController.clear();
@@ -103,6 +107,7 @@ class CustomersController extends GetxController {
       email: updateEmailController.text,
       phone: updatePhoneController.text,
       address: updateAddressController.text,
+      password: updatePasswordController.text,
     );
     updateNameController.clear();
     updateEmailController.clear();

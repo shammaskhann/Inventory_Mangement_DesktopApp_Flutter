@@ -132,9 +132,13 @@ class OrderScreen extends StatelessWidget {
                                       ['NumberOfOrdersToday'],
                                   isGreaterThanLastWeek: !snapshot.data?[0]
                                       ['IsLesser'],
-                                  percValue: double.parse(snapshot.data![0]
-                                          ['PercentageChange']
-                                      .toString()),
+                                  percValue: snapshot.data![0]
+                                              ['PercentageChange'] !=
+                                          null
+                                      ? double.parse(snapshot.data![0]
+                                              ['PercentageChange']
+                                          .toString())
+                                      : 0.0,
                                 );
                               } else if (snapshot.hasError) {
                                 return const InfoBlock2(
@@ -163,6 +167,7 @@ class OrderScreen extends StatelessWidget {
                                 ),
                               );
                             } else {
+                              // log('Past Week Orders: ${snapshot.data}');
                               if (snapshot.hasData) {
                                 return InfoBlock2(
                                   title: "Past Week Orders",
@@ -248,6 +253,7 @@ class OrderScreen extends StatelessWidget {
                             ),
                           );
                         } else {
+                          log('Graph Data: ${snapshot.data}');
                           return Container(
                             height: Get.height * 0.25,
                             child: SfCartesianChart(

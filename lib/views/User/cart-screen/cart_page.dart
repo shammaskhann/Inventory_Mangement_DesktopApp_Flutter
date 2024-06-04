@@ -1,7 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/routes/page_name.dart';
+import 'package:shopify_admin_dashboard/views/User/checkout-page.dart/checkout_page.dart';
+import 'package:shopify_admin_dashboard/views/components/CustomButton.dart';
 
 import '../../../constant/theme/app_themes.dart';
 import '../controller/UserController.dart';
@@ -50,7 +55,7 @@ class _CartWebPageState extends State<CartWebPage> {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Container(
+                      icon: SizedBox(
                         width: Get.width * 0.02,
                         child: Stack(
                           children: [
@@ -60,7 +65,7 @@ class _CartWebPageState extends State<CartWebPage> {
                               size: Get.width * 0.018,
                             ),
                             Obx(
-                              () => (userController.cart.length > 0)
+                              () => (userController.cart.isNotEmpty)
                                   ? Positioned(
                                       top: 0,
                                       right: 0,
@@ -71,16 +76,13 @@ class _CartWebPageState extends State<CartWebPage> {
                                               color: AppTheme.grasGreenClr,
                                               shape: BoxShape.circle),
                                           child: Center(
-                                              child: Obx(() => Text(
-                                                    '${userController.cart.length}',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: AppTheme
-                                                            .whiteselClr,
-                                                        fontSize:
-                                                            Get.width * 0.006),
-                                                  )))))
+                                              child: Text(
+                                            '${userController.cart.length}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: AppTheme.whiteselClr,
+                                                fontSize: Get.width * 0.006),
+                                          ))))
                                   : const SizedBox(),
                             )
                           ],
@@ -88,9 +90,48 @@ class _CartWebPageState extends State<CartWebPage> {
                       ),
                     ),
                     const SizedBox(width: 20),
-                    IconButton(
+                    FocusedMenuHolder(
+                      blurSize: 0,
                       onPressed: () {},
-                      icon: Row(
+                      openWithTap: true,
+                      menuWidth: Get.width * 0.1,
+                      animateMenuItems: true,
+                      menuOffset: 10,
+                      bottomOffsetHeight: 100,
+                      menuBoxDecoration: const BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(15.0))),
+                      duration: const Duration(milliseconds: 100),
+                      menuItems: [
+                        FocusedMenuItem(
+                            trailingIcon: const Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                            ),
+                            title: const Text(
+                              'Profile',
+                            ),
+                            onPressed: () {
+                              Get.toNamed(PageName.profile_page);
+                            }),
+                        FocusedMenuItem(
+                            trailingIcon: const Icon(
+                              Icons.logout,
+                              color: Colors.grey,
+                            ),
+                            title: const Text(
+                              'Log Out',
+                              // style: TextStyle(
+                              //     color: AppTheme.whiteselClr,
+                              //     fontSize: Get.width * 0.008,
+                              //     fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Get.offAllNamed(PageName.auth_screen);
+                            }),
+                      ],
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const CircleAvatar(
@@ -152,7 +193,7 @@ class _CartWebPageState extends State<CartWebPage> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                SizedBox(
                   width: Get.width * 0.2,
                   child: Text(
                     'Product',
@@ -164,7 +205,7 @@ class _CartWebPageState extends State<CartWebPage> {
                   ),
                 ),
                 const Spacer(),
-                Container(
+                SizedBox(
                   width: Get.width * 0.1,
                   child: Text(
                     'Price',
@@ -176,7 +217,7 @@ class _CartWebPageState extends State<CartWebPage> {
                   ),
                 ),
                 const Spacer(),
-                Container(
+                SizedBox(
                   width: Get.width * 0.1,
                   child: Text(
                     'Quantity',
@@ -188,7 +229,7 @@ class _CartWebPageState extends State<CartWebPage> {
                   ),
                 ),
                 const Spacer(),
-                Container(
+                SizedBox(
                   width: Get.width * 0.1,
                   child: Text(
                     'Subtotal',
@@ -203,7 +244,7 @@ class _CartWebPageState extends State<CartWebPage> {
             ),
           ),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             width: Get.width * 0.5,
             child: Obx(
               () => ListView.builder(
@@ -211,11 +252,16 @@ class _CartWebPageState extends State<CartWebPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: userController.cart.length,
                   itemBuilder: (context, index) {
-                    if (userController.cart.length == 0) {
+                    if (userController.cart.isEmpty) {
                       return const Center(
                           child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 40.0),
-                        child: Text('No Product in Cart'),
+                        child: Text('No Product in Cart',
+                            style: TextStyle(
+                                color: AppTheme.whiteselClr,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center),
                       ));
                     } else {
                       return Padding(
@@ -237,12 +283,12 @@ class _CartWebPageState extends State<CartWebPage> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Container(
+                              SizedBox(
                                   width: Get.width * 0.2,
                                   child: Row(
                                     children: [
                                       Container(
-                                        padding: const EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(6),
                                         decoration: BoxDecoration(
                                           color: AppTheme.darkThemeBackgroudClr,
                                           borderRadius:
@@ -260,8 +306,8 @@ class _CartWebPageState extends State<CartWebPage> {
                                               BorderRadius.circular(10),
                                           child: Image.asset(
                                             "assets/images/${userController.productInCart[index].productID}.png",
-                                            height: Get.width * 0.017,
-                                            width: Get.width * 0.017,
+                                            height: Get.width * 0.04,
+                                            width: Get.width * 0.04,
                                           ),
                                         ),
                                       ),
@@ -277,7 +323,7 @@ class _CartWebPageState extends State<CartWebPage> {
                                     ],
                                   )),
                               const Spacer(),
-                              Container(
+                              SizedBox(
                                 width: Get.width * 0.1,
                                 child: Text(
                                   '\$${userController.productInCart[index].price}',
@@ -289,7 +335,7 @@ class _CartWebPageState extends State<CartWebPage> {
                                 ),
                               ),
                               const Spacer(),
-                              Container(
+                              SizedBox(
                                 width: Get.width * 0.1,
                                 child: Center(
                                   child: Container(
@@ -357,7 +403,7 @@ class _CartWebPageState extends State<CartWebPage> {
                                 ),
                               ),
                               const Spacer(),
-                              Container(
+                              SizedBox(
                                 width: Get.width * 0.1,
                                 child: GetBuilder<UserController>(
                                     init: userController,
@@ -385,7 +431,65 @@ class _CartWebPageState extends State<CartWebPage> {
                     }
                   }),
             ),
-          )
+          ),
+          (userController.cart.isEmpty)
+              ? const SizedBox()
+              : Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Spacer(),
+                            SizedBox(
+                              width: Get.width * 0.1,
+                              child: Text(
+                                'Total:',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppTheme.whiteselClr,
+                                    fontSize: Get.width * 0.01),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.05,
+                              child: Obx(
+                                () => Text(
+                                  '\$${userController.totalPrice.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: AppTheme.whiteselClr,
+                                      fontSize: Get.width * 0.01),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 30),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: CustomButton(
+                                title: "Checkout",
+                                onTap: () {
+                                  Get.toNamed(PageName.checkout_page);
+                                },
+                                icon: const SizedBox()),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
         ],
       ),
     );

@@ -1,5 +1,6 @@
 class ApiConstant {
-  //  static String baseUrl = 'http://10.133.148.237:3000/'; //office
+  // static String baseUrl = 'http://192.168.18.119:3000';
+  // static String baseUrl = 'http://10.133.150.153:3000'; //office
   // static String baseUrl = 'http://10.133.150.112:3000';
   static String baseUrl =
       'https://rest-api-node-js-express-sql-server.vercel.app';
@@ -69,6 +70,7 @@ class ApiConstant {
   //Customer Login
   static String customerLogin = '/api/customers/login';
   static String customerRegister = '/api/customers/register';
+  static String getCustomerHistory = '/api/customers/getCustomerOrderHistory';
 
   //get Inv but CategoryID
   static String getInventoryByCategoryID = '/api/inventory/inventory';

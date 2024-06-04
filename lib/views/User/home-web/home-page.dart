@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:shopify_admin_dashboard/constant/theme/app_themes.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:shopify_admin_dashboard/routes/page_name.dart';
 import 'package:shopify_admin_dashboard/shared/loading_indicator.dart';
 import 'package:shopify_admin_dashboard/views/User/cart-screen/cart_page.dart';
 import 'package:shopify_admin_dashboard/views/User/controller/UserController.dart';
@@ -84,7 +87,7 @@ class _HomeWebPageState extends State<HomeWebPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Get.to(() => const CartWebPage());
+                        Get.toNamed(PageName.cart_page);
                       },
                       icon: Container(
                         width: Get.width * 0.02,
@@ -124,9 +127,48 @@ class _HomeWebPageState extends State<HomeWebPage> {
                       ),
                     ),
                     const SizedBox(width: 20),
-                    IconButton(
+                    FocusedMenuHolder(
+                      blurSize: 0,
                       onPressed: () {},
-                      icon: Row(
+                      openWithTap: true,
+                      menuWidth: Get.width * 0.1,
+                      animateMenuItems: true,
+                      menuOffset: 10,
+                      bottomOffsetHeight: 100,
+                      menuBoxDecoration: const BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(15.0))),
+                      duration: const Duration(milliseconds: 100),
+                      menuItems: [
+                        FocusedMenuItem(
+                            trailingIcon: const Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                            ),
+                            title: const Text(
+                              'Profile',
+                            ),
+                            onPressed: () {
+                              Get.toNamed(PageName.profile_page);
+                            }),
+                        FocusedMenuItem(
+                            trailingIcon: const Icon(
+                              Icons.logout,
+                              color: Colors.grey,
+                            ),
+                            title: const Text(
+                              'Log Out',
+                              // style: TextStyle(
+                              //     color: AppTheme.whiteselClr,
+                              //     fontSize: Get.width * 0.008,
+                              //     fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Get.offAllNamed(PageName.auth_screen);
+                            }),
+                      ],
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const CircleAvatar(

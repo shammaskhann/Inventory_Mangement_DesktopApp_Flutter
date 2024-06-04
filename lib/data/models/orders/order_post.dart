@@ -1,7 +1,7 @@
 class OrderModel {
   // final String orderDate; //done
   final int customerID; //done
-  final String discountCode; //done
+  final String? discountCode; //done
   final String fulfillmentStatus; //done
   final String? fulfilledDate;
   final int salesChannelID;

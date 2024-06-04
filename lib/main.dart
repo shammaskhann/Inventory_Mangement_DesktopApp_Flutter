@@ -6,7 +6,7 @@ import 'package:shopify_admin_dashboard/views/User/controller/UserController.dar
 
 void main() {
   Get.put(UserController());
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

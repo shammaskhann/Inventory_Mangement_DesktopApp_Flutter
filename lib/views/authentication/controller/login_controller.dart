@@ -8,6 +8,7 @@ import 'package:shopify_admin_dashboard/views/User/controller/UserController.dar
 import 'package:shopify_admin_dashboard/views/User/home-web/home-page.dart';
 
 class LoginController extends GetxController {
+  // UserController userController = Get.put(UserController(), permanent: true);
   UserController userController = Get.find<UserController>();
   RxBool isLoading = false.obs;
   RxBool isPasswordVisible = false.obs;
@@ -57,11 +58,12 @@ class LoginController extends GetxController {
       isLoading.value = false;
 
       if (res != null && res['ErrorMessage'] == null) {
-        userController.userName = res['Name'];
-        userController.email = res['Email'];
-        userController.phoneNum = res['PhoneNumber'];
-        userController.address = res['Address'];
-        userController.password = res['Password'];
+        userController.setUserID(res['CustomerID']);
+        userController.setUserName(res['Name']);
+        userController.setEmail(res['Email']);
+        userController.setPhoneNum(res['PhoneNumber']);
+        userController.setAddress(res['Address']);
+        userController.setPassword(res['Password']);
         isLoading.value = false;
         Get.offAllNamed(PageName.home_web_page);
       } else {

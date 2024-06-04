@@ -312,7 +312,8 @@ class ApiClient {
       {required String name,
       required String email,
       required String address,
-      required String phone}) async {
+      required String phone,
+      required String password}) async {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postCustomer}");
@@ -324,6 +325,7 @@ class ApiClient {
           "customerEmail": email,
           "customerNum": phone,
           "customerAddress": address,
+          "customerPassword": password,
         }),
         headers: {"Content-Type": "application/json"},
       );
@@ -478,7 +480,7 @@ class ApiClient {
       {
       // required String orderDate,
       required int customerID,
-      required String discountCode,
+      required String? discountCode,
       required String fulfillmentStatus,
       required String? fulfilledDate,
       required int salesChannelID,
@@ -740,7 +742,8 @@ class ApiClient {
       required String name,
       required String email,
       required String phone,
-      required String address}) async {
+      required String address,
+      required String password}) async {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postUpdateCustomer}");
@@ -753,6 +756,7 @@ class ApiClient {
           'Email': email,
           'PhoneNumber': phone,
           'Address': address,
+          'Passowrd': password,
         }),
         headers: {"Content-Type": "application/json"},
       );
@@ -850,6 +854,26 @@ class ApiClient {
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
         //log("Inventory By Category: $response");
+        return response;
+      } else {
+        //log("Error: ${result.body}");
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future getCustomerHistory(int customerID) async {
+    try {
+      log('UserID: $customerID');
+      final Uri url = Uri.parse(
+          "${ApiConstant.baseUrl}${ApiConstant.getCustomerHistory}/$customerID");
+      //log("Getting Customer History: $url");
+      final result = await http.get(url);
+      if (result.statusCode == 200) {
+        final response = jsonDecode(result.body);
+        //log("Customer History: $response");
         return response;
       } else {
         //log("Error: ${result.body}");

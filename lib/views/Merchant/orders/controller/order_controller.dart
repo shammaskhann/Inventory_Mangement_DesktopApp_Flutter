@@ -194,7 +194,8 @@ class OrderController extends GetxController {
       OrderModel order = OrderModel(
         // orderDate: orderDateController.text,
         customerID: selectedCustomerID.value,
-        discountCode: selectedDiscountID.value,
+        discountCode:
+            selectedDiscountID.value == '' ? null : selectedDiscountID.value,
         fulfillmentStatus: fulfillmentStatusController.value,
         fulfilledDate: fulfilledDateController.text == ''
             ? null
@@ -214,7 +215,8 @@ class OrderController extends GetxController {
       final response = await ApiClient.postOrder(
         // orderDate: orderDateController.text,
         customerID: selectedCustomerID.value,
-        discountCode: selectedDiscountID.value,
+        discountCode:
+            selectedDiscountID.value == '' ? null : selectedDiscountID.value,
         fulfillmentStatus: fulfillmentStatusController.value,
         fulfilledDate: fulfilledDateController.text,
         salesChannelID: selectedSalesChannelID.value,
@@ -245,7 +247,7 @@ class OrderController extends GetxController {
         selectedShipperID.value = 0;
         selectedSalesChannelID.value = 0;
         selectedProductList.clear();
-
+        upd();
         Get.close(1);
       } else {
         customButtonLoading.value = false;
