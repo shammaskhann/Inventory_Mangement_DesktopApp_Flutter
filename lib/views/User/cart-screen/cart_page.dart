@@ -128,6 +128,7 @@ class _CartWebPageState extends State<CartWebPage> {
                               //     fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
+                              userController.cart.clear();
                               Get.offAllNamed(PageName.auth_screen);
                             }),
                       ],

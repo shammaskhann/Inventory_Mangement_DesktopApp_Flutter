@@ -747,7 +747,7 @@ class ApiClient {
     try {
       final Uri url =
           Uri.parse("${ApiConstant.baseUrl}${ApiConstant.postUpdateCustomer}");
-      //log("Updating Customer: $url");
+      log("Updating Customer: $url");
       final result = await http.post(
         url,
         body: jsonEncode({
@@ -762,7 +762,7 @@ class ApiClient {
       );
       if (result.statusCode == 200) {
         final response = jsonDecode(result.body);
-        //log("Customer Updated: $response");
+        log("Customer Updated: $response");
         return response;
       } else {
         log("Error: ${result.body}");

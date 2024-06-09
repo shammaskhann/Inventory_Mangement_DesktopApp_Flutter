@@ -165,6 +165,7 @@ class _HomeWebPageState extends State<HomeWebPage> {
                               //     fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
+                              userController.cart.clear();
                               Get.offAllNamed(PageName.auth_screen);
                             }),
                       ],

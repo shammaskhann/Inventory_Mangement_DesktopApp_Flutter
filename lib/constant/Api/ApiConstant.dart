@@ -4,7 +4,7 @@ class ApiConstant {
   // static String baseUrl = 'http://10.133.150.112:3000';
   static String baseUrl =
       'https://rest-api-node-js-express-sql-server.vercel.app';
-  // static String customerApi = '/api/customers';
+  static String customerApi = '/api/customers';
   static String checkDbConnection = '/api/db-connection-status';
 
   // info block tag api

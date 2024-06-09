@@ -125,6 +125,7 @@ class CheckoutScrenn extends StatelessWidget {
                               //     fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
+                              userController.cart.clear();
                               Get.offAllNamed(PageName.auth_screen);
                             }),
                       ],
@@ -423,7 +424,7 @@ class CheckoutScrenn extends StatelessWidget {
                                   )
                                   .toList(),
                               hint: Text(
-                                'Select discount',
+                                'Select Shipper',
                                 style: TextStyle(
                                   color: AppTheme.whiteselClr,
                                   fontSize: Get.width * 0.01,
@@ -518,7 +519,7 @@ class CheckoutScrenn extends StatelessWidget {
                                     )
                                     .toList(),
                                 hint: Text(
-                                  'Select discount',
+                                  'Select discount ',
                                   style: TextStyle(
                                     color: AppTheme.whiteselClr,
                                     fontSize: Get.width * 0.01,
@@ -600,7 +601,7 @@ class CheckoutScrenn extends StatelessWidget {
                                     )
                                     .toList(),
                                 hint: Text(
-                                  'Select discount',
+                                  'Select Gift Card ',
                                   style: TextStyle(
                                     color: AppTheme.whiteselClr,
                                     fontSize: Get.width * 0.01,
@@ -619,6 +620,7 @@ class CheckoutScrenn extends StatelessWidget {
                               fontSize: Get.width * 0.011),
                         ),
                         const SizedBox(height: 10),
+
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           height: Get.width * 0.03,
@@ -627,35 +629,39 @@ class CheckoutScrenn extends StatelessWidget {
                               border: Border.all(color: AppTheme.grasGreenClr),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(5))),
-                          child: DropdownButton<String>(
-                            dropdownColor: AppTheme.darkThemeBackgroudClr,
-                            value: 'Credit Card',
-                            icon: const Icon(
-                              Icons.arrow_drop_down,
-                              color: AppTheme.whiteselClr,
-                            ),
-                            iconSize: Get.width * 0.03,
-                            elevation: 16,
-                            style: TextStyle(
+                          child: Obx(
+                            () => DropdownButton<String>(
+                              dropdownColor: AppTheme.darkThemeBackgroudClr,
+                              value: userController.paymentMethod.value,
+                              icon: const Icon(
+                                Icons.arrow_drop_down,
                                 color: AppTheme.whiteselClr,
-                                fontSize: Get.width * 0.01),
-                            underline: Container(
-                              height: 0,
-                              color: AppTheme.darkThemeBackgroudClr,
+                              ),
+                              iconSize: Get.width * 0.03,
+                              elevation: 16,
+                              style: TextStyle(
+                                  color: AppTheme.whiteselClr,
+                                  fontSize: Get.width * 0.01),
+                              underline: Container(
+                                height: 0,
+                                color: AppTheme.darkThemeBackgroudClr,
+                              ),
+                              onChanged: (String? newValue) {
+                                userController.paymentMethod.value = newValue!;
+                              },
+                              items: <String>[
+                                'Credit Card',
+                                'Debit Card',
+                                'Cash on Delivery',
+                                'Bank Transfer',
+                                'Easy Paisa',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
-                            onChanged: (String? newValue) {},
-                            items: <String>[
-                              'Credit Card',
-                              'Debit Card',
-                              'Cash on Delivery',
-                              'Bank Transfer',
-                              'Easy Paisa',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
                           ),
                         )
                       ],

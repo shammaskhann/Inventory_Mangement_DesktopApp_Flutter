@@ -538,13 +538,16 @@ showEditCustomerDailog(int customerID, String name, String email,
                 ],
               ),
               const SizedBox(height: 20),
-              CustomButton(
-                title: 'Update Customer',
-                onTap: () {
-                  controller.updateCustomer(customerID);
-                },
-                icon: const SizedBox(),
-              ),
+              Obx(
+                () => CustomButton(
+                  loading: controller.updtLoad.value,
+                  title: 'Update Customer',
+                  onTap: () {
+                    controller.updateCustomer(customerID);
+                  },
+                  icon: const SizedBox(),
+                ),
+              )
             ],
           ),
         ),

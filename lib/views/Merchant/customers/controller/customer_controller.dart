@@ -22,6 +22,7 @@ class CustomersController extends GetxController {
   final TextEditingController updatePhoneController = TextEditingController();
   RxBool loading = false.obs;
   bool refrresh = false;
+  RxBool updtLoad = false.obs;
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
@@ -101,6 +102,7 @@ class CustomersController extends GetxController {
   }
 
   Future updateCustomer(int id) async {
+    updtLoad.value = true;
     final res = await ApiClient.updateCustomer(
       customerID: id,
       name: updateNameController.text,
@@ -113,7 +115,9 @@ class CustomersController extends GetxController {
     updateEmailController.clear();
     updateAddressController.clear();
     updatePhoneController.clear();
+    updatePasswordController.clear();
     String msg = res['message'];
+    updtLoad.value = false;
     if (msg == "Customer Updated Successfully!") {
       Get.back(); // Close the dialog
       Get.snackbar(
@@ -125,6 +129,7 @@ class CustomersController extends GetxController {
       refrresh = !refrresh;
       update();
     } else {
+      updtLoad = false.obs;
       Get.snackbar(
         'Error',
         msg,

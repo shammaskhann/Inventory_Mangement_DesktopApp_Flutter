@@ -88,6 +88,7 @@ class ProfileWebPage extends StatelessWidget {
                               //     fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
+                              userController.cart.clear();
                               Get.offAllNamed(PageName.auth_screen);
                             }),
                       ],

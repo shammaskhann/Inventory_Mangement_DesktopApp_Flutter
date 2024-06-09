@@ -143,7 +143,7 @@ class UserController extends GetxController {
         if (item['quantity']! > 1) {
           item['quantity'] = item['quantity']! - 1;
         } else {
-          cart.remove(item);
+          removeFromCart(product);
         }
         break;
       }
@@ -154,14 +154,24 @@ class UserController extends GetxController {
   }
 
   void removeFromCart(Product product) {
+    var itemToRemove;
+
     for (var item in cart) {
       if (item['productID'] == product.productID) {
-        cart.remove(item);
-        productInCart.remove(product);
-        updateTotalPrice();
+        itemToRemove = item;
         break;
       }
     }
+    log('Remove Item: $itemToRemove');
+    if (itemToRemove != null) {
+      cart.removeWhere((item) => item['productID'] == product.productID);
+      //remoce from product in cart
+      productInCart
+          .removeWhere((element) => element.productID == product.productID);
+      updateTotalPrice();
+      update();
+    }
+    log(productInCart.toString());
     log(cart.toString());
   }
 
@@ -179,12 +189,62 @@ class UserController extends GetxController {
   }
 
   void placeOrder() async {
-    orderLoading.value = true;
+    orderLoading.value = true; //
+    //validate
+    if (addressController.text.isEmpty) {
+      Get.snackbar(
+        'Address Required',
+        'Address Required',
+        colorText: Colors.white,
+      );
+      orderLoading.value = false;
+      return;
+    }
+    if (phoneNumController.text.isEmpty) {
+      Get.snackbar('Phone Number Required', 'Phone Number Required',
+          colorText: Colors.white);
+      orderLoading.value = false;
+      return;
+    }
+    if (cart.isEmpty) {
+      Get.snackbar('Cart Empty', 'Cart Empty', colorText: Colors.white);
+      orderLoading.value = false;
+      return;
+    }
+    if (selectedShipperID.value == 0) {
+      Get.snackbar(
+        'Shipper Required',
+        'Shipper Required',
+        colorText: Colors.white,
+      );
+      orderLoading.value = false;
+      return;
+    }
+    // if (selectedDiscountID.value == '') {
+    //   Get.snackbar('Discount Required', 'Discount Required',
+    //       colorText: Colors.white);
+    //   orderLoading.value = false;
+    //   return;
+    // }
+    // if (selectedGiftCardID.value == 0) {
+    //   Get.snackbar('Gift Card Required', 'Gift Card Required',
+    //       colorText: Colors.white);
+    //   orderLoading.value = false;
+    //   return;
+    // }
+    if (paymentMethod.value == '') {
+      Get.snackbar('Payment Method Required', 'Payment Method Required',
+          colorText: Colors.white);
+      orderLoading.value = false;
+      return;
+    }
+
+    //place orderw
     final response = await ApiClient.postOrder(
         customerID: userID,
         discountCode:
             selectedDiscountID.value == '' ? null : selectedDiscountID.value,
-        fulfillmentStatus: "Pending",
+        fulfillmentStatus: "Processing",
         fulfilledDate: null,
         salesChannelID: 4,
         giftCard:
@@ -248,20 +308,28 @@ class UserController extends GetxController {
 
   RxBool updateLoading = false.obs;
   Future updateCustomer() async {
-    updateLoading.value = true;
-    final response = await ApiClient.updateCustomer(
-        customerID: userID,
-        name: updateNameController.text,
-        email: updateEmailController.text,
-        password: updatePasswordController.text,
-        phone: updatePhoneNumController.text,
-        address: updateAddressController.text);
-    String msg = response['message'];
-    if (msg == "Customer Updated Successfully!") {
-      updateLoading.value = false;
-      Get.snackbar('Customer Updated', 'Customer Updated Successfully');
-      Get.offAllNamed(PageName.home_web_page);
-    } else {
+    try {
+      updateLoading.value = true;
+      final response = await ApiClient.updateCustomer(
+          customerID: userID,
+          name: updateNameController.text,
+          email: updateEmailController.text,
+          password: updatePasswordController.text,
+          phone: updatePhoneNumController.text,
+          address: updateAddressController.text);
+      String msg = response['message'];
+      log(msg);
+      if (msg == "Customer Updated Successfully!") {
+        updateLoading.value = false;
+        Get.snackbar('Customer Updated', 'Customer Updated Successfully');
+        Get.offAllNamed(PageName.home_web_page);
+      } else {
+        updateLoading.value = false;
+        Get.snackbar('Customer Update Failed', 'Customer Update Failed');
+        Get.offAllNamed(PageName.home_web_page);
+      }
+    } catch (e) {
+      log(e.toString());
       updateLoading.value = false;
       Get.snackbar('Customer Update Failed', 'Customer Update Failed');
       Get.offAllNamed(PageName.home_web_page);

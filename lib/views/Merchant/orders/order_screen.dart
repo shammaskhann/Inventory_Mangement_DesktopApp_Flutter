@@ -630,7 +630,12 @@ class OrderScreen extends StatelessWidget {
                                             SizedBox(
                                               width: width * 0.05,
                                               child: Text(
-                                                "\$${snapshot.data?[index]['DiscountAmount'].toString() ?? 'N/A'}",
+                                                (snapshot.data?[index][
+                                                                'DiscountAmount']
+                                                            .toString() ==
+                                                        'null')
+                                                    ? 'N/A'
+                                                    : "\$${snapshot.data?[index]['DiscountAmount'].toString() ?? 'N/A'}",
                                                 style: TextStyle(
                                                     color: AppTheme.whiteselClr,
                                                     fontSize: text16Font,
