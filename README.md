@@ -25,6 +25,10 @@ This project is a comprehensive Inventory Management Desktop Application, develo
 - Deployment: Deployed on Vercel for a scalable and efficient deployment process.
 #
 
+<h2>🚀 Backend Repo</h2>
+
+[https://shammaskhann.github.io/deploy\_inv\_mangement/](https://github.com/shammaskhann/Inv_Manangement_RestApi_NodeJs_Express_SQL-SERVER)
+
 # Database (SQL SERVER)
 - SQL Server: Designed to handle the application's data needs with advanced features.
 - Triggers: Automated responses to specific changes in the database.
